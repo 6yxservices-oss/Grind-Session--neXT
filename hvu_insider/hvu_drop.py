@@ -3,11 +3,13 @@
 HVU Insider — Full Production Drop Orchestrator
 -------------------------------------------------
 Entry point. Takes a position group + player list, researches each player
-via Claude subagents in parallel, then produces all 3 deliverables:
+via Claude subagents in parallel, then produces all 5 deliverables:
 
   1. Scouting Article (.docx)    — Brady Jordan insider article
   2. Deliverables by Team (.docx) — Operational playbook
   3. Content Intel Tracker (.xlsx) — 11-tab ops spreadsheet (append if exists)
+  4. Graphics Brief + CSV (.docx/.csv/.json) — Nano Banana template swap guide
+  5. Member Emails (.html) — 5 pre-built emails for Blueprint to send
 
 Usage:
     python hvu_drop.py --position LB --year 2027 \\
@@ -37,6 +39,8 @@ from claude_agent_sdk import (
 from article_builder import build_scouting_article
 from deliverables_builder import build_deliverables_doc
 from tracker_builder import build_or_append_tracker
+from graphics_builder import build_graphics_brief
+from email_builder import build_member_emails
 
 OUTPUT_DIR = Path(__file__).parent / "outputs"
 
@@ -316,6 +320,32 @@ async def run_drop(
     )
     print(f"  Saved: {tracker_path}")
 
+    # ── Step 6: Build Deliverable 4 — Graphics Brief for Nano Banana ────
+    print("\nBuilding Deliverable 4: Graphics Brief for Nano Banana...")
+    brief_path, csv_path, manifest_path = build_graphics_brief(
+        position=pos,
+        year=year,
+        players=researched_players,
+        drop_date=drop_date,
+        output_dir=OUTPUT_DIR,
+    )
+    print(f"  Saved: {brief_path.name} (visual reference)")
+    print(f"  Saved: {csv_path.name} (data feed for template swaps)")
+    print(f"  Saved: {manifest_path.name} (machine-readable manifest)")
+
+    # ── Step 7: Build Deliverable 5 — Member Emails for Blueprint ───────
+    print("\nBuilding Deliverable 5: Member Emails for Blueprint...")
+    email_paths = build_member_emails(
+        position=pos,
+        year=year,
+        players=researched_players,
+        drop_date=drop_date,
+        context_narrative=context or article_content.get("opening", ""),
+        output_dir=OUTPUT_DIR,
+    )
+    for ep in email_paths:
+        print(f"  Saved: emails/{ep.name}")
+
     # ── Summary ──────────────────────────────────────────────────────────
     print(f"\n{'='*60}")
     print(f"  DROP COMPLETE — {year} {pos}")
@@ -323,7 +353,11 @@ async def run_drop(
     print(f"\n  1. {article_path.name}")
     print(f"  2. {deliverables_path.name}")
     print(f"  3. {tracker_path.name}")
+    print(f"  4. {brief_path.name} + {csv_path.name}")
+    print(f"  5. {len(email_paths)} email templates in emails/")
     print(f"\n  All files in: {OUTPUT_DIR.resolve()}")
+    print(f"\n  Graphics: Open Nano Banana, load templates, swap fields from CSV/brief.")
+    print(f"  Emails: Send the .html files + schedule to Blueprint.")
     print(f"\n  The players change. The machine does not.")
 
 
