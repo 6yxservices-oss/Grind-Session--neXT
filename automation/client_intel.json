@@ -1,0 +1,134 @@
+{
+  "client_name": "Acme Corp",
+  "industry": "SaaS / B2B Software",
+  "website": "https://acmecorp.com",
+
+  "brand": {
+    "voice": "Professional, approachable, data-driven. Confident without being arrogant.",
+    "values": ["Innovation", "Reliability", "Customer Success"],
+    "tagline": "Powering businesses forward",
+    "tone_keywords": ["clear", "concise", "results-oriented", "human"],
+    "avoid": ["jargon-heavy", "overly formal", "buzzword bingo"]
+  },
+
+  "products_services": [
+    {
+      "name": "ProDashboard",
+      "description": "All-in-one business analytics and operations platform. Connects all data sources into a single real-time dashboard.",
+      "key_features": [
+        "Real-time KPI tracking",
+        "Automated weekly reports",
+        "Team collaboration tools",
+        "100+ integrations (Salesforce, HubSpot, Slack, etc.)"
+      ],
+      "pricing": "$299/month (Standard), $699/month (Pro), custom Enterprise",
+      "target_user": "Operations managers, COOs, department heads at SMBs"
+    }
+  ],
+
+  "target_audience": {
+    "primary": "SMB operations teams — companies with 50-500 employees",
+    "secondary": "Enterprise IT/ops departments at 500+ employee firms",
+    "demographics": "Decision-makers aged 30-55, tech-comfortable but not engineers",
+    "pain_points": [
+      "Spending too many hours on manual reporting each week",
+      "Data scattered across 8+ disconnected tools",
+      "No single source of truth for team performance",
+      "Difficulty proving ROI to leadership"
+    ],
+    "goals": [
+      "Cut reporting time by 80%",
+      "Make faster, data-backed decisions",
+      "Scale operations without adding headcount",
+      "Improve cross-team visibility"
+    ]
+  },
+
+  "competitors": [
+    { "name": "Tableau", "weakness": "Too complex, requires dedicated analyst" },
+    { "name": "Monday.com", "weakness": "Project management focus, weak analytics" },
+    { "name": "Asana", "weakness": "No real-time data, no reporting automation" }
+  ],
+
+  "unique_value_proposition": "The only operations platform that automatically generates executive-ready reports without any manual work — setup takes under 30 minutes.",
+
+  "team": {
+    "ceo": { "name": "John Smith", "email": "john@acmecorp.com" },
+    "coo": { "name": "Maria Torres", "email": "maria@acmecorp.com" },
+    "marketing_lead": { "name": "Emily Chen", "email": "emily@acmecorp.com" },
+    "sales_lead": { "name": "David Kim", "email": "david@acmecorp.com" },
+    "account_manager": { "name": "Sarah Johnson", "email": "sarah@acmecorp.com" },
+    "support_lead": { "name": "Alex Patel", "email": "alex@acmecorp.com" }
+  },
+
+  "social_media": {
+    "linkedin": "linkedin.com/company/acmecorp",
+    "twitter_x": "@acmecorp",
+    "instagram": "@acmecorp_official",
+    "facebook": "facebook.com/acmecorp",
+    "youtube": "youtube.com/@acmecorp",
+    "posting_frequency": {
+      "linkedin": "Daily (weekdays)",
+      "twitter_x": "3x per day",
+      "instagram": "4x per week",
+      "facebook": "3x per week"
+    }
+  },
+
+  "content_pillars": [
+    "Industry insights and operational thought leadership",
+    "Product tips, how-tos, and feature spotlights",
+    "Customer success stories and ROI case studies",
+    "Data reports and industry benchmarks",
+    "Behind-the-scenes / company culture and hiring"
+  ],
+
+  "current_projects": [
+    {
+      "name": "Q2 Product Launch — ProDashboard AI Edition",
+      "deadline": "2026-06-01",
+      "description": "Launch of ProDashboard v3.0 featuring AI-powered anomaly detection and auto-insights",
+      "status": "In progress",
+      "owner": "Maria Torres"
+    },
+    {
+      "name": "Content & SEO Overhaul",
+      "deadline": "2026-04-15",
+      "description": "Rewrite all website copy and launch a content marketing engine targeting ops personas",
+      "status": "Planning",
+      "owner": "Emily Chen"
+    }
+  ],
+
+  "key_metrics": [
+    { "name": "MRR", "target": "$500K by Q3 2026" },
+    { "name": "Churn Rate", "target": "< 3% monthly" },
+    { "name": "NPS Score", "target": "> 60" },
+    { "name": "CAC", "target": "< $1,200" },
+    { "name": "LTV", "target": "> $18,000" },
+    { "name": "Trial-to-Paid Conversion", "target": "> 25%" },
+    { "name": "DAU/MAU Ratio", "target": "> 40%" },
+    { "name": "Support Ticket Resolution Time", "target": "< 4 hours" }
+  ],
+
+  "sales_data": {
+    "email_list_size": 5200,
+    "average_deal_size": "$3,500",
+    "sales_cycle": "45 days",
+    "top_lead_sources": ["Inbound SEO", "LinkedIn", "Referrals", "Cold outbound"],
+    "typical_buying_committee": ["COO", "IT Manager", "Finance Director"]
+  },
+
+  "customer_success": {
+    "onboarding_time": "30 minutes to first dashboard",
+    "time_to_value": "First automated report within 24 hours",
+    "support_channels": ["In-app chat", "Email", "Knowledge base", "Weekly office hours"]
+  },
+
+  "notes": [
+    "Client prefers concise, ROI-focused communication in all external messaging.",
+    "Emphasize ease of setup — '30 minutes' is a key selling point.",
+    "Avoid over-promising AI capabilities; keep AI messaging grounded in real features.",
+    "LinkedIn is the primary acquisition channel — content there is highest priority."
+  ]
+}
