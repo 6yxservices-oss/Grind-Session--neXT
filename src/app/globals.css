@@ -4,34 +4,52 @@
 
 @layer base {
   body {
-    @apply bg-eybl-dark text-gray-100;
+    @apply bg-haas-dark text-gray-100;
   }
 }
 
 @layer components {
   .card {
-    @apply bg-eybl-navy border border-gray-800 rounded-lg p-6 hover:border-eybl-accent/30 transition-colors;
+    @apply bg-haas-black border border-haas-light/30 rounded-lg p-6 hover:border-haas-red/30 transition-colors;
   }
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
-  .badge-gold {
-    @apply badge bg-eybl-gold/20 text-eybl-gold;
+  .badge-red {
+    @apply badge bg-haas-red/20 text-haas-red;
   }
   .badge-accent {
-    @apply badge bg-eybl-accent/20 text-eybl-accent;
+    @apply badge bg-haas-red/20 text-haas-red;
   }
   .badge-blue {
-    @apply badge bg-blue-500/20 text-blue-400;
+    @apply badge bg-alpine-blue/20 text-alpine-blue;
+  }
+  .badge-pink {
+    @apply badge bg-alpine-pink/20 text-alpine-pink;
+  }
+  .badge-white {
+    @apply badge bg-white/10 text-white;
+  }
+  .badge-gold {
+    @apply badge bg-yellow-500/20 text-yellow-400;
   }
   .btn-primary {
-    @apply bg-eybl-accent hover:bg-eybl-accent/80 text-white font-medium px-4 py-2 rounded-lg transition-colors;
+    @apply bg-haas-red hover:bg-haas-red/80 text-white font-medium px-4 py-2 rounded-lg transition-colors;
+  }
+  .btn-alpine {
+    @apply bg-alpine-blue hover:bg-alpine-blue/80 text-white font-medium px-4 py-2 rounded-lg transition-colors;
   }
   .btn-secondary {
-    @apply bg-eybl-blue hover:bg-eybl-blue/80 text-gray-200 font-medium px-4 py-2 rounded-lg border border-gray-700 transition-colors;
+    @apply bg-haas-gray hover:bg-haas-gray/80 text-gray-200 font-medium px-4 py-2 rounded-lg border border-haas-light/30 transition-colors;
+  }
+  .btn-follow {
+    @apply bg-haas-black hover:bg-haas-red text-white font-medium px-4 py-2 rounded-lg border border-haas-red/50 transition-all;
+  }
+  .btn-vote {
+    @apply bg-gradient-to-r from-haas-red to-alpine-pink text-white font-bold px-6 py-3 rounded-lg transition-all hover:scale-105 shadow-lg;
   }
   .input {
-    @apply bg-eybl-blue border border-gray-700 rounded-lg px-3 py-2 text-gray-100 focus:outline-none focus:border-eybl-accent/50 transition-colors;
+    @apply bg-haas-gray border border-haas-light/30 rounded-lg px-3 py-2 text-gray-100 focus:outline-none focus:border-haas-red/50 transition-colors;
   }
   .select {
     @apply input appearance-none cursor-pointer;
@@ -44,5 +62,11 @@
   }
   .grade-badge {
     @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold;
+  }
+  .haas-gradient {
+    @apply bg-gradient-to-r from-haas-black via-haas-gray to-haas-black;
+  }
+  .alpine-gradient {
+    @apply bg-gradient-to-r from-alpine-dark via-alpine-navy to-alpine-dark;
   }
 }

@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  if (!body.player_id || !body.scout_name || !body.overall_grade) {
+  if (!body.driver_id || !body.scout_name || !body.overall_grade) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 

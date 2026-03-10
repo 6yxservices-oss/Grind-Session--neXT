@@ -9,12 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        eybl: {
-          navy: "#1a1a2e",
-          blue: "#16213e",
-          accent: "#e94560",
-          gold: "#f5a623",
-          dark: "#0f0f1a",
+        haas: {
+          black: "#1a1a2e",
+          red: "#E10600",
+          white: "#FFFFFF",
+          dark: "#0d0d1a",
+          gray: "#2a2a3e",
+          light: "#3a3a4e",
+          accent: "#E10600",
+          silver: "#B0B0B0",
+        },
+        alpine: {
+          pink: "#FF69B4",
+          blue: "#0090FF",
+          dark: "#0a1628",
+          navy: "#0c1e3a",
+          accent: "#FF69B4",
+          cyan: "#00D4FF",
         },
       },
     },
