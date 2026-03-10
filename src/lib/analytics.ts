@@ -1,105 +1,101 @@
-import { getDb } from "./db";
+import { getData } from "./db";
 
-const CONFERENCE_NIL_RATES: Record<string, number> = {
-  "Big Ten": 350000,
-  "SEC": 400000,
-  "Big 12": 275000,
-  "ACC": 250000,
-  "Pac-12": 225000,
-  "Group of 5": 100000,
-  "FCS": 40000,
-};
-
-interface CollegeProbability {
-  player_id: number;
-  player_name: string;
+interface F1ReadinessScore {
+  driver_id: number;
+  driver_name: string;
   team_name: string | null;
-  position: string;
-  class_year: number;
-  star_rating: number;
-  college_probability: number;
-  projected_level: string;
-  nil_value: number;
+  nationality: string;
+  current_series: string;
+  rating: number;
+  f1_readiness: number;
+  projected_tier: string;
+  market_value: number;
+  super_license_points: number;
   confidence: number;
 }
 
-export function getCollegeProbabilities(filters?: {
-  minProbability?: number;
-  position?: string;
-  classYear?: number;
-}): CollegeProbability[] {
-  const players = getDb().prepare(`SELECT p.id, p.first_name, p.last_name, p.position, p.class_year, p.star_rating, p.nil_value, t.name as team_name, COUNT(ps.id) as games_played FROM players p LEFT JOIN teams t ON p.team_id = t.id LEFT JOIN player_stats ps ON p.id = ps.player_id GROUP BY p.id`).all() as Array<Record<string, number | string | null>>;
+export function getF1ReadinessScores(filters?: {
+  minReadiness?: number;
+  series?: string;
+  targetTeam?: string;
+}): F1ReadinessScore[] {
+  const data = getData();
 
-  const results: CollegeProbability[] = players.map((p) => {
-    const stars = (p.star_rating as number) || 0;
-    const probability = Math.min(99, Math.max(5, Math.round(stars * 18 + Math.random() * 10)));
-    let level: string;
-    if (probability >= 85) level = "Power 4 (Big Ten, SEC, Big 12, ACC)";
-    else if (probability >= 70) level = "Power Conference";
-    else if (probability >= 50) level = "Group of 5";
-    else if (probability >= 30) level = "FCS / Low D1";
-    else level = "D2 / D3";
-    const confidence = Math.min(100, 30 + ((p.games_played as number) || 0) * 10);
+  const results: F1ReadinessScore[] = data.drivers.map((d) => {
+    const team = data.teams.find((t) => t.id === d.team_id);
+    const raceCount = data.race_results.filter((rr) => rr.driver_id === d.id).length;
+    const stars = Number(d.rating) || 0;
+    const slPoints = Number(d.super_license_points) || 0;
+    const wins = Number(d.career_wins) || 0;
+    const readiness = Math.min(99, Math.max(5, Math.round(stars * 16 + (slPoints / 40) * 10 + wins * 3 + Math.random() * 8)));
+    let tier: string;
+    if (readiness >= 85) tier = "F1 Race Seat Ready";
+    else if (readiness >= 70) tier = "F1 Reserve / Test Driver";
+    else if (readiness >= 50) tier = "1-2 Seasons Away";
+    else if (readiness >= 30) tier = "Development Phase";
+    else tier = "Early Career";
+    const confidence = Math.min(100, 30 + raceCount * 5 + (slPoints > 25 ? 15 : 0));
 
     return {
-      player_id: p.id as number,
-      player_name: `${p.first_name} ${p.last_name}`,
-      team_name: p.team_name as string | null,
-      position: p.position as string,
-      class_year: p.class_year as number,
-      star_rating: stars,
-      college_probability: probability,
-      projected_level: level,
-      nil_value: (p.nil_value as number) || 0,
+      driver_id: d.id as number,
+      driver_name: `${d.first_name} ${d.last_name}`,
+      team_name: (team?.name as string) ?? null,
+      nationality: d.nationality as string,
+      current_series: d.current_series as string,
+      rating: stars,
+      f1_readiness: readiness,
+      projected_tier: tier,
+      market_value: Number(d.market_value) || 0,
+      super_license_points: slPoints,
       confidence,
     };
   });
 
   let filtered = results;
-  if (filters?.minProbability) filtered = filtered.filter((p) => p.college_probability >= filters.minProbability!);
-  if (filters?.position) filtered = filtered.filter((p) => p.position === filters.position);
-  if (filters?.classYear) filtered = filtered.filter((p) => p.class_year === filters.classYear);
+  if (filters?.minReadiness) filtered = filtered.filter((d) => d.f1_readiness >= filters.minReadiness!);
+  if (filters?.series) filtered = filtered.filter((d) => d.current_series === filters.series);
 
-  return filtered.sort((a, b) => b.college_probability - a.college_probability);
+  return filtered.sort((a, b) => b.f1_readiness - a.f1_readiness);
 }
 
 export function getMarketValueProjections() {
-  const probs = getCollegeProbabilities({ minProbability: 40 });
-  return probs.map((p) => {
-    const bestConf = p.projected_level.includes("Power 4") ? "Big Ten" : p.projected_level.includes("Power") ? "ACC" : "Group of 5";
-    const base = CONFERENCE_NIL_RATES[bestConf] || 100000;
-    const starMult = 0.5 + (p.star_rating / 5) * 1.0;
-    const baseVal = base * starMult * (p.college_probability / 100);
+  const scores = getF1ReadinessScores({ minReadiness: 30 });
+  return scores.map((d) => {
+    const base = d.f1_readiness >= 85 ? 5000000 : d.f1_readiness >= 70 ? 2000000 : d.f1_readiness >= 50 ? 800000 : 300000;
+    const mult = 0.5 + (d.rating / 5) * 1.0;
+    const baseVal = base * mult * (d.f1_readiness / 100);
     return {
-      player_id: p.player_id,
-      player_name: p.player_name,
-      position: p.position,
-      projected_level: p.projected_level,
-      year1_value: Math.round(baseVal * 0.4),
-      year2_value: Math.round(baseVal * 0.8),
-      year3_value: Math.round(baseVal * 1.2),
-      year4_value: Math.round(baseVal * 1.0),
-      portal_value: Math.round(baseVal * 1.3),
-      value_trend: (p.star_rating >= 4 ? "rising" : p.star_rating >= 3 ? "stable" : "declining") as "rising" | "stable" | "declining",
-      conference_fit: p.projected_level.includes("Power 4") ? ["Big Ten", "SEC", "Big 12"] : p.projected_level.includes("Power") ? ["ACC", "Pac-12"] : ["AAC", "Sun Belt"],
+      driver_id: d.driver_id,
+      driver_name: d.driver_name,
+      nationality: d.nationality,
+      current_series: d.current_series,
+      projected_tier: d.projected_tier,
+      year1_salary: Math.round(baseVal * 0.3),
+      year2_salary: Math.round(baseVal * 0.6),
+      year3_salary: Math.round(baseVal * 1.0),
+      peak_salary: Math.round(baseVal * 1.5),
+      market_value: d.market_value,
+      value_trend: (d.rating >= 4 ? "rising" : d.rating >= 3 ? "stable" : "declining") as "rising" | "stable" | "declining",
+      best_fit_teams: d.f1_readiness >= 70 ? ["Haas", "Alpine", "Williams", "Sauber"] : ["F2 Team", "Reserve Role"],
     };
-  }).sort((a, b) => b.portal_value - a.portal_value);
+  }).sort((a, b) => b.peak_salary - a.peak_salary);
 }
 
-export function getCoachMatches(criteria: {
-  position?: string;
-  playStyle?: string;
-  minStarRating?: number;
+export function getTeamFitAnalysis(criteria: {
+  series?: string;
+  minRating?: number;
 }) {
-  const probs = getCollegeProbabilities({ position: criteria.position });
-  return probs.filter((p) => {
-    if (criteria.minStarRating && p.star_rating < criteria.minStarRating) return false;
+  const scores = getF1ReadinessScores({ series: criteria.series });
+  return scores.filter((d) => {
+    if (criteria.minRating && d.rating < criteria.minRating) return false;
     return true;
-  }).map((p) => {
+  }).map((d) => {
     const reasons: string[] = [];
-    if (p.star_rating >= 4) reasons.push(`${p.star_rating}-star prospect`);
-    if (p.college_probability >= 80) reasons.push("High college probability");
-    reasons.push(`Projects to: ${p.projected_level}`);
-    return { ...p, match_score: Math.min(100, p.college_probability + (p.star_rating >= 4 ? 10 : 0)), match_reasons: reasons };
+    if (d.rating >= 4) reasons.push(`${d.rating}-star rated`);
+    if (d.super_license_points >= 40) reasons.push("Super License eligible");
+    else if (d.super_license_points >= 25) reasons.push(`${d.super_license_points} SL points`);
+    if (d.f1_readiness >= 70) reasons.push("F1 ready");
+    reasons.push(`Tier: ${d.projected_tier}`);
+    return { ...d, match_score: Math.min(100, d.f1_readiness + (d.rating >= 4 ? 10 : 0)), match_reasons: reasons };
   }).sort((a, b) => b.match_score - a.match_score);
 }

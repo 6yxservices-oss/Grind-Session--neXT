@@ -1,151 +1,132 @@
 export interface Team {
   id: number;
   name: string;
-  conference: string;
-  city: string;
-  state: string;
+  series: string;
+  country: string;
+  engine_supplier: string | null;
   logo_url: string | null;
   created_at: string;
 }
 
-export interface Player {
+export interface Driver {
   id: number;
   first_name: string;
   last_name: string;
   team_id: number | null;
-  position: string;
-  height: string | null;
-  weight: number | null;
-  class_year: number;
-  high_school: string | null;
-  hometown: string | null;
-  state: string | null;
-  star_rating: number;
+  nationality: string;
+  date_of_birth: string | null;
+  age: number | null;
+  current_series: string;
+  super_license_points: number;
+  super_license_eligible: number;
+  career_wins: number;
+  career_podiums: number;
+  career_poles: number;
+  rating: number;
   ranking: number | null;
   status: string;
-  committed_to: string | null;
+  academy: string | null;
   photo_url: string | null;
   merch_store_url: string | null;
-  nil_value: number | null;
+  market_value: number | null;
+  f1_target_team: string | null;
   created_at: string;
-  // Joined fields
   team_name?: string;
 }
 
-export interface Game {
+export interface Race {
   id: number;
-  home_team_id: number;
-  away_team_id: number;
-  week_number: number;
-  venue: string | null;
-  city: string | null;
-  state: string | null;
-  game_date: string;
-  home_score: number | null;
-  away_score: number | null;
+  series: string;
+  round_number: number;
+  race_name: string;
+  circuit: string;
+  country: string;
+  race_date: string;
   status: string;
   created_at: string;
-  home_team_name?: string;
-  away_team_name?: string;
 }
 
-export interface PlayerStats {
+export interface RaceResult {
   id: number;
-  player_id: number;
-  game_id: number;
-  snaps: number;
-  // Offense
-  pass_completions: number;
-  pass_attempts: number;
-  pass_yards: number;
-  pass_tds: number;
-  interceptions: number;
-  rush_attempts: number;
-  rush_yards: number;
-  rush_tds: number;
-  receptions: number;
-  rec_yards: number;
-  rec_tds: number;
-  // Defense
-  tackles: number;
-  solo_tackles: number;
-  tackles_for_loss: number;
-  sacks: number;
-  forced_fumbles: number;
-  interceptions_def: number;
-  pass_breakups: number;
-  // Special
+  driver_id: number;
+  race_id: number;
+  qualifying_position: number | null;
+  race_position: number | null;
+  grid_position: number | null;
+  fastest_lap: number;
+  points_scored: number;
+  dnf: number;
+  dnf_reason: string | null;
+  gap_to_leader: string | null;
   created_at: string;
-  player_name?: string;
-  game_info?: string;
+  driver_name?: string;
+  race_info?: string;
 }
 
-export interface FootballMetrics {
+export interface PerformanceMetrics {
   id: number;
-  player_id: number;
-  top_speed_mph: number | null;
-  top_speed_times_reached: number | null;
-  avg_top_speed_pos: number | null;
-  forty_yard: number | null;
-  shuttle: number | null;
-  vertical_jump: number | null;
-  broad_jump: number | null;
-  bench_press_reps: number | null;
-  throw_velocity_mph: number | null;
-  throw_velocity_avg_pos: number | null;
-  tackle_force_lbs: number | null;
-  block_force_lbs: number | null;
-  nfl_avg_tackle_force: number | null;
-  nfl_avg_block_force: number | null;
-  wingspan: string | null;
-  hand_size: number | null;
-  arm_length: number | null;
+  driver_id: number;
+  avg_qualifying_delta: number | null;
+  avg_race_pace_delta: number | null;
+  wet_weather_rating: number | null;
+  tire_management_rating: number | null;
+  overtaking_rating: number | null;
+  consistency_rating: number | null;
+  racecraft_rating: number | null;
+  starts_rating: number | null;
+  reaction_time_avg: number | null;
+  reaction_time_best: number | null;
+  top_speed_kph: number | null;
+  avg_top_speed_series: number | null;
+  sector_speciality: string | null;
+  mental_resilience_rating: number | null;
+  adaptability_rating: number | null;
   updated_at: string;
 }
 
 export interface ScoutingReport {
   id: number;
-  player_id: number;
-  game_id: number | null;
+  driver_id: number;
+  race_id: number | null;
   scout_name: string;
   overall_grade: string;
-  offensive_grade: string | null;
-  defensive_grade: string | null;
-  athleticism_grade: string | null;
-  football_iq_grade: string | null;
+  speed_grade: string | null;
+  racecraft_grade: string | null;
+  consistency_grade: string | null;
+  race_iq_grade: string | null;
   strengths: string | null;
   weaknesses: string | null;
   notes: string | null;
   projection: string | null;
   comparison: string | null;
   created_at: string;
-  player_name?: string;
-  game_info?: string;
+  driver_name?: string;
+  race_info?: string;
 }
 
-export interface TransferPortalEntry {
+export interface DriverMarketEntry {
   id: number;
-  player_id: number;
-  transfer_likelihood: number;
+  driver_id: number;
+  contract_status: string;
+  current_contract_end: string | null;
+  availability_likelihood: number;
+  interested_teams: string | null;
   reason: string | null;
-  current_playing_time_pct: number | null;
-  projected_nil_increase: number | null;
-  portal_entry_date: string | null;
-  status: string;
-  destination: string | null;
+  estimated_salary: number | null;
   created_at: string;
-  player_name?: string;
-  position?: string;
+  driver_name?: string;
+  nationality?: string;
+  current_series?: string;
   team_name?: string;
-  nil_value?: number;
-  star_rating?: number;
+  rating?: number;
+  market_value?: number;
 }
 
 export interface SocialAction {
   id: number;
   user_id: string;
-  player_id: number;
-  action_type: "follow" | "like" | "share" | "shortlist";
+  driver_id: number;
+  action_type: "follow" | "like" | "share" | "shortlist" | "vote_haas" | "vote_alpine";
   created_at: string;
 }
 
@@ -154,16 +135,17 @@ export interface FeedPost {
   author: string;
   content: string;
   post_type: string;
-  player_id: number | null;
+  driver_id: number | null;
+  team_context: string | null;
   likes_count: number;
   shares_count: number;
   created_at: string;
-  player_name?: string;
+  driver_name?: string;
 }
 
 export interface MerchItem {
   id: number;
-  player_id: number;
+  driver_id: number;
   name: string;
   description: string | null;
   price: number;
@@ -173,47 +155,41 @@ export interface MerchItem {
   created_at: string;
 }
 
-export interface NflProjection {
+export interface F1Projection {
   id: number;
-  player_id: number;
-  draft_probability: number;
-  projected_round: number | null;
-  projected_pick_range: string | null;
+  driver_id: number;
+  f1_probability: number;
+  projected_year: number | null;
+  target_team: string | null;
   projected_role: string | null;
-  nfl_comparison: string | null;
-  nfl_comp_similarity: number | null;
+  f1_comparison: string | null;
+  f1_comp_similarity: number | null;
   secondary_comparison: string | null;
-  player_archetype: string | null;
-  bust_probability: number;
-  pro_bowl_probability: number;
-  projected_rookie_contract: number | null;
-  projected_second_contract: number | null;
+  driver_archetype: string | null;
+  championship_probability: number;
+  career_podium_est: number | null;
+  projected_first_contract: number | null;
+  projected_peak_salary: number | null;
   career_earnings_est: number | null;
   updated_at: string;
 }
 
-export interface ScholasticData {
+export interface FanVote {
   id: number;
-  player_id: number;
-  gpa: number | null;
-  gpa_scale: number;
-  sat_score: number | null;
-  act_score: number | null;
-  ncaa_eligible: number;
-  core_gpa: number | null;
-  academic_standing: string;
-  intended_major: string | null;
-  updated_at: string;
+  user_id: string;
+  driver_id: number;
+  target_team: string;
+  created_at: string;
 }
 
-export interface NilContract {
+export interface DriverContract {
   id: number;
-  player_id: number;
-  player_legal_name: string;
-  player_email: string;
+  driver_id: number;
+  driver_legal_name: string;
+  driver_email: string;
   license_type: string;
-  revenue_split_player: number;
-  revenue_split_collective: number;
+  revenue_split_driver: number;
+  revenue_split_team: number;
   merch_categories: string;
   contract_status: string;
   signed_at: string;
@@ -223,7 +199,6 @@ export interface NilContract {
   created_at: string;
 }
 
-export const POSITIONS = ["QB", "RB", "WR", "TE", "OL", "DL", "LB", "CB", "S", "K/P", "ATH"] as const;
-export const CLASS_YEARS = [2025, 2026, 2027, 2028] as const;
+export const SERIES = ["F2", "F3", "F4", "Super Formula", "IndyCar", "Formula E", "DTM"] as const;
 export type Grade = "A+" | "A" | "A-" | "B+" | "B" | "B-" | "C+" | "C" | "C-" | "D" | "F";
 export const GRADES: Grade[] = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];

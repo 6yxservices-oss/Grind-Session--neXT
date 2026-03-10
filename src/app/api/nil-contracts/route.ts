@@ -1,35 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNilContract, createNilContract } from "@/lib/queries";
+import { getDriverContract, createDriverContract } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
-  const playerId = req.nextUrl.searchParams.get("player_id");
-  if (!playerId) return NextResponse.json({ error: "player_id required" }, { status: 400 });
-  const contract = getNilContract(parseInt(playerId));
+  const driverId = req.nextUrl.searchParams.get("driver_id");
+  if (!driverId) return NextResponse.json({ error: "driver_id required" }, { status: 400 });
+  const contract = getDriverContract(parseInt(driverId));
   return NextResponse.json({ contract });
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { player_id, player_legal_name, player_email, digital_signature } = body;
-  if (!player_id || !player_legal_name || !player_email || !digital_signature) {
+  const { driver_id, driver_legal_name, driver_email, digital_signature } = body;
+  if (!driver_id || !driver_legal_name || !driver_email || !digital_signature) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  const existing = getNilContract(player_id);
+  const existing = getDriverContract(driver_id);
   if (existing) {
-    return NextResponse.json({ error: "Contract already exists for this player" }, { status: 409 });
+    return NextResponse.json({ error: "Contract already exists" }, { status: 409 });
   }
 
-  const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
-  const id = createNilContract({
-    player_id,
-    player_legal_name,
-    player_email,
-    digital_signature,
-    ip_address: ip,
-  });
-
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const id = createDriverContract({ driver_id, driver_legal_name, driver_email, digital_signature, ip_address: ip });
   return NextResponse.json({ id, status: "active" });
 }
