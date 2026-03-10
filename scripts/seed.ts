@@ -1,217 +1,237 @@
 import Database from "better-sqlite3";
 import path from "path";
-const fs = require("fs");
 
-const DB_PATH = path.join(process.cwd(), "mikev-scout.db");
-if (fs.existsSync(DB_PATH)) fs.unlinkSync(DB_PATH);
+const DB_PATH = path.join(process.cwd(), "f1-next.db");
+
+// Delete existing DB
+try { require("fs").unlinkSync(DB_PATH); } catch {}
 
 const db = new Database(DB_PATH);
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 
-// Create all tables
+// Create schema
 db.exec(`
-  CREATE TABLE teams (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, conference TEXT NOT NULL, city TEXT NOT NULL, state TEXT NOT NULL, logo_url TEXT, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE players (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, team_id INTEGER REFERENCES teams(id), position TEXT NOT NULL, height TEXT, weight INTEGER, class_year INTEGER NOT NULL, high_school TEXT, hometown TEXT, state TEXT, star_rating INTEGER DEFAULT 0, ranking INTEGER, status TEXT DEFAULT 'Active', committed_to TEXT, photo_url TEXT, merch_store_url TEXT, nil_value INTEGER DEFAULT 0, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE games (id INTEGER PRIMARY KEY AUTOINCREMENT, home_team_id INTEGER REFERENCES teams(id), away_team_id INTEGER REFERENCES teams(id), week_number INTEGER NOT NULL, venue TEXT, city TEXT, state TEXT, game_date TEXT NOT NULL, home_score INTEGER, away_score INTEGER, status TEXT DEFAULT 'Scheduled', created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE player_stats (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL REFERENCES players(id), game_id INTEGER NOT NULL REFERENCES games(id), snaps INTEGER DEFAULT 0, pass_completions INTEGER DEFAULT 0, pass_attempts INTEGER DEFAULT 0, pass_yards INTEGER DEFAULT 0, pass_tds INTEGER DEFAULT 0, interceptions INTEGER DEFAULT 0, rush_attempts INTEGER DEFAULT 0, rush_yards INTEGER DEFAULT 0, rush_tds INTEGER DEFAULT 0, receptions INTEGER DEFAULT 0, rec_yards INTEGER DEFAULT 0, rec_tds INTEGER DEFAULT 0, tackles INTEGER DEFAULT 0, solo_tackles INTEGER DEFAULT 0, tackles_for_loss INTEGER DEFAULT 0, sacks REAL DEFAULT 0, forced_fumbles INTEGER DEFAULT 0, interceptions_def INTEGER DEFAULT 0, pass_breakups INTEGER DEFAULT 0, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE football_metrics (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL UNIQUE REFERENCES players(id), top_speed_mph REAL, top_speed_times_reached INTEGER DEFAULT 0, avg_top_speed_pos REAL, forty_yard REAL, shuttle REAL, vertical_jump REAL, broad_jump REAL, bench_press_reps INTEGER, throw_velocity_mph REAL, throw_velocity_avg_pos REAL, tackle_force_lbs REAL, block_force_lbs REAL, nfl_avg_tackle_force REAL, nfl_avg_block_force REAL, wingspan TEXT, hand_size REAL, arm_length REAL, updated_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE scouting_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL REFERENCES players(id), game_id INTEGER REFERENCES games(id), scout_name TEXT NOT NULL, overall_grade TEXT NOT NULL, offensive_grade TEXT, defensive_grade TEXT, athleticism_grade TEXT, football_iq_grade TEXT, strengths TEXT, weaknesses TEXT, notes TEXT, projection TEXT, comparison TEXT, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE transfer_portal (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL REFERENCES players(id), transfer_likelihood REAL DEFAULT 0, reason TEXT, current_playing_time_pct REAL DEFAULT 0, projected_nil_increase REAL DEFAULT 0, portal_entry_date TEXT, status TEXT DEFAULT 'Watch', destination TEXT, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE social_actions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL DEFAULT 'fan_1', player_id INTEGER NOT NULL REFERENCES players(id), action_type TEXT NOT NULL, created_at TEXT DEFAULT (datetime('now')), UNIQUE(user_id, player_id, action_type));
-  CREATE TABLE feed_posts (id INTEGER PRIMARY KEY AUTOINCREMENT, author TEXT NOT NULL DEFAULT 'Coach Mike V', content TEXT NOT NULL, post_type TEXT NOT NULL DEFAULT 'update', player_id INTEGER REFERENCES players(id), likes_count INTEGER DEFAULT 0, shares_count INTEGER DEFAULT 0, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE merch_items (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL REFERENCES players(id), name TEXT NOT NULL, description TEXT, price REAL NOT NULL, image_url TEXT, category TEXT NOT NULL DEFAULT 'Apparel', in_stock INTEGER DEFAULT 1, created_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE nfl_projections (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL UNIQUE REFERENCES players(id), draft_probability REAL DEFAULT 0, projected_round INTEGER, projected_pick_range TEXT, projected_role TEXT, nfl_comparison TEXT, nfl_comp_similarity REAL, secondary_comparison TEXT, player_archetype TEXT, bust_probability REAL DEFAULT 0, pro_bowl_probability REAL DEFAULT 0, projected_rookie_contract INTEGER, projected_second_contract INTEGER, career_earnings_est INTEGER, updated_at TEXT DEFAULT (datetime('now')));
-  CREATE TABLE scholastic_data (id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER NOT NULL UNIQUE REFERENCES players(id), gpa REAL, gpa_scale REAL DEFAULT 4.0, sat_score INTEGER, act_score INTEGER, ncaa_eligible INTEGER DEFAULT 1, core_gpa REAL, academic_standing TEXT DEFAULT 'Good Standing', intended_major TEXT, updated_at TEXT DEFAULT (datetime('now')));
-  CREATE INDEX idx_players_team ON players(team_id);
-  CREATE INDEX idx_stats_player ON player_stats(player_id);
-  CREATE INDEX idx_stats_game ON player_stats(game_id);
-  CREATE INDEX idx_reports_player ON scouting_reports(player_id);
-  CREATE INDEX idx_social_player ON social_actions(player_id);
-  CREATE INDEX idx_portal_player ON transfer_portal(player_id);
-  CREATE INDEX idx_merch_player ON merch_items(player_id);
-  CREATE INDEX idx_feed_date ON feed_posts(created_at);
+  CREATE TABLE IF NOT EXISTS teams (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, series TEXT NOT NULL, country TEXT NOT NULL, engine_supplier TEXT, logo_url TEXT, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS drivers (id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, team_id INTEGER REFERENCES teams(id), nationality TEXT NOT NULL, date_of_birth TEXT, age INTEGER, current_series TEXT NOT NULL, super_license_points INTEGER DEFAULT 0, super_license_eligible INTEGER DEFAULT 0, career_wins INTEGER DEFAULT 0, career_podiums INTEGER DEFAULT 0, career_poles INTEGER DEFAULT 0, rating INTEGER DEFAULT 0, ranking INTEGER, status TEXT DEFAULT 'Active', academy TEXT, photo_url TEXT, merch_store_url TEXT, market_value INTEGER DEFAULT 0, f1_target_team TEXT, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS races (id INTEGER PRIMARY KEY AUTOINCREMENT, series TEXT NOT NULL, round_number INTEGER NOT NULL, race_name TEXT NOT NULL, circuit TEXT NOT NULL, country TEXT NOT NULL, race_date TEXT NOT NULL, status TEXT DEFAULT 'Upcoming', created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS race_results (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL REFERENCES drivers(id), race_id INTEGER NOT NULL REFERENCES races(id), qualifying_position INTEGER, race_position INTEGER, grid_position INTEGER, fastest_lap INTEGER DEFAULT 0, points_scored REAL DEFAULT 0, dnf INTEGER DEFAULT 0, dnf_reason TEXT, gap_to_leader TEXT, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS performance_metrics (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL UNIQUE REFERENCES drivers(id), avg_qualifying_delta REAL, avg_race_pace_delta REAL, wet_weather_rating INTEGER, tire_management_rating INTEGER, overtaking_rating INTEGER, consistency_rating INTEGER, racecraft_rating INTEGER, starts_rating INTEGER, reaction_time_avg REAL, reaction_time_best REAL, top_speed_kph REAL, avg_top_speed_series REAL, sector_speciality TEXT, mental_resilience_rating INTEGER, adaptability_rating INTEGER, updated_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS scouting_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL REFERENCES drivers(id), race_id INTEGER REFERENCES races(id), scout_name TEXT NOT NULL, overall_grade TEXT NOT NULL, speed_grade TEXT, racecraft_grade TEXT, consistency_grade TEXT, race_iq_grade TEXT, strengths TEXT, weaknesses TEXT, notes TEXT, projection TEXT, comparison TEXT, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS driver_market (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL REFERENCES drivers(id), contract_status TEXT DEFAULT 'Under Contract', current_contract_end TEXT, availability_likelihood REAL DEFAULT 0, interested_teams TEXT, reason TEXT, estimated_salary INTEGER, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS social_actions (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL DEFAULT 'fan_1', driver_id INTEGER NOT NULL REFERENCES drivers(id), action_type TEXT NOT NULL, created_at TEXT DEFAULT (datetime('now')), UNIQUE(user_id, driver_id, action_type));
+  CREATE TABLE IF NOT EXISTS fan_votes (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT NOT NULL DEFAULT 'fan_1', driver_id INTEGER NOT NULL REFERENCES drivers(id), target_team TEXT NOT NULL, created_at TEXT DEFAULT (datetime('now')), UNIQUE(user_id, driver_id, target_team));
+  CREATE TABLE IF NOT EXISTS feed_posts (id INTEGER PRIMARY KEY AUTOINCREMENT, author TEXT NOT NULL DEFAULT 'Haas neXT', content TEXT NOT NULL, post_type TEXT NOT NULL DEFAULT 'update', driver_id INTEGER REFERENCES drivers(id), team_context TEXT, likes_count INTEGER DEFAULT 0, shares_count INTEGER DEFAULT 0, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS merch_items (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL REFERENCES drivers(id), name TEXT NOT NULL, description TEXT, price REAL NOT NULL, image_url TEXT, category TEXT NOT NULL DEFAULT 'Apparel', in_stock INTEGER DEFAULT 1, created_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS f1_projections (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL UNIQUE REFERENCES drivers(id), f1_probability REAL DEFAULT 0, projected_year INTEGER, target_team TEXT, projected_role TEXT, f1_comparison TEXT, f1_comp_similarity REAL, secondary_comparison TEXT, driver_archetype TEXT, championship_probability REAL DEFAULT 0, career_podium_est INTEGER, projected_first_contract INTEGER, projected_peak_salary INTEGER, career_earnings_est INTEGER, updated_at TEXT DEFAULT (datetime('now')));
+  CREATE TABLE IF NOT EXISTS driver_contracts (id INTEGER PRIMARY KEY AUTOINCREMENT, driver_id INTEGER NOT NULL UNIQUE REFERENCES drivers(id), driver_legal_name TEXT NOT NULL, driver_email TEXT NOT NULL, license_type TEXT NOT NULL DEFAULT 'non-exclusive', revenue_split_driver REAL NOT NULL DEFAULT 70, revenue_split_team REAL NOT NULL DEFAULT 30, merch_categories TEXT NOT NULL DEFAULT 'Apparel,Headwear,Accessories', contract_status TEXT NOT NULL DEFAULT 'active', signed_at TEXT DEFAULT (datetime('now')), ip_address TEXT, digital_signature TEXT NOT NULL, terms_version TEXT NOT NULL DEFAULT '1.0', created_at TEXT DEFAULT (datetime('now')));
 `);
 
-// ── Teams (schools these recruits play for / are targeted by) ──
-const teamsData = [
-  { name: "Penn State", conf: "Big Ten", city: "State College", state: "PA" },
-  { name: "Oregon", conf: "Big Ten", city: "Eugene", state: "OR" },
-  { name: "Notre Dame", conf: "Independent", city: "South Bend", state: "IN" },
-  { name: "Michigan", conf: "Big Ten", city: "Ann Arbor", state: "MI" },
-  { name: "Ohio State", conf: "Big Ten", city: "Columbus", state: "OH" },
-  { name: "Clemson", conf: "ACC", city: "Clemson", state: "SC" },
-  { name: "Georgia", conf: "SEC", city: "Athens", state: "GA" },
-  { name: "Auburn", conf: "SEC", city: "Auburn", state: "AL" },
-  { name: "Miami", conf: "ACC", city: "Miami", state: "FL" },
-  { name: "Virginia Tech", conf: "ACC", city: "Blacksburg", state: "VA" },
-  { name: "Syracuse", conf: "ACC", city: "Syracuse", state: "NY" },
-  { name: "Pittsburgh", conf: "ACC", city: "Pittsburgh", state: "PA" },
+// ── TEAMS (F2/F3 teams) ──
+const insertTeam = db.prepare("INSERT INTO teams (name, series, country, engine_supplier) VALUES (?, ?, ?, ?)");
+const teams = [
+  ["Prema Racing", "F2", "Italy", "Dallara"],
+  ["ART Grand Prix", "F2", "France", "Dallara"],
+  ["Campos Racing", "F2", "Spain", "Dallara"],
+  ["DAMS", "F2", "France", "Dallara"],
+  ["Invicta Racing", "F2", "UK", "Dallara"],
+  ["MP Motorsport", "F2", "Netherlands", "Dallara"],
+  ["Hitech Pulse-Eight", "F2", "UK", "Dallara"],
+  ["Rodin Motorsport", "F2", "New Zealand", "Dallara"],
+  ["Trident", "F3", "Italy", "Dallara"],
+  ["Prema Racing F3", "F3", "Italy", "Dallara"],
+  ["ART Grand Prix F3", "F3", "France", "Dallara"],
+  ["Van Amersfoort Racing", "F3", "Netherlands", "Dallara"],
+];
+teams.forEach((t) => insertTeam.run(...t));
+console.log(`Seeded ${teams.length} teams`);
+
+// ── DRIVERS (Real F2/F3 talent) ──
+const insertDriver = db.prepare("INSERT INTO drivers (first_name, last_name, team_id, nationality, age, current_series, super_license_points, super_license_eligible, career_wins, career_podiums, career_poles, rating, ranking, status, academy, market_value, f1_target_team) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+const drivers = [
+  // F2 Top Tier - Haas targets
+  ["Gabriel", "Bortoleto", 1, "Brazilian", 20, "F2", 40, 1, 3, 11, 4, 5, 1, "Active", "Alpine Academy", 8000000, "Both"],
+  ["Isack", "Hadjar", 6, "French", 20, "F2", 38, 0, 4, 10, 3, 5, 2, "Active", "Red Bull Junior", 7500000, "Both"],
+  ["Paul", "Aron", 7, "Estonian", 20, "F2", 30, 0, 2, 7, 2, 4, 3, "Active", "Mercedes Junior", 5000000, "Haas"],
+  ["Jak", "Crawford", 3, "American", 20, "F2", 25, 0, 1, 5, 1, 4, 5, "Active", null, 4000000, "Haas"],
+  ["Zane", "Maloney", 8, "Barbadian", 21, "F2", 28, 0, 3, 8, 2, 4, 4, "Active", "Sauber Academy", 4500000, "Both"],
+
+  // F2 Mid-Tier - Alpine targets
+  ["Victor", "Martins", 2, "French", 22, "F2", 22, 0, 1, 4, 3, 4, 6, "Active", "Alpine Academy", 3500000, "Alpine"],
+  ["Kimi", "Antonelli", 1, "Italian", 18, "F2", 35, 0, 5, 9, 6, 5, 7, "Active", "Mercedes Junior", 10000000, "Both"],
+  ["Oliver", "Bearman", 1, "British", 19, "F2", 32, 0, 2, 6, 2, 5, 8, "Active", "Ferrari Driver Academy", 7000000, "Haas"],
+
+  // F3 Rising Stars
+  ["Arvid", "Lindblad", 10, "British", 17, "F3", 15, 0, 4, 8, 5, 4, 9, "Active", "Red Bull Junior", 3000000, "Both"],
+  ["Dino", "Beganovic", 9, "Swedish", 20, "F3", 18, 0, 2, 6, 1, 4, 10, "Active", "Ferrari Driver Academy", 2500000, "Alpine"],
+  ["Gabriele", "Mini", 7, "Italian", 19, "F3", 12, 0, 3, 5, 2, 3, 11, "Active", "Alpine Academy", 2000000, "Alpine"],
+  ["Luke", "Browning", 7, "British", 21, "F3", 20, 0, 3, 7, 4, 4, 12, "Active", "Williams Academy", 2800000, "Both"],
+
+  // American / Wildcard entries
+  ["Juju", "Noda", 5, "American", 18, "F3", 8, 0, 0, 2, 0, 3, 15, "Active", null, 1500000, "Haas"],
+  ["Ugo", "Ugochukwu", 11, "American", 17, "F3", 6, 0, 1, 3, 1, 3, 16, "Active", "McLaren Junior", 2000000, "Haas"],
+
+  // IndyCar Crossover
+  ["Colton", "Herta", null, "American", 24, "IndyCar", 32, 0, 7, 18, 8, 5, 13, "Active", null, 6000000, "Haas"],
+  ["Theo", "Pourchaire", 2, "French", 21, "F2", 35, 0, 5, 12, 4, 5, 14, "Active", "Sauber Academy", 6500000, "Alpine"],
 ];
 
-const insertTeam = db.prepare("INSERT INTO teams (name, conference, city, state) VALUES (?, ?, ?, ?)");
-const teamIds: number[] = [];
-for (const t of teamsData) { teamIds.push(Number(insertTeam.run(t.name, t.conf, t.city, t.state).lastInsertRowid)); }
-console.log(`Seeded ${teamsData.length} teams`);
+drivers.forEach((d) => insertDriver.run(...d));
+console.log(`Seeded ${drivers.length} drivers`);
 
-// ── Players: Real HVU Insider 2027 Target Board ──
-const playersData = [
-  // QBs
-  { first: "Will", last: "Mencl", team: null, pos: "QB", h: "6'3", w: 205, yr: 2027, hs: "Chandler HS", city: "Chandler", st: "AZ", stars: 5, rank: 1, nil: 150000, status: "Uncommitted" },
-  { first: "Peter", last: "Borque", team: null, pos: "QB", h: "6'4", w: 220, yr: 2027, hs: "Tabor Academy", city: "Marion", st: "MA", stars: 4, rank: 86, nil: 75000, status: "Decommitted", note: "Decommitted from Michigan" },
-  { first: "Will", last: "Wood", team: null, pos: "QB", h: "6'2", w: 220, yr: 2027, hs: "Xaverian Brothers HS", city: "Natick", st: "MA", stars: 3, rank: null, nil: 25000, status: "Uncommitted" },
-  // RBs
-  { first: "Tre", last: "Segarra", team: null, pos: "RB", h: "5'10", w: 205, yr: 2027, hs: "Byrnes HS", city: "Duncan", st: "SC", stars: 4, rank: 5, nil: 100000, status: "Uncommitted" },
-  { first: "Aiden", last: "Gibson", team: null, pos: "RB", h: "5'11", w: 195, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 3, rank: null, nil: 15000, status: "PSU Visit Locked" },
-  { first: "Gary", last: "Walker", team: null, pos: "RB", h: "6'0", w: 200, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 3, rank: null, nil: 10000, status: "PSU Visit Scheduled" },
-  { first: "Dajon", last: "Talley-Rhodes", team: null, pos: "RB", h: "5'10", w: 190, yr: 2027, hs: "St. John's College HS", city: "Washington", st: "DC", stars: 3, rank: null, nil: 8000, status: "Pitt Lead" },
-  // DB/ATH
-  { first: "Case", last: "Alexander", team: null, pos: "ATH", h: "6'3", w: 210, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 3, rank: null, nil: 20000, status: "PSU Legacy" },
-  { first: "Blake", last: "Betton", team: null, pos: "S", h: "6'1", w: 195, yr: 2027, hs: "Shakopee HS", city: "Shakopee", st: "MN", stars: 3, rank: null, nil: 15000, status: "PSU Visit Locked" },
-  { first: "Brandon", last: "Lockley Jr.", team: null, pos: "LB", h: "6'2", w: 220, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 3, rank: null, nil: 10000, status: "Regional Target" },
-  { first: "Tyson", last: "Washington", team: null, pos: "DB", h: "6'0", w: 185, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 3, rank: null, nil: 8000, status: "PSU Target" },
-  // EDGE/DL
-  { first: "Abraham", last: "Sesay", team: null, pos: "DE", h: "6'5", w: 225, yr: 2027, hs: "TBD", city: "Exton", st: "PA", stars: 4, rank: 50, nil: 125000, status: "Uncommitted" },
-  { first: "Mekai", last: "Brown", team: null, pos: "DE", h: "6'4", w: 240, yr: 2027, hs: "TBD", city: "TBD", st: "PA", stars: 4, rank: null, nil: 60000, status: "PSU Re-Offered" },
-  { first: "Keysan", last: "Taylor", team: null, pos: "EDGE", h: "6'3", w: 235, yr: 2027, hs: "TBD", city: "TBD", st: "TBD", stars: 4, rank: 26, nil: 50000, status: "PSU Monitoring" },
-  { first: "Aidan", last: "O'Neil", team: null, pos: "DL", h: "6'4", w: 260, yr: 2027, hs: "TBD", city: "TBD", st: "TBD", stars: 3, rank: null, nil: 10000, status: "Evaluation Stage" },
-  // Former PSU target (note)
-  { first: "Kemon", last: "Spell", team: 6, pos: "RB", h: "5'11", w: 210, yr: 2027, hs: "McKeesport HS", city: "McKeesport", st: "PA", stars: 5, rank: 3, nil: 200000, status: "Active", committed: "Georgia" },
+// ── RACES ──
+const insertRace = db.prepare("INSERT INTO races (series, round_number, race_name, circuit, country, race_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+const races = [
+  ["F2", 1, "Bahrain Sprint", "Bahrain International Circuit", "Bahrain", "2025-03-01", "Completed"],
+  ["F2", 1, "Bahrain Feature", "Bahrain International Circuit", "Bahrain", "2025-03-02", "Completed"],
+  ["F2", 2, "Saudi Arabia Sprint", "Jeddah Corniche Circuit", "Saudi Arabia", "2025-03-08", "Completed"],
+  ["F2", 2, "Saudi Arabia Feature", "Jeddah Corniche Circuit", "Saudi Arabia", "2025-03-09", "Completed"],
+  ["F3", 1, "Bahrain Sprint", "Bahrain International Circuit", "Bahrain", "2025-03-01", "Completed"],
+  ["F3", 1, "Bahrain Feature", "Bahrain International Circuit", "Bahrain", "2025-03-02", "Completed"],
+  ["F2", 3, "Melbourne Sprint", "Albert Park Circuit", "Australia", "2025-03-22", "Upcoming"],
+  ["F2", 3, "Melbourne Feature", "Albert Park Circuit", "Australia", "2025-03-23", "Upcoming"],
 ];
+races.forEach((r) => insertRace.run(...r));
+console.log(`Seeded ${races.length} races`);
 
-const insertPlayer = db.prepare("INSERT INTO players (first_name, last_name, team_id, position, height, weight, class_year, high_school, hometown, state, star_rating, ranking, nil_value, status, committed_to) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-const playerIds: number[] = [];
-for (const p of playersData) {
-  const tid = p.team != null ? teamIds[p.team] : null;
-  const committed = (p as any).committed || null;
-  playerIds.push(Number(insertPlayer.run(p.first, p.last, tid, p.pos, p.h, p.w, p.yr, p.hs, p.city, p.st, p.stars, p.rank, p.nil, p.status, committed).lastInsertRowid));
-}
-console.log(`Seeded ${playersData.length} players`);
-
-// ── Games (Penn State 2025 season sample) ──
-const insertGame = db.prepare("INSERT INTO games (home_team_id, away_team_id, week_number, venue, city, state, game_date, home_score, away_score, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-const gameIds: number[] = [];
-const psu = teamIds[0];
-const gameData = [
-  [psu, teamIds[4], 1, "Beaver Stadium", "State College", "PA", "2025-08-30", 28, 24, "Final"],
-  [teamIds[2], psu, 3, "Notre Dame Stadium", "South Bend", "IN", "2025-09-13", 21, 31, "Final"],
-  [psu, teamIds[3], 5, "Beaver Stadium", "State College", "PA", "2025-09-27", 35, 17, "Final"],
-  [psu, teamIds[1], 7, "Beaver Stadium", "State College", "PA", "2025-10-11", 27, 24, "Final"],
-  [psu, teamIds[5], 10, "Beaver Stadium", "State College", "PA", "2025-11-01", null, null, "Scheduled"],
-  [teamIds[3], psu, 12, "Michigan Stadium", "Ann Arbor", "MI", "2025-11-15", null, null, "Scheduled"],
+// ── RACE RESULTS (for completed races) ──
+const insertResult = db.prepare("INSERT INTO race_results (driver_id, race_id, qualifying_position, race_position, grid_position, fastest_lap, points_scored, dnf, dnf_reason, gap_to_leader) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+const results = [
+  // Bahrain F2 Sprint (race 1)
+  [1, 1, 2, 1, 2, 1, 10, 0, null, null], // Bortoleto P1
+  [2, 1, 1, 2, 1, 0, 8, 0, null, "+1.2s"], // Hadjar P2
+  [7, 1, 3, 3, 3, 0, 6, 0, null, "+3.4s"], // Antonelli P3
+  [8, 1, 4, 4, 4, 0, 5, 0, null, "+5.1s"], // Bearman P4
+  [3, 1, 6, 5, 6, 0, 4, 0, null, "+7.8s"], // Aron P5
+  // Bahrain F2 Feature (race 2)
+  [7, 2, 1, 1, 1, 1, 25, 0, null, null], // Antonelli wins feature
+  [1, 2, 3, 2, 3, 0, 18, 0, null, "+2.1s"],
+  [16, 2, 5, 3, 5, 0, 15, 0, null, "+4.5s"], // Pourchaire P3
+  [2, 2, 2, 4, 2, 0, 12, 0, null, "+6.3s"],
+  [5, 2, 4, 5, 4, 0, 10, 0, null, "+8.9s"], // Maloney P5
+  // Saudi F2 Sprint (race 3)
+  [2, 3, 1, 1, 1, 0, 10, 0, null, null], // Hadjar wins
+  [8, 3, 3, 2, 3, 1, 8, 0, null, "+0.8s"],
+  [1, 3, 2, 3, 2, 0, 6, 0, null, "+2.3s"],
+  [4, 3, 7, 4, 7, 0, 5, 0, null, "+4.1s"], // Crawford P4
+  // Bahrain F3 Sprint (race 5)
+  [9, 5, 1, 1, 1, 1, 10, 0, null, null], // Lindblad P1
+  [10, 5, 3, 2, 3, 0, 8, 0, null, "+1.5s"], // Beganovic P2
+  [12, 5, 2, 3, 2, 0, 6, 0, null, "+3.2s"], // Browning P3
+  [11, 5, 5, 4, 5, 0, 5, 0, null, "+5.6s"], // Mini P4
+  // Bahrain F3 Feature (race 6)
+  [12, 6, 1, 1, 1, 0, 25, 0, null, null], // Browning wins
+  [9, 6, 2, 2, 2, 1, 18, 0, null, "+1.8s"],
+  [14, 6, 8, 3, 8, 0, 15, 0, null, "+3.1s"], // Ugochukwu P3
+  [10, 6, 3, 4, 3, 0, 12, 0, null, "+4.7s"],
 ];
-for (const g of gameData) { gameIds.push(Number(insertGame.run(...g).lastInsertRowid)); }
-console.log(`Seeded ${gameData.length} games`);
+results.forEach((r) => insertResult.run(...r));
+console.log(`Seeded ${results.length} race results`);
 
-// ── Football Metrics ──
-const insertMetrics = db.prepare("INSERT INTO football_metrics (player_id, top_speed_mph, top_speed_times_reached, avg_top_speed_pos, forty_yard, shuttle, vertical_jump, broad_jump, bench_press_reps, throw_velocity_mph, throw_velocity_avg_pos, tackle_force_lbs, block_force_lbs, nfl_avg_tackle_force, nfl_avg_block_force, wingspan, hand_size, arm_length) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+// ── PERFORMANCE METRICS ──
+const insertMetrics = db.prepare("INSERT INTO performance_metrics (driver_id, avg_qualifying_delta, avg_race_pace_delta, wet_weather_rating, tire_management_rating, overtaking_rating, consistency_rating, racecraft_rating, starts_rating, reaction_time_avg, reaction_time_best, top_speed_kph, avg_top_speed_series, sector_speciality, mental_resilience_rating, adaptability_rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+const metrics = [
+  [1, -0.085, -0.042, 88, 92, 85, 90, 91, 87, 0.215, 0.198, 332.4, 328.1, "S2", 89, 91], // Bortoleto
+  [2, -0.102, -0.055, 82, 85, 92, 84, 89, 90, 0.208, 0.191, 334.1, 328.1, "S1", 85, 83], // Hadjar
+  [3, -0.065, -0.031, 76, 80, 78, 85, 80, 82, 0.225, 0.208, 330.2, 328.1, "S3", 82, 80], // Aron
+  [4, -0.048, -0.025, 72, 78, 80, 80, 82, 79, 0.230, 0.215, 329.5, 328.1, "S1", 78, 85], // Crawford
+  [5, -0.072, -0.038, 80, 88, 83, 87, 85, 84, 0.218, 0.202, 331.8, 328.1, "S2", 86, 84], // Maloney
+  [6, -0.055, -0.030, 85, 82, 75, 78, 80, 76, 0.228, 0.210, 329.8, 328.1, "S1", 80, 82], // Martins
+  [7, -0.125, -0.065, 92, 88, 95, 85, 94, 91, 0.198, 0.185, 335.2, 328.1, "S2", 88, 95], // Antonelli
+  [8, -0.090, -0.048, 84, 86, 82, 88, 86, 85, 0.220, 0.205, 333.0, 328.1, "S3", 90, 88], // Bearman
+  [9, -0.110, -0.052, 78, 75, 88, 82, 87, 88, 0.212, 0.195, 318.5, 315.2, "S1", 84, 86], // Lindblad
+  [10, -0.068, -0.035, 74, 82, 76, 84, 79, 80, 0.232, 0.218, 316.8, 315.2, "S2", 80, 78], // Beganovic
+  [11, -0.058, -0.028, 70, 76, 82, 78, 80, 77, 0.235, 0.220, 317.2, 315.2, "S3", 76, 80], // Mini
+  [12, -0.082, -0.040, 86, 84, 80, 86, 83, 83, 0.222, 0.208, 319.0, 315.2, "S1", 85, 82], // Browning
+  [15, -0.030, -0.015, 85, 90, 88, 92, 90, 86, 0.195, 0.182, 350.2, 345.0, null, 92, 78], // Herta (IndyCar)
+  [16, -0.095, -0.050, 86, 90, 84, 89, 87, 85, 0.210, 0.195, 332.8, 328.1, "S2", 88, 86], // Pourchaire
+];
+metrics.forEach((m) => insertMetrics.run(...m));
+console.log(`Seeded ${metrics.length} performance metrics`);
 
-const metricsData: Record<number, any> = {
-  0: { speed: 19.8, times: 12, avgSpeed: 19.2, forty: 4.62, shut: 4.15, vert: 33.5, broad: 118, bench: 8, throwV: 62, throwAvg: 55, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'6", hand: 10.0, arm: 33.5 },
-  1: { speed: 18.9, times: 8, avgSpeed: 19.2, forty: 4.72, shut: 4.22, vert: 31.0, broad: 112, bench: 10, throwV: 59, throwAvg: 55, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'8", hand: 10.25, arm: 34.0 },
-  2: { speed: 19.5, times: 15, avgSpeed: 19.2, forty: 4.58, shut: 4.10, vert: 35.0, broad: 120, bench: 6, throwV: 57, throwAvg: 55, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'4", hand: 9.75, arm: 32.5 },
-  3: { speed: 21.8, times: 22, avgSpeed: 21.0, forty: 4.42, shut: 4.02, vert: 38.5, broad: 126, bench: 12, throwV: null, throwAvg: null, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "5'11", hand: 9.25, arm: 31.0 },
-  4: { speed: 21.2, times: 14, avgSpeed: 21.0, forty: 4.48, shut: 4.08, vert: 36.0, broad: 122, bench: 10, throwV: null, throwAvg: null, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'0", hand: 9.0, arm: 31.5 },
-  7: { speed: 20.5, times: 8, avgSpeed: 20.0, forty: 4.55, shut: 4.12, vert: 34.0, broad: 119, bench: 6, throwV: null, throwAvg: null, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'5", hand: 9.5, arm: 33.0 },
-  8: { speed: 20.8, times: 18, avgSpeed: 20.5, forty: 4.50, shut: 4.05, vert: 37.0, broad: 124, bench: 8, throwV: null, throwAvg: null, tackle: 520, block: null, nflTkl: 680, nflBlk: null, wing: "6'3", hand: 9.25, arm: 32.5 },
-  9: { speed: 19.2, times: 6, avgSpeed: 19.5, forty: 4.65, shut: 4.18, vert: 32.0, broad: 116, bench: 14, throwV: null, throwAvg: null, tackle: 610, block: null, nflTkl: 680, nflBlk: null, wing: "6'4", hand: 10.0, arm: 33.0 },
-  11: { speed: 19.5, times: 20, avgSpeed: 18.8, forty: 4.58, shut: 4.15, vert: 35.5, broad: 122, bench: 16, throwV: null, throwAvg: null, tackle: 720, block: null, nflTkl: 680, nflBlk: null, wing: "6'8", hand: 10.5, arm: 34.5 },
-  12: { speed: 19.0, times: 14, avgSpeed: 18.8, forty: 4.65, shut: 4.20, vert: 34.0, broad: 119, bench: 18, throwV: null, throwAvg: null, tackle: 680, block: 750, nflTkl: 680, nflBlk: 820, wing: "6'7", hand: 10.25, arm: 34.0 },
-  13: { speed: 18.8, times: 10, avgSpeed: 18.8, forty: 4.68, shut: 4.22, vert: 33.5, broad: 118, bench: 15, throwV: null, throwAvg: null, tackle: 650, block: null, nflTkl: 680, nflBlk: null, wing: "6'6", hand: 10.0, arm: 33.5 },
-  15: { speed: 22.4, times: 28, avgSpeed: 21.0, forty: 4.35, shut: 3.98, vert: 40.0, broad: 130, bench: 14, throwV: null, throwAvg: null, tackle: null, block: null, nflTkl: null, nflBlk: null, wing: "6'1", hand: 9.5, arm: 31.5 },
-};
-
-for (const [idx, m] of Object.entries(metricsData)) {
-  const i = parseInt(idx);
-  insertMetrics.run(playerIds[i], m.speed, m.times, m.avgSpeed, m.forty, m.shut, m.vert, m.broad, m.bench, m.throwV, m.throwAvg, m.tackle, m.block, m.nflTkl, m.nflBlk, m.wing, m.hand, m.arm);
-}
-console.log(`Seeded ${Object.keys(metricsData).length} football metrics`);
-
-// ── Scouting Reports ──
-const insertReport = db.prepare("INSERT INTO scouting_reports (player_id, scout_name, overall_grade, offensive_grade, defensive_grade, athleticism_grade, football_iq_grade, strengths, weaknesses, notes, projection, comparison) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+// ── SCOUTING REPORTS ──
+const insertReport = db.prepare("INSERT INTO scouting_reports (driver_id, race_id, scout_name, overall_grade, speed_grade, racecraft_grade, consistency_grade, race_iq_grade, strengths, weaknesses, notes, projection, comparison) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 const reports = [
-  [playerIds[0], "Mike V", "A+", "A+", null, "A", "A+", "Completed 70%+ for 3,815 yards. Not a project — a ready passer. Navy All-American Bowl participant as a junior.", "Family has deep Florida ties — culture pitch matters as much as scheme.", "If Mencl ends up at PSU, it rewrites the QB room ceiling for the entire class. Oregon leads, PSU in active pursuit alongside Auburn and Miami.", "Elite P5 Starter, NFL Draft Day 1-2", "Justin Herbert"],
-  [playerIds[1], "Mike V", "A", "A", null, "B+", "A", "Won Gatorade Player of the Year in Massachusetts. Led Tabor to 9-0 title. Efficient, clean, decisive. Older maturity shows on film.", "Reclassified back to 2027 — needs to prove consistent against top competition.", "Pulled Michigan pledge due to coaching staff uncertainty. PSU is now an early leader per ESPN. Scheduling spring visits — PSU needs to be on that list fast.", "Power 5 Starter, possible NFL mid-round", "Mac Jones"],
-  [playerIds[2], "Mike V", "B+", "A-", null, "A-", "B+", "42 touchdowns, 1 interception. Led Xaverian to 3rd straight state championship. 2,828 passing + 440 rushing — dual threat who plays within the offense.", "ACC interest emerging but no Power 4 blue-blood offers yet. Needs to prove against national-level competition.", "If PSU can't land Mencl or Borque, Wood is a legitimate option with upside still being discovered. Syracuse offered.", "Mid-Major to Power 5 upside", "Gardner Minshew"],
-  [playerIds[3], "Mike V", "A", "A+", null, "A+", "A-", "1,374 rushing yards + 12 TDs. 348 receiving yards. Plays in space AND between the tackles. Greer Touchdown Club Offensive POY.", "Catholic faith is a real factor — Notre Dame's messaging has been intentional. Marcus Freeman made in-home visit.", "Notre Dame has serious momentum. HC Marcus Freeman visited in-person. PSU needs to match that energy for a South Carolina kid.", "Power 5 RB1, NFL Day 2", "Saquon Barkley lite"],
-  [playerIds[11], "Mike V", "A+", null, "A+", "A+", "A", "Top-ranked EDGE in updated 2027 Rivals300. In-state kid from Exton, PA. 6'5, 225 with top-program interest across SEC and Big Ten.", "Ohio State has RPM momentum. SC/PSU/ND battle ongoing.", "PSU cannot let this one leave the state. In-state elite EDGE prospects don't come around often. This is a top-3 priority.", "1st Round NFL Draft Pick", "Micah Parsons"],
-  [playerIds[12], "Mike V", "A-", null, "A", "A", "B+", "New PSU staff made Brown a priority — in-home visit done, offer extended. Spring visit already scheduled.", "Needs continued development of pass rush technique. Raw but toolsy.", "Fast movement from new staff. PSU's DL development under last staff produced first-round picks. New staff leaning into that legacy.", "Power 5 Starter, NFL Day 2-3", "Nolan Smith"],
-  [playerIds[15], "Mike V", "A+", "A+", null, "A+", "A-", "Former PSU commit. 5-star McKeesport RB. Electric speed, vision, and contact balance that's rare at this age.", "Lost to Georgia after January visit. Speed of recruitment matters — this is the cautionary tale.", "Flipped to Georgia. That recruitment is closed. The lesson: PSU can't let the next one get away.", "1st Round NFL Draft Pick", "Bijan Robinson"],
+  [7, 2, "neXT Scout Team", "A+", "A+", "A", "A", "A+", "Extraordinary raw pace, fearless overtaking, adaptable in all conditions", "Occasional over-aggression in wheel-to-wheel, young and still maturing", "Antonelli is the generational talent. His Bahrain Feature win was dominant — fastest in every sector. He has the same instinctive speed Verstappen showed in F3.", "F1 race seat 2026 — future WDC contender", "Max Verstappen"],
+  [1, 1, "neXT Scout Team", "A", "A", "A-", "A+", "A", "Brilliant tire management, smooth and consistent, great in traffic", "Qualifying pace sometimes lacking vs top competitors", "Bortoleto is the complete package. His consistency is remarkable — always in the points, rarely makes mistakes. Sprint race win in Bahrain was clinical.", "F1 race seat 2026", "Carlos Sainz"],
+  [2, 3, "Haas neXT Analysis", "A", "A+", "A", "B+", "A-", "Blistering one-lap pace, aggressive but clean overtaking", "Consistency needs work — can have quiet weekends mixed with brilliant ones", "Hadjar is lightning quick. His Saudi sprint win was a masterclass in qualifying-to-race conversion. When he's on it, nobody can touch him.", "F1 race seat 2026-2027", "Charles Leclerc"],
+  [8, 3, "Alpine neXT Analysis", "A-", "A-", "A", "A", "A-", "Already has F1 experience (Haas sub), mature beyond his years, consistent", "Needs more dominant wins, qualifying can improve", "Bearman has already tasted F1 and proved he belongs. His Saudi P2 shows he's ready to step up.", "F1 race seat 2025-2026", "Lando Norris"],
+  [15, null, "Haas neXT Analysis", "A", "A+", "A", "A+", "B+", "IndyCar champion-level pace, oval experience unique, aggressive racer", "Super License situation complicated, no single-seater feeder series recently", "Herta is the American F1 dream. His raw speed is undeniable. The question isn't talent — it's logistics and super license.", "F1 test/reserve 2026, race seat if SL resolved", "Daniel Ricciardo"],
+  [9, 5, "neXT Scout Team", "A-", "A", "A-", "B+", "A-", "Exceptional raw pace for his age, strong starts, fearless wheel-to-wheel", "Still learning tire management at this level, can overdrive", "Lindblad is the future. At 17, he's already dominating F3 qualifying. His Bahrain sprint win was clinical.", "F1 race seat 2028", "Lewis Hamilton (early career)"],
+  [4, 3, "Haas neXT Analysis", "B+", "B+", "B+", "B", "B+", "American talent pipeline, solid racecraft, improving every weekend", "Not yet at the level of top F2 peers, needs more race wins", "Crawford represents the American F1 pipeline. His P4 in Saudi shows improvement. Haas would benefit from an American driver for marketing.", "F2 champion contender, F1 reserve 2027", "Alexander Rossi"],
 ];
-
-for (const r of reports) { insertReport.run(...r); }
+reports.forEach((r) => insertReport.run(...r));
 console.log(`Seeded ${reports.length} scouting reports`);
 
-// ── Transfer Portal Entries ──
-const insertPortal = db.prepare("INSERT INTO transfer_portal (player_id, transfer_likelihood, reason, current_playing_time_pct, projected_nil_increase, status) VALUES (?, ?, ?, ?, ?, ?)");
-// Create some hypothetical portal watch entries from existing college players
-const portalPlayers = [
-  { first: "Marcus", last: "Rivera", team: 3, pos: "WR", h: "6'2", w: 195, yr: 2025, hs: "Detroit Catholic Central", city: "Detroit", st: "MI", stars: 4, rank: null, nil: 180000, status: "Active" },
-  { first: "Jaylen", last: "Thompson", team: 4, pos: "CB", h: "6'0", w: 185, yr: 2025, hs: "Pickerington Central", city: "Columbus", st: "OH", stars: 4, rank: null, nil: 150000, status: "Active" },
-  { first: "Derek", last: "Williams", team: 1, pos: "LB", h: "6'3", w: 235, yr: 2025, hs: "Central Catholic", city: "Portland", st: "OR", stars: 3, rank: null, nil: 90000, status: "Active" },
-  { first: "Tyler", last: "Jackson", team: 8, pos: "S", h: "6'1", w: 200, yr: 2025, hs: "Gulliver Prep", city: "Miami", st: "FL", stars: 4, rank: null, nil: 200000, status: "Active" },
+// ── DRIVER MARKET ──
+const insertMarket = db.prepare("INSERT INTO driver_market (driver_id, contract_status, current_contract_end, availability_likelihood, interested_teams, reason, estimated_salary) VALUES (?, ?, ?, ?, ?, ?, ?)");
+const marketEntries = [
+  [1, "Option Year", "2025-12-31", 75, "Haas, Alpine, Sauber", "Alpine Academy graduate, contract expires end of 2025. Multiple teams interested.", 500000],
+  [7, "Under Contract", "2026-12-31", 30, "Mercedes", "Locked into Mercedes pathway but could be loaned to a customer team.", 800000],
+  [15, "Free Agent", null, 85, "Haas, Alpine", "No current F1 contract. Super license situation the only barrier. American marketing value enormous for Haas.", 2000000],
+  [16, "Option Year", "2025-12-31", 70, "Alpine, Haas, Williams", "Sauber Academy but contract situation unclear. Strong F2 results making him attractive.", 600000],
+  [8, "Under Contract", "2026-12-31", 60, "Haas, Sauber", "Ferrari Academy but could be placed at Haas (Ferrari partnership). Already has F1 race experience.", 700000],
+  [4, "Under Contract", "2025-12-31", 55, "Haas", "American driver with F2 experience. Perfect marketing fit for Haas US fanbase.", 300000],
 ];
+marketEntries.forEach((m) => insertMarket.run(...m));
+console.log(`Seeded ${marketEntries.length} market entries`);
 
-for (const p of portalPlayers) {
-  const pid = Number(insertPlayer.run(p.first, p.last, teamIds[p.team], p.pos, p.h, p.w, p.yr, p.hs, p.city, p.st, p.stars, p.rank, p.nil, p.status, null).lastInsertRowid);
-  playerIds.push(pid);
-}
-
-insertPortal.run(playerIds[16], 75, "Buried on depth chart behind 2 seniors. Only 25% snap share. Looking for starting opportunity.", 25, 40, "Watch");
-insertPortal.run(playerIds[17], 60, "Coaching staff changes. New DC runs different scheme. May not fit new system.", 55, 25, "Watch");
-insertPortal.run(playerIds[18], 85, "Publicly expressed frustration with playing time on social media. Portal entry expected.", 15, 60, "In Portal");
-insertPortal.run(playerIds[19], 45, "NIL situation. Current deal below market value. Testing waters for better NIL package.", 70, 35, "Watch");
-console.log(`Seeded 4 portal entries`);
-
-// ── Merch Items ──
-const insertMerch = db.prepare("INSERT INTO merch_items (player_id, name, description, price, category) VALUES (?, ?, ?, ?, ?)");
-const merchTargets = [0, 3, 11, 15]; // Mencl, Segarra, Sesay, Spell
-for (const idx of merchTargets) {
-  const p = playersData[idx];
-  insertMerch.run(playerIds[idx], `${p.first} ${p.last} Jersey`, `Official replica jersey`, 89.99, "Jersey");
-  insertMerch.run(playerIds[idx], `${p.first} ${p.last} Signed Poster`, `Limited edition signed print`, 49.99, "Poster");
-  insertMerch.run(playerIds[idx], `${p.last} #${idx + 1} Hat`, `Snapback cap`, 34.99, "Hat");
-}
-console.log(`Seeded ${merchTargets.length * 3} merch items`);
-
-// ── Feed Posts ──
-const insertFeed = db.prepare("INSERT INTO feed_posts (author, content, post_type, player_id, likes_count, shares_count, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
-const feedData = [
-  ["Coach Mike V", "INTEL DROP: Will Mencl (5★ QB, Chandler AZ) completed 70%+ for 3,815 yards last season. Not a project — a ready passer. Oregon leads but PSU is in active pursuit. The offensive identity pitch vs Oregon determines if PSU is real here.", "intel", playerIds[0], 342, 89, "2026-03-10T08:00:00Z"],
-  ["Coach Mike V", "DECOMMIT ALERT: Peter Borque has pulled his Michigan pledge. PSU + Virginia Tech are early leaders. Won Gatorade POY in Massachusetts. The timing of this decommit is a SIGNIFICANT opening. PSU needs to lock a visit NOW.", "commit", playerIds[1], 567, 201, "2026-03-09T14:30:00Z"],
-  ["Coach Mike V", "🏈 HVU INSIDER CHALLENGE: 2027 QB Call — Penn State needs a quarterback. Who gets there first?\n\n1. Does PSU land Mencl, Borque, or Wood?\n2. Who is PSU's biggest QB competition in 2027?\n3. Does PSU lock a 2027 QB commit before Spring Game?\n\nComplete → 1,000 XP + 3 Sweepstakes Entries", "challenge", null, 891, 312, "2026-03-10T10:00:00Z"],
-  ["Coach Mike V", "EDGE WATCH: Abraham Sesay (4★, Exton PA) — Top-ranked EDGE in updated Rivals300. In-state. 6'5, 225. Ohio State has RPM momentum but this isn't closed. PSU CANNOT let this one leave the state. Top-3 priority.", "intel", playerIds[11], 445, 156, "2026-03-08T16:00:00Z"],
-  ["Coach Mike V", "LESSON LEARNED: Kemon Spell (5★ RB, McKeesport) flipped to Georgia after January visit. That recruitment is CLOSED. The lesson? Speed matters. PSU can't let the next one get away.", "intel", playerIds[15], 678, 234, "2026-03-07T12:00:00Z"],
-  ["Coach Mike V", "RB BOARD UPDATE: Tre Segarra (4★, Byrnes HS) — Marcus Freeman made the in-person visit. Notre Dame has serious momentum. Catholic faith is a real factor. Can PSU's staff generate that level of urgency for a South Carolina kid?", "intel", playerIds[3], 389, 134, "2026-03-06T09:00:00Z"],
-  ["Coach Mike V", "SPRING VISIT LOCKED: Mekai Brown (4★ DE) has a spring visit to State College scheduled. New staff made him a priority — in-home visit done, offer extended. PSU's DL development is the strongest pitch in the room.", "intel", playerIds[12], 234, 87, "2026-03-05T11:00:00Z"],
-  ["Coach Mike V", "PRO DAY EXPERIENCE: Full Pro Day Credential, Lasch Building & Stadium Tours, Meet PSU GM Derek Hoodjer, Signed Jersey, Lunch with Mike V, Framed Signed Print, and Social Media Recognition. Enter at insider.happyvalleyunited.com", "update", null, 1203, 456, "2026-03-04T08:00:00Z"],
+// ── MERCH ITEMS ──
+const insertMerch = db.prepare("INSERT INTO merch_items (driver_id, name, price, category) VALUES (?, ?, ?, ?)");
+const merchItems = [
+  [1, "Bortoleto Team Cap", 35, "Headwear"], [1, "Bortoleto Race Tee", 40, "Apparel"], [1, "1:43 Model Car", 55, "Model"],
+  [7, "Antonelli Trucker Hat", 30, "Headwear"], [7, "Antonelli Hoodie", 70, "Apparel"], [7, "Signed Driver Card", 25, "Collectibles"],
+  [2, "Hadjar Race Cap", 35, "Headwear"], [2, "Hadjar Performance Tee", 40, "Apparel"],
+  [8, "Bearman Team Cap", 35, "Headwear"], [8, "Bearman Race Tee", 40, "Apparel"],
+  [15, "Herta USA Cap", 35, "Headwear"], [15, "Herta Stars & Stripes Tee", 45, "Apparel"], [15, "Herta Race Hoodie", 75, "Apparel"],
+  [9, "Lindblad Rising Star Tee", 35, "Apparel"], [12, "Browning Team Cap", 30, "Headwear"],
 ];
-for (const f of feedData) { insertFeed.run(...f); }
-console.log(`Seeded ${feedData.length} feed posts`);
+merchItems.forEach((m) => insertMerch.run(...m));
+console.log(`Seeded ${merchItems.length} merch items`);
 
-// ── NFL Projections (for top recruits) ──
-const insertNfl = db.prepare("INSERT INTO nfl_projections (player_id, draft_probability, projected_round, projected_pick_range, projected_role, nfl_comparison, nfl_comp_similarity, secondary_comparison, player_archetype, bust_probability, pro_bowl_probability, projected_rookie_contract, projected_second_contract, career_earnings_est) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-const nflData = [
-  [playerIds[0], 82, 1, "8-20", "Starting QB", "Justin Herbert", 72, "Dak Prescott", "Pro-Style Pocket Passer", 12, 28, 32000000, 180000000, 350000000],
-  [playerIds[1], 55, 2, "35-55", "Starting QB", "Mac Jones", 68, "Kirk Cousins", "Efficient Game Manager", 22, 12, 8000000, 80000000, 180000000],
-  [playerIds[3], 70, 1, "15-30", "Starting RB", "Saquon Barkley", 65, "Josh Jacobs", "Three-Down Back", 15, 22, 18000000, 60000000, 150000000],
-  [playerIds[11], 88, 1, "1-10", "Starting EDGE", "Micah Parsons", 78, "Myles Garrett", "Elite Pass Rusher", 8, 35, 40000000, 120000000, 300000000],
-  [playerIds[15], 90, 1, "1-5", "Feature Back", "Bijan Robinson", 80, "Saquon Barkley", "Generational RB", 6, 40, 35000000, 70000000, 200000000],
+// ── F1 PROJECTIONS ──
+const insertProjection = db.prepare("INSERT INTO f1_projections (driver_id, f1_probability, projected_year, target_team, projected_role, f1_comparison, f1_comp_similarity, secondary_comparison, driver_archetype, championship_probability, career_podium_est, projected_first_contract, projected_peak_salary, career_earnings_est) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+const projections = [
+  [7, 98, 2025, "Mercedes", "Race Seat", "Max Verstappen", 82, "Charles Leclerc", "Complete Driver", 35, 80, 5000000, 25000000, 200000000],
+  [1, 88, 2026, "Alpine / Haas", "Race Seat", "Carlos Sainz", 78, "Fernando Alonso", "Consistent Racer", 15, 45, 2000000, 12000000, 80000000],
+  [2, 85, 2026, "Red Bull / VCARB", "Race Seat", "Charles Leclerc", 75, "Pierre Gasly", "Qualifying Specialist", 12, 35, 2500000, 15000000, 90000000],
+  [8, 90, 2025, "Haas", "Race Seat", "Lando Norris", 72, "Carlos Sainz", "Complete Driver", 10, 40, 1500000, 10000000, 70000000],
+  [15, 65, 2026, "Haas", "Test Driver", "Daniel Ricciardo", 80, "Alexander Rossi", "Racecraft Master", 5, 20, 3000000, 8000000, 40000000],
+  [16, 82, 2026, "Alpine", "Race Seat", "Pierre Gasly", 76, "Esteban Ocon", "Complete Driver", 8, 30, 1800000, 10000000, 60000000],
+  [9, 78, 2028, "Red Bull Junior", "Race Seat", "Lewis Hamilton", 70, "Max Verstappen", "Future Champion", 25, 60, 3000000, 20000000, 150000000],
+  [12, 55, 2027, "Williams", "Race Seat", "George Russell", 68, "Lando Norris", "Consistent Racer", 5, 15, 1000000, 5000000, 30000000],
 ];
-for (const n of nflData) { insertNfl.run(...n); }
-console.log(`Seeded ${nflData.length} NFL projections`);
+projections.forEach((p) => insertProjection.run(...p));
+console.log(`Seeded ${projections.length} F1 projections`);
 
-// ── Scholastic Data ──
-const insertScholastic = db.prepare("INSERT INTO scholastic_data (player_id, gpa, sat_score, act_score, ncaa_eligible, core_gpa, academic_standing, intended_major) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-const majors = ["Business", "Communications", "Kinesiology", "Sports Management", "Liberal Arts", "Undecided"];
-for (let i = 0; i < playersData.length; i++) {
-  const gpa = +(2.8 + Math.random() * 1.2).toFixed(2);
-  const sat = 1000 + Math.floor(Math.random() * 300);
-  const act = Math.floor(sat / 50) + Math.floor(Math.random() * 4);
-  insertScholastic.run(playerIds[i], gpa, sat, act, 1, +(gpa - 0.1).toFixed(2), "Good Standing", majors[Math.floor(Math.random() * majors.length)]);
-}
-console.log(`Seeded ${playersData.length} scholastic records`);
+// ── FEED POSTS ──
+const insertPost = db.prepare("INSERT INTO feed_posts (author, content, post_type, driver_id, team_context, likes_count, shares_count) VALUES (?, ?, ?, ?, ?, ?, ?)");
+const posts = [
+  ["Haas neXT", "RACE RECAP: Antonelli dominates Bahrain Feature Race! The 18-year-old Italian put on a masterclass, leading every lap from pole. This kid is special. Fan Vote is LIVE — should he test with Haas?", "race_recap", 7, "haas", 1245, 389],
+  ["Alpine neXT", "DRIVER INTEL: Gabriel Bortoleto's tire management data from Bahrain is extraordinary. His deg numbers are better than some current F1 drivers. Alpine Academy product — could he be France's next F1 star?", "intel", 1, "alpine", 892, 234],
+  ["Haas neXT", "FAN VOTE UPDATE: Colton Herta leads the Haas neXT vote with 2,340 votes! The American driver has massive fan support. Super License situation remains the key question.", "vote", 15, "haas", 2341, 567],
+  ["Alpine neXT", "RISE+ CHALLENGE: Scout 5 F3 drivers this weekend and earn 250 RISE+ points! Top scouts get an exclusive invite to the Alpine garage at Silverstone.", "intel", null, "alpine", 678, 145],
+  ["Haas neXT", "MARKET ALERT: Oliver Bearman's contract with Ferrari Academy could see him placed at Haas for 2026. The British teenager already has F1 race experience from his Jeddah sub.", "signing", 8, "haas", 1567, 423],
+  ["neXT Feed", "BREAKING: Arvid Lindblad wins F3 Bahrain Sprint at just 17 years old! Red Bull Junior dominating the feeder series. Remember this name.", "race_recap", 9, null, 945, 312],
+  ["Alpine neXT", "RISE+ EVENT: Meet the next gen at Silverstone! RISE+ members get paddock access, driver meet & greets, and pit lane walks during the F2/F3 support races. Points required: 5,000", "update", null, "alpine", 1123, 289],
+  ["Haas neXT", "SCOUTING REPORT: Jak Crawford's P4 in Saudi shows steady improvement. The American is exactly what Haas needs for their US market strategy. Full analysis on his profile.", "intel", 4, "haas", 456, 98],
+];
+posts.forEach((p) => insertPost.run(...p));
+console.log(`Seeded ${posts.length} feed posts`);
 
-db.close();
-console.log("\nDatabase seeded successfully with HVU Insider 2027 Target Board!");
+// ── INITIAL FAN VOTES ──
+const insertVote = db.prepare("INSERT INTO fan_votes (user_id, driver_id, target_team) VALUES (?, ?, ?)");
+const votes: [string, number, string][] = [];
+// Simulate some initial voting data
+for (let i = 0; i < 50; i++) votes.push([`fan_${100 + i}`, 15, "haas"]); // Herta leads Haas vote
+for (let i = 0; i < 35; i++) votes.push([`fan_${200 + i}`, 8, "haas"]); // Bearman
+for (let i = 0; i < 28; i++) votes.push([`fan_${300 + i}`, 7, "haas"]); // Antonelli
+for (let i = 0; i < 20; i++) votes.push([`fan_${400 + i}`, 4, "haas"]); // Crawford
+for (let i = 0; i < 40; i++) votes.push([`fan_${500 + i}`, 1, "alpine"]); // Bortoleto leads Alpine
+for (let i = 0; i < 32; i++) votes.push([`fan_${600 + i}`, 16, "alpine"]); // Pourchaire
+for (let i = 0; i < 25; i++) votes.push([`fan_${700 + i}`, 6, "alpine"]); // Martins
+for (let i = 0; i < 22; i++) votes.push([`fan_${800 + i}`, 7, "alpine"]); // Antonelli
+votes.forEach((v) => insertVote.run(...v));
+console.log(`Seeded ${votes.length} fan votes`);
+
+console.log("\nDatabase seeded successfully with F2/F3 driver data for Haas neXT / Alpine neXT!");

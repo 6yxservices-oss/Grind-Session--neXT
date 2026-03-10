@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { getAllPlayers } from "@/lib/queries";
+import { getAllDrivers } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const players = getAllPlayers();
+  const drivers = getAllDrivers();
   return NextResponse.json(
-    players.map((p) => ({
-      id: p.id,
-      name: `${p.first_name} ${p.last_name}`,
+    drivers.map((d) => ({
+      id: d.id,
+      name: `${d.first_name} ${d.last_name}`,
     }))
   );
 }

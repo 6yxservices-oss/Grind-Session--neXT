@@ -6,17 +6,17 @@ export default function ReportsPage() {
   const reports = getAllReports();
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between"><div><h1 className="text-2xl font-bold">Scout Reports</h1><p className="text-gray-400 text-sm mt-1">{reports.length} reports filed &middot; +50 XP per report</p></div><Link href="/reports/new" className="btn-primary">+ New Report</Link></div>
+      <div className="flex items-center justify-between"><div><h1 className="text-2xl font-bold">Scout Reports</h1><p className="text-gray-400 text-sm mt-1">{reports.length} reports filed &middot; +50 RISE+ pts per report</p></div><Link href="/reports/new" className="btn-primary">+ New Report</Link></div>
       <div className="space-y-4">
         {reports.map((r) => (
-          <Link key={r.id} href={`/reports/${r.id}`} className="card block hover:border-psu-accent/50">
+          <Link key={r.id} href={`/reports/${r.id}`} className="card block hover:border-haas-red/50">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4"><GradeBadge grade={r.overall_grade} size="lg" /><div><h3 className="font-semibold">{r.player_name}</h3><p className="text-sm text-gray-400">by {r.scout_name} &middot; {r.created_at}</p></div></div>
+              <div className="flex items-center gap-4"><GradeBadge grade={r.overall_grade} size="lg" /><div><h3 className="font-semibold">{r.driver_name}</h3><p className="text-sm text-gray-400">by {r.scout_name} &middot; {r.created_at}</p></div></div>
               <div className="flex gap-4 text-sm">
-                {r.offensive_grade && <div className="text-center"><div className="text-gray-500 text-xs">OFF</div><div>{r.offensive_grade}</div></div>}
-                {r.defensive_grade && <div className="text-center"><div className="text-gray-500 text-xs">DEF</div><div>{r.defensive_grade}</div></div>}
-                {r.athleticism_grade && <div className="text-center"><div className="text-gray-500 text-xs">ATH</div><div>{r.athleticism_grade}</div></div>}
-                {r.football_iq_grade && <div className="text-center"><div className="text-gray-500 text-xs">IQ</div><div>{r.football_iq_grade}</div></div>}
+                {r.speed_grade && <div className="text-center"><div className="text-gray-500 text-xs">SPD</div><div>{r.speed_grade}</div></div>}
+                {r.racecraft_grade && <div className="text-center"><div className="text-gray-500 text-xs">RCR</div><div>{r.racecraft_grade}</div></div>}
+                {r.consistency_grade && <div className="text-center"><div className="text-gray-500 text-xs">CON</div><div>{r.consistency_grade}</div></div>}
+                {r.race_iq_grade && <div className="text-center"><div className="text-gray-500 text-xs">IQ</div><div>{r.race_iq_grade}</div></div>}
               </div>
             </div>
             {r.notes && <p className="text-sm text-gray-300 mt-3 line-clamp-2">{r.notes}</p>}
