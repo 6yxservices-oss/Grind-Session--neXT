@@ -1,4 +1,4 @@
-import { getDb } from "./db";
+import { getData } from "./db";
 
 // Conference-based market value rates (estimated NIL $ per season)
 const CONFERENCE_MARKET_RATES: Record<string, { base: number; multiplier: number }> = {
@@ -78,7 +78,7 @@ interface CoachMatch {
 
 // Parse height string like "6'5" to inches
 function heightToInches(height: string | null): number {
-  if (!height) return 72; // default 6'0"
+  if (!height) return 72;
   const match = height.match(/(\d+)'(\d+)/);
   if (!match) return 72;
   return parseInt(match[1]) * 12 + parseInt(match[2]);
@@ -102,14 +102,11 @@ function calculateSizeFactor(height: string | null, position: string): number {
   const range = getIdealHeightRange(position);
 
   if (inches >= range.min && inches <= range.max) {
-    // Within ideal range: score based on proximity to ideal
     const deviation = Math.abs(inches - range.ideal);
     return Math.max(0.7, 1 - deviation * 0.05);
   } else if (inches > range.max) {
-    // Oversized for position (often a plus)
     return Math.min(1.0, 0.85 + (inches - range.max) * 0.02);
   } else {
-    // Undersized for position
     return Math.max(0.3, 0.7 - (range.min - inches) * 0.1);
   }
 }
@@ -120,59 +117,46 @@ export function getCollegeProbabilities(filters?: {
   position?: string;
   classYear?: number;
 }): CollegeProbability[] {
-  const db = getDb();
+  const data = getData();
 
-  const players = db
-    .prepare(
-      `SELECT p.id, p.first_name, p.last_name, p.position, p.class_year,
-              p.star_rating, p.height, p.weight, t.name as team_name,
-              COALESCE(AVG(ps.points), 0) as ppg,
-              COALESCE(AVG(ps.rebounds), 0) as rpg,
-              COALESCE(AVG(ps.assists), 0) as apg,
-              COALESCE(AVG(ps.steals), 0) as spg,
-              COALESCE(AVG(ps.blocks), 0) as bpg,
-              COUNT(ps.id) as games_played,
-              0 as pts_stddev
-       FROM players p
-       LEFT JOIN teams t ON p.team_id = t.id
-       LEFT JOIN player_stats ps ON p.id = ps.player_id
-       GROUP BY p.id`
-    )
-    .all() as Array<Record<string, number | string | null>>;
+  const players = data.players.map((p) => {
+    const team = data.teams.find((t) => t.id === p.team_id);
+    const playerStats = data.player_stats.filter((ps) => ps.player_id === p.id);
+    const gamesPlayed = playerStats.length;
+    const ppg = gamesPlayed > 0 ? playerStats.reduce((sum, ps) => sum + Number(ps.points || 0), 0) / gamesPlayed : 0;
+    const rpg = gamesPlayed > 0 ? playerStats.reduce((sum, ps) => sum + Number(ps.rebounds || 0), 0) / gamesPlayed : 0;
+    const apg = gamesPlayed > 0 ? playerStats.reduce((sum, ps) => sum + Number(ps.assists || 0), 0) / gamesPlayed : 0;
+    return {
+      id: p.id, first_name: p.first_name, last_name: p.last_name,
+      position: p.position, class_year: p.class_year, star_rating: p.star_rating,
+      height: p.height, weight: p.weight, team_name: team?.name ?? null,
+      ppg, rpg, apg, games_played: gamesPlayed,
+    };
+  });
 
   const results: CollegeProbability[] = players.map((p) => {
-    const starRating = (p.star_rating as number) || 0;
-    const ppg = (p.ppg as number) || 0;
-    const rpg = (p.rpg as number) || 0;
-    const apg = (p.apg as number) || 0;
-    const gamesPlayed = (p.games_played as number) || 0;
+    const starRating = Number(p.star_rating) || 0;
+    const ppg = p.ppg;
+    const rpg = p.rpg;
+    const apg = p.apg;
+    const gamesPlayed = p.games_played;
 
-    // Star rating factor (0-1): 5-star = 1.0, 4-star = 0.85, etc.
     const starFactor = Math.min(1, starRating / 5);
-
-    // Stats factor: normalized scoring output for position
     const ppgNorm = Math.min(1, ppg / 25);
     const rpgNorm = Math.min(1, rpg / 12);
     const apgNorm = Math.min(1, apg / 8);
     const statsFactor = ppgNorm * 0.5 + rpgNorm * 0.25 + apgNorm * 0.25;
-
-    // Size factor
     const sizeFactor = calculateSizeFactor(p.height as string | null, p.position as string);
+    const consistencyFactor = gamesPlayed > 0 ? Math.max(0.3, 1) : 0.5;
 
-    // Consistency factor (lower variance = more consistent)
-    const consistencyFactor = gamesPlayed > 0 ? Math.max(0.3, 1 - ((p.pts_stddev as number) || 0) / (ppg + 1) * 0.5) : 0.5;
-
-    // Weighted probability
     const rawProbability =
       starFactor * COLLEGE_PROB_WEIGHTS.star_rating +
       statsFactor * (COLLEGE_PROB_WEIGHTS.ppg + COLLEGE_PROB_WEIGHTS.rpg + COLLEGE_PROB_WEIGHTS.apg) +
       sizeFactor * (COLLEGE_PROB_WEIGHTS.athleticism + COLLEGE_PROB_WEIGHTS.size) +
       consistencyFactor * COLLEGE_PROB_WEIGHTS.consistency;
 
-    // Scale to 0-100 with floor/ceiling
     const probability = Math.round(Math.min(99, Math.max(5, rawProbability * 100)));
 
-    // Determine projected level
     let projectedLevel: string;
     if (probability >= 85) projectedLevel = "High Major (Power 5)";
     else if (probability >= 70) projectedLevel = "Major Conference";
@@ -181,7 +165,6 @@ export function getCollegeProbabilities(filters?: {
     else if (probability >= 25) projectedLevel = "D2 / NAIA";
     else projectedLevel = "D3 / JUCO";
 
-    // Confidence based on data availability
     const confidence = Math.min(100, 30 + gamesPlayed * 10);
 
     return {
@@ -228,7 +211,6 @@ export function getMarketValueProjections(playerId?: number): MarketValueProject
   return probabilities
     .filter((p) => (playerId ? p.player_id === playerId : p.college_probability >= 40))
     .map((p) => {
-      // Determine best-fit conferences based on projected level
       const conferenceFit: string[] = [];
       if (p.projected_level.includes("Power 5") || p.projected_level.includes("High Major")) {
         conferenceFit.push("SEC", "Big Ten", "Big 12", "ACC");
@@ -238,33 +220,26 @@ export function getMarketValueProjections(playerId?: number): MarketValueProject
         conferenceFit.push("Mountain West", "Mid-Major");
       }
 
-      // Base value from best conference fit
       const bestConf = conferenceFit[0];
       const rate = CONFERENCE_MARKET_RATES[bestConf] || CONFERENCE_MARKET_RATES["Mid-Major"];
 
-      // Modify by player attributes
       const starMultiplier = 0.5 + (p.star_rating / 5) * 1.0;
       const statsMultiplier = 0.7 + (p.ppg / 20) * 0.6;
       const probabilityMultiplier = p.college_probability / 100;
 
       const baseValue = rate.base * starMultiplier * statsMultiplier * probabilityMultiplier;
 
-      // Year-over-year projections (freshman to senior)
-      const year1Value = Math.round(baseValue * 0.4); // Freshman: lower value
-      const year2Value = Math.round(baseValue * 0.8); // Sophomore: developing
-      const year3Value = Math.round(baseValue * 1.2); // Junior: peak portal value
-      const year4Value = Math.round(baseValue * 1.0); // Senior: slight decline
-
-      // Portal transfer value (typically peaks junior year)
+      const year1Value = Math.round(baseValue * 0.4);
+      const year2Value = Math.round(baseValue * 0.8);
+      const year3Value = Math.round(baseValue * 1.2);
+      const year4Value = Math.round(baseValue * 1.0);
       const portalValue = Math.round(baseValue * 1.3);
 
-      // Value trend based on trajectory
       let valueTrend: "rising" | "stable" | "declining";
       if (p.star_rating >= 4 && p.ppg >= 15) valueTrend = "rising";
       else if (p.star_rating >= 3) valueTrend = "stable";
       else valueTrend = "declining";
 
-      // Generate comparable player archetypes
       const comparables = generateComparables(p.position, p.ppg, p.rpg, p.apg, p.star_rating);
 
       return {
@@ -348,7 +323,6 @@ export function getCoachMatches(criteria: {
         const playerInches = heightToInches(p.height);
         if (playerInches < minInches) return false;
       }
-      // Filter by conference fit
       if (criteria.conference) {
         const projections = getMarketValueProjections(p.player_id);
         if (projections.length > 0 && !projections[0].conference_fit.includes(criteria.conference)) {
@@ -361,7 +335,6 @@ export function getCoachMatches(criteria: {
       let matchScore = p.college_probability;
       const reasons: string[] = [];
 
-      // Boost based on play style match
       switch (criteria.playStyle) {
         case "scoring":
           if (p.ppg >= 15) { matchScore += 10; reasons.push("Elite scorer"); }
@@ -401,6 +374,3 @@ export function getCoachMatches(criteria: {
     })
     .sort((a, b) => b.match_score - a.match_score);
 }
-
-// SQLite doesn't have STDEV, so we approximate variance in the query as 0
-// This is handled gracefully in the code above
