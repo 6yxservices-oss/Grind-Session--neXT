@@ -1,118 +1,74 @@
 import Link from "next/link";
-import { getAllPlayers } from "@/lib/queries";
-import { getAllTeams } from "@/lib/queries";
+import { getAllPlayers, getAllTeams } from "@/lib/queries";
 import StarRating from "@/components/star-rating";
 
 export const dynamic = "force-dynamic";
 
-export default function PlayersPage({
-  searchParams,
-}: {
-  searchParams: { position?: string; class?: string; team?: string; q?: string };
-}) {
-  const players = getAllPlayers({
-    position: searchParams.position,
-    classYear: searchParams.class ? parseInt(searchParams.class) : undefined,
-    teamId: searchParams.team ? parseInt(searchParams.team) : undefined,
-    search: searchParams.q,
-  });
+function formatCurrency(v: number): string {
+  if (v >= 1000000) return `$${(v / 1000000).toFixed(1)}M`;
+  if (v >= 1000) return `$${(v / 1000).toFixed(0)}K`;
+  return `$${v}`;
+}
+
+export default function PlayersPage({ searchParams }: { searchParams: { position?: string; class?: string; team?: string; q?: string } }) {
+  const players = getAllPlayers({ position: searchParams.position, classYear: searchParams.class ? parseInt(searchParams.class) : undefined, teamId: searchParams.team ? parseInt(searchParams.team) : undefined, search: searchParams.q });
   const teams = getAllTeams();
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Players</h1>
-          <p className="text-gray-400 text-sm mt-1">{players.length} prospects tracked</p>
+          <h1 className="text-2xl font-bold">Recruits</h1>
+          <p className="text-gray-400 text-sm mt-1">{players.length} prospects on Mike V&apos;s board</p>
         </div>
       </div>
 
-      {/* Filters */}
       <form className="flex flex-wrap gap-3">
-        <input
-          name="q"
-          type="text"
-          placeholder="Search players..."
-          defaultValue={searchParams.q}
-          className="input w-64"
-        />
+        <input name="q" type="text" placeholder="Search recruits..." defaultValue={searchParams.q} className="input w-64" />
         <select name="position" defaultValue={searchParams.position || ""} className="select">
           <option value="">All Positions</option>
-          {["PG", "SG", "SF", "PF", "C"].map((p) => (
-            <option key={p} value={p}>{p}</option>
-          ))}
+          {["QB", "RB", "WR", "TE", "OL", "DL", "LB", "CB", "S", "K/P", "ATH"].map((p) => <option key={p} value={p}>{p}</option>)}
         </select>
         <select name="class" defaultValue={searchParams.class || ""} className="select">
           <option value="">All Classes</option>
-          {[2025, 2026, 2027, 2028].map((y) => (
-            <option key={y} value={y}>{y}</option>
-          ))}
+          {[2025, 2026, 2027, 2028].map((y) => <option key={y} value={y}>{y}</option>)}
         </select>
         <select name="team" defaultValue={searchParams.team || ""} className="select">
           <option value="">All Teams</option>
-          {teams.map((t) => (
-            <option key={t.id} value={t.id}>{t.name}</option>
-          ))}
+          {teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
         </select>
         <button type="submit" className="btn-primary">Filter</button>
       </form>
 
-      {/* Player Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="border-b border-gray-800">
+          <thead className="border-b border-psu-light/20">
             <tr>
-              <th className="table-header">Rank</th>
-              <th className="table-header">Player</th>
-              <th className="table-header">Position</th>
-              <th className="table-header">Class</th>
-              <th className="table-header">Height</th>
-              <th className="table-header">Team</th>
-              <th className="table-header">Rating</th>
-              <th className="table-header">Status</th>
+              {["Rank", "Player", "Pos", "Class", "Size", "Team", "Rating", "NIL Value", "Status"].map((h) => <th key={h} className="table-header">{h}</th>)}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-800/50">
-            {players.map((player, i) => (
-              <tr key={player.id} className="hover:bg-white/5 transition-colors">
-                <td className="table-cell text-gray-500">{player.ranking || i + 1}</td>
+          <tbody className="divide-y divide-psu-light/10">
+            {players.map((p, i) => (
+              <tr key={p.id} className="hover:bg-white/5 transition-colors">
+                <td className="table-cell text-gray-500">{p.ranking || i + 1}</td>
                 <td className="table-cell">
-                  <Link href={`/players/${player.id}`} className="text-white hover:text-eybl-accent font-medium">
-                    {player.first_name} {player.last_name}
-                  </Link>
-                  {player.high_school && (
-                    <div className="text-xs text-gray-500">{player.high_school}</div>
-                  )}
+                  <Link href={`/players/${p.id}`} className="text-white hover:text-psu-accent font-medium">{p.first_name} {p.last_name}</Link>
+                  {p.high_school && <div className="text-xs text-gray-500">{p.high_school}</div>}
                 </td>
+                <td className="table-cell"><span className="badge-blue">{p.position}</span></td>
+                <td className="table-cell">{p.class_year}</td>
+                <td className="table-cell text-gray-300">{p.height || "—"} {p.weight ? `/ ${p.weight}` : ""}</td>
+                <td className="table-cell text-gray-300">{p.team_name ? <Link href={`/teams/${p.team_id}`} className="hover:text-psu-accent">{p.team_name}</Link> : "—"}</td>
+                <td className="table-cell"><StarRating rating={p.star_rating} /></td>
+                <td className="table-cell">{p.nil_value ? <span className="text-psu-gold font-medium">{formatCurrency(p.nil_value)}</span> : "—"}</td>
                 <td className="table-cell">
-                  <span className="badge-blue">{player.position}</span>
-                </td>
-                <td className="table-cell">{player.class_year}</td>
-                <td className="table-cell text-gray-300">{player.height || "—"}</td>
-                <td className="table-cell text-gray-300">
-                  {player.team_name ? (
-                    <Link href={`/teams/${player.team_id}`} className="hover:text-eybl-accent">
-                      {player.team_name}
-                    </Link>
-                  ) : "—"}
-                </td>
-                <td className="table-cell">
-                  <StarRating rating={player.star_rating} />
-                </td>
-                <td className="table-cell">
-                  <span className={`badge ${player.status === "Active" ? "bg-green-500/20 text-green-400" : "bg-gray-500/20 text-gray-400"}`}>
-                    {player.status}
-                  </span>
+                  {p.committed_to ? <span className="badge bg-green-500/20 text-green-400">{p.committed_to}</span> : <span className="badge bg-psu-light/20 text-psu-steel">{p.status}</span>}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {players.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            <p>No players found. Seed the database to get started.</p>
-          </div>
-        )}
+        {players.length === 0 && <div className="text-center py-12 text-gray-500">No players found.</div>}
       </div>
     </div>
   );

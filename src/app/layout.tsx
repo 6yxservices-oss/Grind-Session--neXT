@@ -3,8 +3,8 @@ import "./globals.css";
 import Nav from "@/components/nav";
 
 export const metadata: Metadata = {
-  title: "EYBL Scout - Elite Youth Basketball Scouting Platform",
-  description: "Advanced scouting and analytics platform for Nike EYBL prospects",
+  title: "MIKE V's Recruiting Board - Football Scouting Platform",
+  description: "Advanced football recruiting analytics, transfer portal tracking, and NIL valuations",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -4,34 +4,40 @@
 
 @layer base {
   body {
-    @apply bg-eybl-dark text-gray-100;
+    @apply bg-psu-dark text-gray-100;
   }
 }
 
 @layer components {
   .card {
-    @apply bg-eybl-navy border border-gray-800 rounded-lg p-6 hover:border-eybl-accent/30 transition-colors;
+    @apply bg-psu-navy border border-psu-light/30 rounded-lg p-6 hover:border-psu-accent/30 transition-colors;
   }
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
   .badge-gold {
-    @apply badge bg-eybl-gold/20 text-eybl-gold;
+    @apply badge bg-psu-gold/20 text-psu-gold;
   }
   .badge-accent {
-    @apply badge bg-eybl-accent/20 text-eybl-accent;
+    @apply badge bg-psu-accent/20 text-psu-accent;
   }
   .badge-blue {
     @apply badge bg-blue-500/20 text-blue-400;
   }
+  .badge-white {
+    @apply badge bg-white/10 text-white;
+  }
   .btn-primary {
-    @apply bg-eybl-accent hover:bg-eybl-accent/80 text-white font-medium px-4 py-2 rounded-lg transition-colors;
+    @apply bg-psu-accent hover:bg-psu-accent/80 text-white font-medium px-4 py-2 rounded-lg transition-colors;
   }
   .btn-secondary {
-    @apply bg-eybl-blue hover:bg-eybl-blue/80 text-gray-200 font-medium px-4 py-2 rounded-lg border border-gray-700 transition-colors;
+    @apply bg-psu-blue hover:bg-psu-blue/80 text-gray-200 font-medium px-4 py-2 rounded-lg border border-psu-light/30 transition-colors;
+  }
+  .btn-follow {
+    @apply bg-psu-navy hover:bg-psu-accent text-white font-medium px-4 py-2 rounded-lg border border-psu-accent/50 transition-all;
   }
   .input {
-    @apply bg-eybl-blue border border-gray-700 rounded-lg px-3 py-2 text-gray-100 focus:outline-none focus:border-eybl-accent/50 transition-colors;
+    @apply bg-psu-blue border border-psu-light/30 rounded-lg px-3 py-2 text-gray-100 focus:outline-none focus:border-psu-accent/50 transition-colors;
   }
   .select {
     @apply input appearance-none cursor-pointer;
@@ -44,5 +50,8 @@
   }
   .grade-badge {
     @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold;
+  }
+  .nittany-gradient {
+    @apply bg-gradient-to-r from-psu-navy via-psu-blue to-psu-navy;
   }
 }

@@ -9,12 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        eybl: {
-          navy: "#1a1a2e",
-          blue: "#16213e",
-          accent: "#e94560",
-          gold: "#f5a623",
-          dark: "#0f0f1a",
+        psu: {
+          navy: "#041E42",
+          white: "#FFFFFF",
+          blue: "#0a2a5c",
+          accent: "#1E88E5",
+          dark: "#021029",
+          light: "#1a3a6a",
+          gold: "#c5b358",
+          steel: "#9EA2A2",
         },
       },
     },

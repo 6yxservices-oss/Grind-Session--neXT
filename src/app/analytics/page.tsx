@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCollegeProbabilities, getMarketValueProjections, getCoachMatches } from "@/lib/analytics";
 import StarRating from "@/components/star-rating";
+import { POSITIONS } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,6 @@ export default function AnalyticsPage({
     position?: string;
     class?: string;
     minProb?: string;
-    style?: string;
     minStars?: string;
   };
 }) {
@@ -26,22 +26,16 @@ export default function AnalyticsPage({
   const position = searchParams.position || undefined;
   const classYear = searchParams.class ? parseInt(searchParams.class) : undefined;
 
-  // College Probability Data
   const probabilities = getCollegeProbabilities({
     position,
     classYear,
     minProbability: searchParams.minProb ? parseInt(searchParams.minProb) : undefined,
   });
 
-  // Market Value Projections
   const marketValues = getMarketValueProjections();
 
-  // Coach Matching
   const coachMatches = getCoachMatches({
     position,
-    minClassYear: classYear,
-    maxClassYear: classYear,
-    playStyle: (searchParams.style as "scoring" | "defensive" | "playmaking" | "rebounding" | "all-around") || undefined,
     minStarRating: searchParams.minStars ? parseInt(searchParams.minStars) : undefined,
   });
 
@@ -50,15 +44,15 @@ export default function AnalyticsPage({
       <div>
         <h1 className="text-2xl font-bold">Analytics & Insights</h1>
         <p className="text-gray-400 text-sm mt-1">
-          College probability predictions, transfer portal market values, and coach-player matching
+          Recruiting probability, NIL market values, and coach-recruit matching
         </p>
       </div>
 
       {/* Tab Navigation */}
       <div className="flex gap-2 border-b border-gray-800 pb-3">
         {[
-          { key: "college", label: "College Probability" },
-          { key: "market", label: "Market Value" },
+          { key: "college", label: "Recruiting Probability" },
+          { key: "market", label: "NIL Market Value" },
           { key: "coach", label: "Coach Matching" },
         ].map((t) => (
           <Link
@@ -66,7 +60,7 @@ export default function AnalyticsPage({
             href={`/analytics?tab=${t.key}`}
             className={`px-4 py-2 rounded-t-lg text-sm font-medium transition-colors ${
               tab === t.key
-                ? "bg-eybl-accent/10 text-eybl-accent border-b-2 border-eybl-accent"
+                ? "bg-psu-accent/10 text-psu-accent border-b-2 border-psu-accent"
                 : "text-gray-400 hover:text-gray-200"
             }`}
           >
@@ -80,7 +74,7 @@ export default function AnalyticsPage({
         <input type="hidden" name="tab" value={tab} />
         <select name="position" defaultValue={searchParams.position || ""} className="select">
           <option value="">All Positions</option>
-          {["PG", "SG", "SF", "PF", "C"].map((p) => (
+          {POSITIONS.map((p) => (
             <option key={p} value={p}>{p}</option>
           ))}
         </select>
@@ -100,35 +94,25 @@ export default function AnalyticsPage({
           </select>
         )}
         {tab === "coach" && (
-          <>
-            <select name="style" defaultValue={searchParams.style || ""} className="select">
-              <option value="">All Play Styles</option>
-              <option value="scoring">Scoring</option>
-              <option value="playmaking">Playmaking</option>
-              <option value="rebounding">Rebounding</option>
-              <option value="defensive">Defensive</option>
-              <option value="all-around">All-Around</option>
-            </select>
-            <select name="minStars" defaultValue={searchParams.minStars || ""} className="select">
-              <option value="">Min Stars</option>
-              <option value="5">5 Stars</option>
-              <option value="4">4+ Stars</option>
-              <option value="3">3+ Stars</option>
-            </select>
-          </>
+          <select name="minStars" defaultValue={searchParams.minStars || ""} className="select">
+            <option value="">Min Stars</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4+ Stars</option>
+            <option value="3">3+ Stars</option>
+          </select>
         )}
         <button type="submit" className="btn-primary">Apply</button>
       </form>
 
-      {/* ─── College Probability Tab ─── */}
+      {/* ─── Recruiting Probability Tab ─── */}
       {tab === "college" && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             {[
-              { label: "Power 5 Caliber", count: probabilities.filter((p) => p.college_probability >= 80).length, color: "text-green-400" },
-              { label: "Major Conf.", count: probabilities.filter((p) => p.college_probability >= 60 && p.college_probability < 80).length, color: "text-blue-400" },
-              { label: "Mid-Major", count: probabilities.filter((p) => p.college_probability >= 40 && p.college_probability < 60).length, color: "text-yellow-400" },
-              { label: "Lower Division", count: probabilities.filter((p) => p.college_probability < 40).length, color: "text-gray-400" },
+              { label: "Power 4 Caliber", count: probabilities.filter((p) => p.college_probability >= 80).length, color: "text-green-400" },
+              { label: "Power Conference", count: probabilities.filter((p) => p.college_probability >= 60 && p.college_probability < 80).length, color: "text-blue-400" },
+              { label: "Group of 5", count: probabilities.filter((p) => p.college_probability >= 40 && p.college_probability < 60).length, color: "text-yellow-400" },
+              { label: "FCS / Lower", count: probabilities.filter((p) => p.college_probability < 40).length, color: "text-gray-400" },
             ].map((tier) => (
               <div key={tier.label} className="card text-center">
                 <div className={`text-3xl font-bold ${tier.color}`}>{tier.count}</div>
@@ -142,13 +126,11 @@ export default function AnalyticsPage({
               <thead className="border-b border-gray-800">
                 <tr>
                   <th className="table-header">#</th>
-                  <th className="table-header">Player</th>
+                  <th className="table-header">Recruit</th>
                   <th className="table-header">Pos</th>
                   <th className="table-header">Class</th>
                   <th className="table-header">Stars</th>
-                  <th className="table-header">PPG</th>
-                  <th className="table-header">RPG</th>
-                  <th className="table-header">APG</th>
+                  <th className="table-header">NIL Value</th>
                   <th className="table-header">Probability</th>
                   <th className="table-header">Projected Level</th>
                   <th className="table-header">Confidence</th>
@@ -159,7 +141,7 @@ export default function AnalyticsPage({
                   <tr key={p.player_id} className="hover:bg-white/5">
                     <td className="table-cell text-gray-500">{i + 1}</td>
                     <td className="table-cell">
-                      <Link href={`/players/${p.player_id}`} className="font-medium hover:text-eybl-accent">
+                      <Link href={`/players/${p.player_id}`} className="font-medium hover:text-psu-accent">
                         {p.player_name}
                       </Link>
                       {p.team_name && <div className="text-xs text-gray-500">{p.team_name}</div>}
@@ -167,9 +149,7 @@ export default function AnalyticsPage({
                     <td className="table-cell"><span className="badge-blue">{p.position}</span></td>
                     <td className="table-cell">{p.class_year}</td>
                     <td className="table-cell"><StarRating rating={p.star_rating} /></td>
-                    <td className="table-cell">{p.ppg}</td>
-                    <td className="table-cell">{p.rpg}</td>
-                    <td className="table-cell">{p.apg}</td>
+                    <td className="table-cell text-psu-gold font-medium">{formatCurrency(p.nil_value)}</td>
                     <td className="table-cell">
                       <div className="flex items-center gap-2">
                         <div className="w-16 bg-gray-800 rounded-full h-2">
@@ -194,12 +174,12 @@ export default function AnalyticsPage({
             </table>
           </div>
           {probabilities.length === 0 && (
-            <div className="text-center py-12 text-gray-500">No player data available</div>
+            <div className="text-center py-12 text-gray-500">No recruit data available</div>
           )}
         </div>
       )}
 
-      {/* ─── Market Value Tab ─── */}
+      {/* ─── NIL Market Value Tab ─── */}
       {tab === "market" && (
         <div className="space-y-4">
           <div className="overflow-x-auto">
@@ -207,7 +187,7 @@ export default function AnalyticsPage({
               <thead className="border-b border-gray-800">
                 <tr>
                   <th className="table-header">#</th>
-                  <th className="table-header">Player</th>
+                  <th className="table-header">Recruit</th>
                   <th className="table-header">Pos</th>
                   <th className="table-header">Level</th>
                   <th className="table-header">Fr. NIL</th>
@@ -224,7 +204,7 @@ export default function AnalyticsPage({
                   <tr key={mv.player_id} className="hover:bg-white/5">
                     <td className="table-cell text-gray-500">{i + 1}</td>
                     <td className="table-cell">
-                      <Link href={`/players/${mv.player_id}`} className="font-medium hover:text-eybl-accent">
+                      <Link href={`/players/${mv.player_id}`} className="font-medium hover:text-psu-accent">
                         {mv.player_name}
                       </Link>
                     </td>
@@ -235,7 +215,7 @@ export default function AnalyticsPage({
                     <td className="table-cell text-sm">{formatCurrency(mv.year3_value)}</td>
                     <td className="table-cell text-sm">{formatCurrency(mv.year4_value)}</td>
                     <td className="table-cell">
-                      <span className="text-eybl-accent font-bold">{formatCurrency(mv.portal_value)}</span>
+                      <span className="text-psu-accent font-bold">{formatCurrency(mv.portal_value)}</span>
                     </td>
                     <td className="table-cell">
                       <span className={`badge ${
@@ -267,23 +247,23 @@ export default function AnalyticsPage({
       {/* ─── Coach Matching Tab ─── */}
       {tab === "coach" && (
         <div className="space-y-4">
-          <div className="card bg-eybl-blue/50 border-eybl-accent/20">
+          <div className="card bg-psu-blue/50 border-psu-accent/20">
             <p className="text-sm text-gray-300">
-              <strong className="text-eybl-accent">Coach Matching</strong> connects coaches directly to players with the highest probability of making it to college.
-              Filter by position, play style, and star rating to find the best fit for your program.
+              <strong className="text-psu-accent">Coach Matching</strong> connects coaching staffs to recruits with the highest probability of earning a scholarship.
+              Filter by position and star rating to find the best fit for your program.
             </p>
           </div>
 
           <div className="grid gap-4">
             {coachMatches.map((match, i) => (
-              <div key={match.player_id} className="card hover:border-eybl-accent/50">
+              <div key={match.player_id} className="card hover:border-psu-accent/50">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-eybl-accent/20 flex items-center justify-center text-eybl-accent font-bold text-sm">
+                    <div className="w-10 h-10 rounded-full bg-psu-accent/20 flex items-center justify-center text-psu-accent font-bold text-sm">
                       {i + 1}
                     </div>
                     <div>
-                      <Link href={`/players/${match.player_id}`} className="text-lg font-semibold hover:text-eybl-accent">
+                      <Link href={`/players/${match.player_id}`} className="text-lg font-semibold hover:text-psu-accent">
                         {match.player_name}
                       </Link>
                       <div className="flex items-center gap-3 mt-1">
@@ -292,9 +272,7 @@ export default function AnalyticsPage({
                         <StarRating rating={match.star_rating} />
                       </div>
                       <div className="flex gap-6 mt-3 text-sm">
-                        <div><span className="text-gray-500">PPG:</span> <span className="font-medium">{match.ppg}</span></div>
-                        <div><span className="text-gray-500">RPG:</span> <span className="font-medium">{match.rpg}</span></div>
-                        <div><span className="text-gray-500">APG:</span> <span className="font-medium">{match.apg}</span></div>
+                        <div><span className="text-gray-500">NIL:</span> <span className="font-medium text-psu-gold">{formatCurrency(match.nil_value)}</span></div>
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3">
                         {match.match_reasons.map((reason) => (
@@ -319,7 +297,7 @@ export default function AnalyticsPage({
                         match.college_probability >= 60 ? "text-blue-400" :
                         "text-yellow-400"
                       }`}>
-                        {match.college_probability}% college prob.
+                        {match.college_probability}% recruiting prob.
                       </div>
                     </div>
                   </div>
@@ -328,7 +306,7 @@ export default function AnalyticsPage({
             ))}
           </div>
           {coachMatches.length === 0 && (
-            <div className="text-center py-12 text-gray-500">No matching players found. Adjust your filters.</div>
+            <div className="text-center py-12 text-gray-500">No matching recruits found. Adjust your filters.</div>
           )}
         </div>
       )}
