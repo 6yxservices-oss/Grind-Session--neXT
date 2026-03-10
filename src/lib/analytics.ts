@@ -1,4 +1,4 @@
-import { getDb } from "./db";
+import { getData } from "./db";
 
 const CONFERENCE_NIL_RATES: Record<string, number> = {
   "Big Ten": 350000,
@@ -28,10 +28,26 @@ export function getCollegeProbabilities(filters?: {
   position?: string;
   classYear?: number;
 }): CollegeProbability[] {
-  const players = getDb().prepare(`SELECT p.id, p.first_name, p.last_name, p.position, p.class_year, p.star_rating, p.nil_value, t.name as team_name, COUNT(ps.id) as games_played FROM players p LEFT JOIN teams t ON p.team_id = t.id LEFT JOIN player_stats ps ON p.id = ps.player_id GROUP BY p.id`).all() as Array<Record<string, number | string | null>>;
+  const data = getData();
+
+  const players = data.players.map((p) => {
+    const team = data.teams.find((t) => t.id === p.team_id);
+    const gamesPlayed = data.player_stats.filter((ps) => ps.player_id === p.id).length;
+    return {
+      id: p.id,
+      first_name: p.first_name,
+      last_name: p.last_name,
+      position: p.position,
+      class_year: p.class_year,
+      star_rating: p.star_rating,
+      nil_value: p.nil_value,
+      team_name: team?.name ?? null,
+      games_played: gamesPlayed,
+    };
+  });
 
   const results: CollegeProbability[] = players.map((p) => {
-    const stars = (p.star_rating as number) || 0;
+    const stars = Number(p.star_rating) || 0;
     const probability = Math.min(99, Math.max(5, Math.round(stars * 18 + Math.random() * 10)));
     let level: string;
     if (probability >= 85) level = "Power 4 (Big Ten, SEC, Big 12, ACC)";
@@ -39,7 +55,7 @@ export function getCollegeProbabilities(filters?: {
     else if (probability >= 50) level = "Group of 5";
     else if (probability >= 30) level = "FCS / Low D1";
     else level = "D2 / D3";
-    const confidence = Math.min(100, 30 + ((p.games_played as number) || 0) * 10);
+    const confidence = Math.min(100, 30 + (p.games_played || 0) * 10);
 
     return {
       player_id: p.id as number,
@@ -50,7 +66,7 @@ export function getCollegeProbabilities(filters?: {
       star_rating: stars,
       college_probability: probability,
       projected_level: level,
-      nil_value: (p.nil_value as number) || 0,
+      nil_value: Number(p.nil_value) || 0,
       confidence,
     };
   });

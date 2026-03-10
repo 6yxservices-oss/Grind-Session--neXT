@@ -1,15 +1,19 @@
-import { getDb } from "./db";
+import { getData } from "./db";
 import type { Player, Team, Game, PlayerStats, ScoutingReport, FootballMetrics, NflProjection, ScholasticData, TransferPortalEntry, FeedPost, MerchItem, SocialAction, NilContract } from "./types";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+function as<T>(rows: Record<string, unknown>[]): T[] { return rows as unknown as T[]; }
+function asOne<T>(row: Record<string, unknown> | undefined): T | null { return (row as unknown as T) ?? null; }
 
 // ── Teams ──────────────────────────────────────────────
 export function getAllTeams(): Team[] {
-  return getDb().prepare("SELECT * FROM teams ORDER BY name").all() as Team[];
+  return as<Team>(getData().teams.slice().sort((a, b) => String(a.name).localeCompare(String(b.name))));
 }
 
 export function getTeamById(id: number): (Team & { players: Player[] }) | null {
-  const team = getDb().prepare("SELECT * FROM teams WHERE id = ?").get(id) as Team | undefined;
+  const team = asOne<Team>(getData().teams.find((t) => t.id === id));
   if (!team) return null;
-  const players = getDb().prepare("SELECT * FROM players WHERE team_id = ? ORDER BY last_name").all(id) as Player[];
+  const players = as<Player>(getData().players.filter((p) => p.team_id === id).sort((a, b) => String(a.last_name).localeCompare(String(b.last_name))));
   return { ...team, players };
 }
 
@@ -20,14 +24,22 @@ export function getAllPlayers(filters?: {
   teamId?: number;
   search?: string;
 }): Player[] {
-  let query = `SELECT p.*, t.name as team_name FROM players p LEFT JOIN teams t ON p.team_id = t.id WHERE 1=1`;
-  const params: unknown[] = [];
-  if (filters?.position) { query += " AND p.position = ?"; params.push(filters.position); }
-  if (filters?.classYear) { query += " AND p.class_year = ?"; params.push(filters.classYear); }
-  if (filters?.teamId) { query += " AND p.team_id = ?"; params.push(filters.teamId); }
-  if (filters?.search) { query += " AND (p.first_name || ' ' || p.last_name LIKE ?)"; params.push(`%${filters.search}%`); }
-  query += " ORDER BY p.star_rating DESC, p.ranking ASC";
-  return getDb().prepare(query).all(...params) as Player[];
+  const data = getData();
+  let rows = data.players.map((p: any) => {
+    const team = data.teams.find((t) => t.id === p.team_id);
+    return { ...p, team_name: team ? team.name : null };
+  });
+
+  if (filters?.position) rows = rows.filter((p) => p.position === filters.position);
+  if (filters?.classYear) rows = rows.filter((p) => p.class_year === filters.classYear);
+  if (filters?.teamId) rows = rows.filter((p) => p.team_id === filters.teamId);
+  if (filters?.search) {
+    const s = String(filters.search).toLowerCase();
+    rows = rows.filter((p) => `${p.first_name} ${p.last_name}`.toLowerCase().includes(s));
+  }
+
+  rows.sort((a, b) => Number(b.star_rating) - Number(a.star_rating) || (Number(a.ranking) || 999) - (Number(b.ranking) || 999));
+  return as<Player>(rows);
 }
 
 export function getPlayerById(id: number): (Player & {
@@ -40,131 +52,280 @@ export function getPlayerById(id: number): (Player & {
   social_counts: Record<string, number>;
   portal_entry: TransferPortalEntry | null;
 }) | null {
-  const player = getDb().prepare(`SELECT p.*, t.name as team_name FROM players p LEFT JOIN teams t ON p.team_id = t.id WHERE p.id = ?`).get(id) as Player | undefined;
-  if (!player) return null;
+  const data = getData();
+  const raw = data.players.find((p) => p.id === id);
+  if (!raw) return null;
 
-  const stats = getDb().prepare(`SELECT ps.*, ht.name || ' vs ' || at.name as game_info FROM player_stats ps JOIN games g ON ps.game_id = g.id JOIN teams ht ON g.home_team_id = ht.id JOIN teams at ON g.away_team_id = at.id WHERE ps.player_id = ? ORDER BY g.game_date DESC`).all(id) as PlayerStats[];
-  const reports = getDb().prepare(`SELECT sr.* FROM scouting_reports sr WHERE sr.player_id = ? ORDER BY sr.created_at DESC`).all(id) as ScoutingReport[];
-  const metrics = (getDb().prepare("SELECT * FROM football_metrics WHERE player_id = ?").get(id) as FootballMetrics | undefined) ?? null;
-  const nfl_projection = (getDb().prepare("SELECT * FROM nfl_projections WHERE player_id = ?").get(id) as NflProjection | undefined) ?? null;
-  const scholastic = (getDb().prepare("SELECT * FROM scholastic_data WHERE player_id = ?").get(id) as ScholasticData | undefined) ?? null;
-  const merch = getDb().prepare("SELECT * FROM merch_items WHERE player_id = ? AND in_stock = 1").all(id) as MerchItem[];
-  const portal_entry = (getDb().prepare("SELECT * FROM transfer_portal WHERE player_id = ?").get(id) as TransferPortalEntry | undefined) ?? null;
+  const team = data.teams.find((t) => t.id === raw.team_id);
+  const player = { ...raw, team_name: team ? team.name : null } as unknown as Player;
 
-  const follows = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE player_id = ? AND action_type = 'follow'").get(id) as {c:number}).c;
-  const likes = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE player_id = ? AND action_type = 'like'").get(id) as {c:number}).c;
-  const shortlisted = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE player_id = ? AND action_type = 'shortlist'").get(id) as {c:number}).c;
+  const stats = as<PlayerStats>(
+    data.player_stats
+      .filter((ps) => ps.player_id === id)
+      .map((ps) => {
+        const game = data.games.find((g) => g.id === ps.game_id);
+        const ht = game ? data.teams.find((t) => t.id === game.home_team_id) : null;
+        const at = game ? data.teams.find((t) => t.id === game.away_team_id) : null;
+        return { ...ps, game_info: ht && at ? `${ht.name} vs ${at.name}` : "" };
+      })
+      .sort((a, b) => {
+        const ga = data.games.find((g) => g.id === a.game_id);
+        const gb = data.games.find((g) => g.id === b.game_id);
+        return String(gb?.game_date ?? "").localeCompare(String(ga?.game_date ?? ""));
+      })
+  );
+
+  const reports = as<ScoutingReport>(
+    data.scouting_reports.filter((sr) => sr.player_id === id).sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+  );
+
+  const metrics = asOne<FootballMetrics>(data.football_metrics.find((fm) => fm.player_id === id));
+  const nfl_projection = asOne<NflProjection>(data.nfl_projections.find((np) => np.player_id === id));
+  const scholastic = asOne<ScholasticData>(data.scholastic_data.find((sd) => sd.player_id === id));
+  const merch = as<MerchItem>(data.merch_items.filter((m) => m.player_id === id && m.in_stock === 1));
+  const portal_entry = asOne<TransferPortalEntry>(data.transfer_portal.find((tp) => tp.player_id === id));
+
+  const follows = data.social_actions.filter((sa) => sa.player_id === id && sa.action_type === "follow").length;
+  const likes = data.social_actions.filter((sa) => sa.player_id === id && sa.action_type === "like").length;
+  const shortlisted = data.social_actions.filter((sa) => sa.player_id === id && sa.action_type === "shortlist").length;
 
   return { ...player, stats, reports, metrics, nfl_projection, scholastic, merch, portal_entry, social_counts: { follows, likes, shortlisted } };
 }
 
 // ── Games ──────────────────────────────────────────────
 export function getAllGames(filters?: { week?: number; status?: string }): Game[] {
-  let query = `SELECT g.*, ht.name as home_team_name, at.name as away_team_name FROM games g JOIN teams ht ON g.home_team_id = ht.id JOIN teams at ON g.away_team_id = at.id WHERE 1=1`;
-  const params: unknown[] = [];
-  if (filters?.week) { query += " AND g.week_number = ?"; params.push(filters.week); }
-  if (filters?.status) { query += " AND g.status = ?"; params.push(filters.status); }
-  query += " ORDER BY g.game_date DESC";
-  return getDb().prepare(query).all(...params) as Game[];
+  const data = getData();
+  let rows = data.games.map((g: any) => {
+    const ht = data.teams.find((t) => t.id === g.home_team_id);
+    const at = data.teams.find((t) => t.id === g.away_team_id);
+    return { ...g, home_team_name: ht?.name ?? "TBD", away_team_name: at?.name ?? "TBD" };
+  });
+
+  if (filters?.week) rows = rows.filter((g) => g.week_number === filters.week);
+  if (filters?.status) rows = rows.filter((g) => g.status === filters.status);
+  rows.sort((a, b) => String(b.game_date).localeCompare(String(a.game_date)));
+  return as<Game>(rows);
 }
 
 export function getGameById(id: number): (Game & { stats: (PlayerStats & { player_name: string })[] }) | null {
-  const game = getDb().prepare(`SELECT g.*, ht.name as home_team_name, at.name as away_team_name FROM games g JOIN teams ht ON g.home_team_id = ht.id JOIN teams at ON g.away_team_id = at.id WHERE g.id = ?`).get(id) as Game | undefined;
-  if (!game) return null;
-  const stats = getDb().prepare(`SELECT ps.*, p.first_name || ' ' || p.last_name as player_name FROM player_stats ps JOIN players p ON ps.player_id = p.id WHERE ps.game_id = ? ORDER BY ps.tackles + ps.pass_yards + ps.rush_yards DESC`).all(id) as (PlayerStats & { player_name: string })[];
-  return { ...game, stats };
+  const data = getData();
+  const raw = data.games.find((g) => g.id === id);
+  if (!raw) return null;
+  const ht = data.teams.find((t) => t.id === raw.home_team_id);
+  const at = data.teams.find((t) => t.id === raw.away_team_id);
+  const game = { ...raw, home_team_name: ht?.name ?? "TBD", away_team_name: at?.name ?? "TBD" } as unknown as Game;
+
+  const stats = data.player_stats
+    .filter((ps) => ps.game_id === id)
+    .map((ps) => {
+      const p = data.players.find((pl) => pl.id === ps.player_id);
+      return { ...ps, player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown" };
+    })
+    .sort((a, b) => (Number(b.tackles) + Number(b.pass_yards) + Number(b.rush_yards)) - (Number(a.tackles) + Number(a.pass_yards) + Number(a.rush_yards)));
+
+  return { ...game, stats: stats as unknown as (PlayerStats & { player_name: string })[] };
 }
 
 // ── Scouting Reports ──────────────────────────────────
 export function getAllReports(): ScoutingReport[] {
-  return getDb().prepare(`SELECT sr.*, p.first_name || ' ' || p.last_name as player_name FROM scouting_reports sr JOIN players p ON sr.player_id = p.id ORDER BY sr.created_at DESC`).all() as ScoutingReport[];
+  const data = getData();
+  return as<ScoutingReport>(
+    data.scouting_reports
+      .slice()
+      .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+      .map((sr) => {
+        const p = data.players.find((pl) => pl.id === sr.player_id);
+        return { ...sr, player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown" };
+      })
+  );
 }
 
 export function getReportById(id: number): ScoutingReport | null {
-  return (getDb().prepare(`SELECT sr.*, p.first_name || ' ' || p.last_name as player_name FROM scouting_reports sr JOIN players p ON sr.player_id = p.id WHERE sr.id = ?`).get(id) as ScoutingReport | undefined) ?? null;
+  const data = getData();
+  const sr = data.scouting_reports.find((r) => r.id === id);
+  if (!sr) return null;
+  const p = data.players.find((pl) => pl.id === sr.player_id);
+  return { ...sr, player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown" } as unknown as ScoutingReport;
 }
 
-export function createReport(data: Record<string, unknown>): number {
-  const result = getDb().prepare(`INSERT INTO scouting_reports (player_id, game_id, scout_name, overall_grade, offensive_grade, defensive_grade, athleticism_grade, football_iq_grade, strengths, weaknesses, notes, projection, comparison) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(data.player_id, data.game_id ?? null, data.scout_name, data.overall_grade, data.offensive_grade ?? null, data.defensive_grade ?? null, data.athleticism_grade ?? null, data.football_iq_grade ?? null, data.strengths ?? null, data.weaknesses ?? null, data.notes ?? null, data.projection ?? null, data.comparison ?? null);
-  return Number(result.lastInsertRowid);
+export function createReport(body: Record<string, unknown>): number {
+  const data = getData();
+  const id = data.scouting_reports.length + 100;
+  data.scouting_reports.push({
+    id,
+    player_id: body.player_id,
+    game_id: body.game_id ?? null,
+    scout_name: body.scout_name,
+    overall_grade: body.overall_grade,
+    offensive_grade: body.offensive_grade ?? null,
+    defensive_grade: body.defensive_grade ?? null,
+    athleticism_grade: body.athleticism_grade ?? null,
+    football_iq_grade: body.football_iq_grade ?? null,
+    strengths: body.strengths ?? null,
+    weaknesses: body.weaknesses ?? null,
+    notes: body.notes ?? null,
+    projection: body.projection ?? null,
+    comparison: body.comparison ?? null,
+    created_at: new Date().toISOString(),
+  });
+  return id;
 }
 
 // ── Transfer Portal ───────────────────────────────────
 export function getTransferPortalFeed(): TransferPortalEntry[] {
-  return getDb().prepare(`SELECT tp.*, p.first_name || ' ' || p.last_name as player_name, p.position, p.nil_value, p.star_rating, t.name as team_name FROM transfer_portal tp JOIN players p ON tp.player_id = p.id LEFT JOIN teams t ON p.team_id = t.id ORDER BY tp.transfer_likelihood DESC`).all() as TransferPortalEntry[];
+  const data = getData();
+  return as<TransferPortalEntry>(
+    data.transfer_portal
+      .map((tp) => {
+        const p = data.players.find((pl) => pl.id === tp.player_id);
+        const t = p ? data.teams.find((te) => te.id === p.team_id) : null;
+        return {
+          ...tp,
+          player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown",
+          position: p?.position,
+          nil_value: p?.nil_value,
+          star_rating: p?.star_rating,
+          team_name: t?.name ?? null,
+        };
+      })
+      .sort((a, b) => Number(b.transfer_likelihood) - Number(a.transfer_likelihood))
+  );
 }
 
 // ── Social ─────────────────────────────────────────────
 export function toggleSocialAction(userId: string, playerId: number, actionType: string): boolean {
-  const existing = getDb().prepare("SELECT id FROM social_actions WHERE user_id = ? AND player_id = ? AND action_type = ?").get(userId, playerId, actionType);
-  if (existing) {
-    getDb().prepare("DELETE FROM social_actions WHERE user_id = ? AND player_id = ? AND action_type = ?").run(userId, playerId, actionType);
+  const data = getData();
+  const idx = data.social_actions.findIndex(
+    (sa) => sa.user_id === userId && sa.player_id === playerId && sa.action_type === actionType
+  );
+  if (idx >= 0) {
+    data.social_actions.splice(idx, 1);
     return false;
   }
-  getDb().prepare("INSERT INTO social_actions (user_id, player_id, action_type) VALUES (?, ?, ?)").run(userId, playerId, actionType);
+  data.social_actions.push({ id: Date.now(), user_id: userId, player_id: playerId, action_type: actionType, created_at: new Date().toISOString() });
   return true;
 }
 
 export function getUserActions(userId: string): SocialAction[] {
-  return getDb().prepare("SELECT * FROM social_actions WHERE user_id = ?").all(userId) as SocialAction[];
+  return as<SocialAction>(getData().social_actions.filter((sa) => sa.user_id === userId));
 }
 
 export function getShortlistedPlayers(userId: string): Player[] {
-  return getDb().prepare(`SELECT p.*, t.name as team_name FROM players p LEFT JOIN teams t ON p.team_id = t.id JOIN social_actions sa ON p.id = sa.player_id WHERE sa.user_id = ? AND sa.action_type = 'shortlist' ORDER BY p.star_rating DESC`).all(userId) as Player[];
+  const data = getData();
+  const shortIds = new Set(data.social_actions.filter((sa) => sa.user_id === userId && sa.action_type === "shortlist").map((sa) => sa.player_id));
+  return as<Player>(
+    data.players
+      .filter((p) => shortIds.has(p.id))
+      .map((p) => {
+        const t = data.teams.find((te) => te.id === p.team_id);
+        return { ...p, team_name: t?.name ?? null };
+      })
+      .sort((a, b) => Number(b.star_rating) - Number(a.star_rating))
+  );
 }
 
 // ── Feed ───────────────────────────────────────────────
 export function getFeedPosts(): FeedPost[] {
-  return getDb().prepare(`SELECT fp.*, p.first_name || ' ' || p.last_name as player_name FROM feed_posts fp LEFT JOIN players p ON fp.player_id = p.id ORDER BY fp.created_at DESC`).all() as FeedPost[];
+  const data = getData();
+  return as<FeedPost>(
+    data.feed_posts
+      .map((fp) => {
+        const p = fp.player_id ? data.players.find((pl) => pl.id === fp.player_id) : null;
+        return { ...fp, player_name: p ? `${p.first_name} ${p.last_name}` : null };
+      })
+      .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+  );
 }
 
 // ── NIL Contracts ─────────────────────────────────────
 export function getNilContract(playerId: number): NilContract | null {
-  return (getDb().prepare("SELECT * FROM nil_contracts WHERE player_id = ?").get(playerId) as NilContract | undefined) ?? null;
+  return asOne<NilContract>(getData().nil_contracts.find((nc) => nc.player_id === playerId));
 }
 
-export function createNilContract(data: {
+export function createNilContract(body: {
   player_id: number;
   player_legal_name: string;
   player_email: string;
   digital_signature: string;
   ip_address?: string;
 }): number {
-  const result = getDb().prepare(
-    `INSERT INTO nil_contracts (player_id, player_legal_name, player_email, digital_signature, ip_address)
-     VALUES (?, ?, ?, ?, ?)`
-  ).run(data.player_id, data.player_legal_name, data.player_email, data.digital_signature, data.ip_address ?? null);
-  return Number(result.lastInsertRowid);
+  const data = getData();
+  const id = data.nil_contracts.length + 100;
+  data.nil_contracts.push({
+    id,
+    player_id: body.player_id,
+    player_legal_name: body.player_legal_name,
+    player_email: body.player_email,
+    license_type: "non-exclusive",
+    revenue_split_player: 70,
+    revenue_split_collective: 30,
+    merch_categories: "Apparel,Headwear,Accessories",
+    contract_status: "active",
+    signed_at: new Date().toISOString(),
+    ip_address: body.ip_address ?? null,
+    digital_signature: body.digital_signature,
+    terms_version: "1.0",
+    created_at: new Date().toISOString(),
+  });
+  return id;
 }
 
 export function getPlayersWithNilContracts(): (Player & { contract: NilContract })[] {
-  const rows = getDb().prepare(
-    `SELECT p.*, t.name as team_name, nc.id as nc_id, nc.signed_at, nc.contract_status, nc.revenue_split_player, nc.revenue_split_collective
-     FROM players p
-     JOIN nil_contracts nc ON p.id = nc.player_id
-     LEFT JOIN teams t ON p.team_id = t.id
-     WHERE nc.contract_status = 'active'
-     ORDER BY p.star_rating DESC`
-  ).all() as (Player & { nc_id: number; signed_at: string; contract_status: string; revenue_split_player: number; revenue_split_collective: number })[];
-  return rows.map((r) => ({
-    ...r,
-    contract: { id: r.nc_id, player_id: r.id, signed_at: r.signed_at, contract_status: r.contract_status, revenue_split_player: r.revenue_split_player, revenue_split_collective: r.revenue_split_collective } as NilContract,
-  }));
+  const data = getData();
+  return data.nil_contracts
+    .filter((nc) => nc.contract_status === "active")
+    .map((nc) => {
+      const p = data.players.find((pl) => pl.id === nc.player_id);
+      const t = p ? data.teams.find((te) => te.id === p.team_id) : null;
+      return {
+        ...(p ?? {}),
+        team_name: t?.name ?? null,
+        contract: nc as unknown as NilContract,
+      };
+    })
+    .sort((a, b) => Number(b.star_rating ?? 0) - Number(a.star_rating ?? 0)) as unknown as (Player & { contract: NilContract })[];
 }
 
 // ── Dashboard ──────────────────────────────────────────
 export function getDashboardStats() {
-  const db = getDb();
-  const playerCount = (db.prepare("SELECT COUNT(*) as c FROM players").get() as {c:number}).c;
-  const teamCount = (db.prepare("SELECT COUNT(*) as c FROM teams").get() as {c:number}).c;
-  const gameCount = (db.prepare("SELECT COUNT(*) as c FROM games").get() as {c:number}).c;
-  const reportCount = (db.prepare("SELECT COUNT(*) as c FROM scouting_reports").get() as {c:number}).c;
+  const data = getData();
 
-  const topPerformers = db.prepare(`SELECT p.id, p.first_name, p.last_name, p.position, t.name as team_name, p.nil_value, COALESCE(SUM(ps.pass_yards + ps.rush_yards + ps.rec_yards), 0) as total_yards, COALESCE(SUM(ps.tackles), 0) as total_tackles, COUNT(ps.id) as games FROM players p LEFT JOIN teams t ON p.team_id = t.id LEFT JOIN player_stats ps ON p.id = ps.player_id GROUP BY p.id ORDER BY total_yards + total_tackles * 10 DESC LIMIT 10`).all();
+  const playerCount = data.players.length;
+  const teamCount = data.teams.length;
+  const gameCount = data.games.length;
+  const reportCount = data.scouting_reports.length;
 
-  const recentReports = db.prepare(`SELECT sr.id, sr.overall_grade, sr.scout_name, sr.created_at, p.first_name || ' ' || p.last_name as player_name FROM scouting_reports sr JOIN players p ON sr.player_id = p.id ORDER BY sr.created_at DESC LIMIT 5`).all();
+  const topPerformers = data.players
+    .map((p) => {
+      const t = data.teams.find((te) => te.id === p.team_id);
+      const playerStats = data.player_stats.filter((ps) => ps.player_id === p.id);
+      const total_yards = playerStats.reduce((sum, ps) => sum + Number(ps.pass_yards || 0) + Number(ps.rush_yards || 0) + Number(ps.rec_yards || 0), 0);
+      const total_tackles = playerStats.reduce((sum, ps) => sum + Number(ps.tackles || 0), 0);
+      return {
+        id: p.id, first_name: p.first_name, last_name: p.last_name,
+        position: p.position, team_name: t?.name ?? null, nil_value: p.nil_value,
+        total_yards, total_tackles, games: playerStats.length,
+      };
+    })
+    .sort((a, b) => (b.total_yards + b.total_tackles * 10) - (a.total_yards + a.total_tackles * 10))
+    .slice(0, 10);
 
-  const portalWatch = db.prepare(`SELECT tp.*, p.first_name || ' ' || p.last_name as player_name, p.position, p.nil_value FROM transfer_portal tp JOIN players p ON tp.player_id = p.id WHERE tp.transfer_likelihood >= 50 ORDER BY tp.transfer_likelihood DESC LIMIT 5`).all();
+  const recentReports = data.scouting_reports
+    .map((sr) => {
+      const p = data.players.find((pl) => pl.id === sr.player_id);
+      return { id: sr.id, overall_grade: sr.overall_grade, scout_name: sr.scout_name, created_at: sr.created_at, player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown" };
+    })
+    .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+    .slice(0, 5);
+
+  const portalWatch = data.transfer_portal
+    .filter((tp) => Number(tp.transfer_likelihood) >= 50)
+    .map((tp) => {
+      const p = data.players.find((pl) => pl.id === tp.player_id);
+      return { ...tp, player_name: p ? `${p.first_name} ${p.last_name}` : "Unknown", position: p?.position, nil_value: p?.nil_value };
+    })
+    .sort((a, b) => Number(b.transfer_likelihood) - Number(a.transfer_likelihood))
+    .slice(0, 5);
 
   return { playerCount, teamCount, gameCount, reportCount, topPerformers, recentReports, portalWatch };
 }
