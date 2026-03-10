@@ -1,0 +1,3540 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Prema Racing",
+      "series": "F2",
+      "country": "Italy",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "name": "ART Grand Prix",
+      "series": "F2",
+      "country": "France",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "name": "Campos Racing",
+      "series": "F2",
+      "country": "Spain",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "name": "DAMS",
+      "series": "F2",
+      "country": "France",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "name": "Invicta Racing",
+      "series": "F2",
+      "country": "UK",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "name": "MP Motorsport",
+      "series": "F2",
+      "country": "Netherlands",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "name": "Hitech Pulse-Eight",
+      "series": "F2",
+      "country": "UK",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "name": "Rodin Motorsport",
+      "series": "F2",
+      "country": "New Zealand",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "name": "Trident",
+      "series": "F3",
+      "country": "Italy",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "name": "Prema Racing F3",
+      "series": "F3",
+      "country": "Italy",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "name": "ART Grand Prix F3",
+      "series": "F3",
+      "country": "France",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "name": "Van Amersfoort Racing",
+      "series": "F3",
+      "country": "Netherlands",
+      "engine_supplier": "Dallara",
+      "logo_url": null,
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "drivers": [
+    {
+      "id": 1,
+      "first_name": "Gabriel",
+      "last_name": "Bortoleto",
+      "team_id": 1,
+      "nationality": "Brazilian",
+      "date_of_birth": null,
+      "age": 20,
+      "current_series": "F2",
+      "super_license_points": 40,
+      "super_license_eligible": 1,
+      "career_wins": 3,
+      "career_podiums": 11,
+      "career_poles": 4,
+      "rating": 5,
+      "ranking": 1,
+      "status": "Active",
+      "academy": "Alpine Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 8000000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "first_name": "Isack",
+      "last_name": "Hadjar",
+      "team_id": 6,
+      "nationality": "French",
+      "date_of_birth": null,
+      "age": 20,
+      "current_series": "F2",
+      "super_license_points": 38,
+      "super_license_eligible": 0,
+      "career_wins": 4,
+      "career_podiums": 10,
+      "career_poles": 3,
+      "rating": 5,
+      "ranking": 2,
+      "status": "Active",
+      "academy": "Red Bull Junior",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 7500000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "first_name": "Paul",
+      "last_name": "Aron",
+      "team_id": 7,
+      "nationality": "Estonian",
+      "date_of_birth": null,
+      "age": 20,
+      "current_series": "F2",
+      "super_license_points": 30,
+      "super_license_eligible": 0,
+      "career_wins": 2,
+      "career_podiums": 7,
+      "career_poles": 2,
+      "rating": 4,
+      "ranking": 3,
+      "status": "Active",
+      "academy": "Mercedes Junior",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 5000000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "first_name": "Jak",
+      "last_name": "Crawford",
+      "team_id": 3,
+      "nationality": "American",
+      "date_of_birth": null,
+      "age": 20,
+      "current_series": "F2",
+      "super_license_points": 25,
+      "super_license_eligible": 0,
+      "career_wins": 1,
+      "career_podiums": 5,
+      "career_poles": 1,
+      "rating": 4,
+      "ranking": 5,
+      "status": "Active",
+      "academy": null,
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 4000000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "first_name": "Zane",
+      "last_name": "Maloney",
+      "team_id": 8,
+      "nationality": "Barbadian",
+      "date_of_birth": null,
+      "age": 21,
+      "current_series": "F2",
+      "super_license_points": 28,
+      "super_license_eligible": 0,
+      "career_wins": 3,
+      "career_podiums": 8,
+      "career_poles": 2,
+      "rating": 4,
+      "ranking": 4,
+      "status": "Active",
+      "academy": "Sauber Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 4500000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "first_name": "Victor",
+      "last_name": "Martins",
+      "team_id": 2,
+      "nationality": "French",
+      "date_of_birth": null,
+      "age": 22,
+      "current_series": "F2",
+      "super_license_points": 22,
+      "super_license_eligible": 0,
+      "career_wins": 1,
+      "career_podiums": 4,
+      "career_poles": 3,
+      "rating": 4,
+      "ranking": 6,
+      "status": "Active",
+      "academy": "Alpine Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 3500000,
+      "f1_target_team": "Alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "first_name": "Kimi",
+      "last_name": "Antonelli",
+      "team_id": 1,
+      "nationality": "Italian",
+      "date_of_birth": null,
+      "age": 18,
+      "current_series": "F2",
+      "super_license_points": 35,
+      "super_license_eligible": 0,
+      "career_wins": 5,
+      "career_podiums": 9,
+      "career_poles": 6,
+      "rating": 5,
+      "ranking": 7,
+      "status": "Active",
+      "academy": "Mercedes Junior",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 10000000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "first_name": "Oliver",
+      "last_name": "Bearman",
+      "team_id": 1,
+      "nationality": "British",
+      "date_of_birth": null,
+      "age": 19,
+      "current_series": "F2",
+      "super_license_points": 32,
+      "super_license_eligible": 0,
+      "career_wins": 2,
+      "career_podiums": 6,
+      "career_poles": 2,
+      "rating": 5,
+      "ranking": 8,
+      "status": "Active",
+      "academy": "Ferrari Driver Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 7000000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "first_name": "Arvid",
+      "last_name": "Lindblad",
+      "team_id": 10,
+      "nationality": "British",
+      "date_of_birth": null,
+      "age": 17,
+      "current_series": "F3",
+      "super_license_points": 15,
+      "super_license_eligible": 0,
+      "career_wins": 4,
+      "career_podiums": 8,
+      "career_poles": 5,
+      "rating": 4,
+      "ranking": 9,
+      "status": "Active",
+      "academy": "Red Bull Junior",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 3000000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "first_name": "Dino",
+      "last_name": "Beganovic",
+      "team_id": 9,
+      "nationality": "Swedish",
+      "date_of_birth": null,
+      "age": 20,
+      "current_series": "F3",
+      "super_license_points": 18,
+      "super_license_eligible": 0,
+      "career_wins": 2,
+      "career_podiums": 6,
+      "career_poles": 1,
+      "rating": 4,
+      "ranking": 10,
+      "status": "Active",
+      "academy": "Ferrari Driver Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 2500000,
+      "f1_target_team": "Alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "first_name": "Gabriele",
+      "last_name": "Mini",
+      "team_id": 7,
+      "nationality": "Italian",
+      "date_of_birth": null,
+      "age": 19,
+      "current_series": "F3",
+      "super_license_points": 12,
+      "super_license_eligible": 0,
+      "career_wins": 3,
+      "career_podiums": 5,
+      "career_poles": 2,
+      "rating": 3,
+      "ranking": 11,
+      "status": "Active",
+      "academy": "Alpine Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 2000000,
+      "f1_target_team": "Alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "first_name": "Luke",
+      "last_name": "Browning",
+      "team_id": 7,
+      "nationality": "British",
+      "date_of_birth": null,
+      "age": 21,
+      "current_series": "F3",
+      "super_license_points": 20,
+      "super_license_eligible": 0,
+      "career_wins": 3,
+      "career_podiums": 7,
+      "career_poles": 4,
+      "rating": 4,
+      "ranking": 12,
+      "status": "Active",
+      "academy": "Williams Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 2800000,
+      "f1_target_team": "Both",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 13,
+      "first_name": "Juju",
+      "last_name": "Noda",
+      "team_id": 5,
+      "nationality": "American",
+      "date_of_birth": null,
+      "age": 18,
+      "current_series": "F3",
+      "super_license_points": 8,
+      "super_license_eligible": 0,
+      "career_wins": 0,
+      "career_podiums": 2,
+      "career_poles": 0,
+      "rating": 3,
+      "ranking": 15,
+      "status": "Active",
+      "academy": null,
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 1500000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 14,
+      "first_name": "Ugo",
+      "last_name": "Ugochukwu",
+      "team_id": 11,
+      "nationality": "American",
+      "date_of_birth": null,
+      "age": 17,
+      "current_series": "F3",
+      "super_license_points": 6,
+      "super_license_eligible": 0,
+      "career_wins": 1,
+      "career_podiums": 3,
+      "career_poles": 1,
+      "rating": 3,
+      "ranking": 16,
+      "status": "Active",
+      "academy": "McLaren Junior",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 2000000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 15,
+      "first_name": "Colton",
+      "last_name": "Herta",
+      "team_id": null,
+      "nationality": "American",
+      "date_of_birth": null,
+      "age": 24,
+      "current_series": "IndyCar",
+      "super_license_points": 32,
+      "super_license_eligible": 0,
+      "career_wins": 7,
+      "career_podiums": 18,
+      "career_poles": 8,
+      "rating": 5,
+      "ranking": 13,
+      "status": "Active",
+      "academy": null,
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 6000000,
+      "f1_target_team": "Haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 16,
+      "first_name": "Theo",
+      "last_name": "Pourchaire",
+      "team_id": 2,
+      "nationality": "French",
+      "date_of_birth": null,
+      "age": 21,
+      "current_series": "F2",
+      "super_license_points": 35,
+      "super_license_eligible": 0,
+      "career_wins": 5,
+      "career_podiums": 12,
+      "career_poles": 4,
+      "rating": 5,
+      "ranking": 14,
+      "status": "Active",
+      "academy": "Sauber Academy",
+      "photo_url": null,
+      "merch_store_url": null,
+      "market_value": 6500000,
+      "f1_target_team": "Alpine",
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "races": [
+    {
+      "id": 1,
+      "series": "F2",
+      "round_number": 1,
+      "race_name": "Bahrain Sprint",
+      "circuit": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "race_date": "2025-03-01",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "series": "F2",
+      "round_number": 1,
+      "race_name": "Bahrain Feature",
+      "circuit": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "race_date": "2025-03-02",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "series": "F2",
+      "round_number": 2,
+      "race_name": "Saudi Arabia Sprint",
+      "circuit": "Jeddah Corniche Circuit",
+      "country": "Saudi Arabia",
+      "race_date": "2025-03-08",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "series": "F2",
+      "round_number": 2,
+      "race_name": "Saudi Arabia Feature",
+      "circuit": "Jeddah Corniche Circuit",
+      "country": "Saudi Arabia",
+      "race_date": "2025-03-09",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "series": "F3",
+      "round_number": 1,
+      "race_name": "Bahrain Sprint",
+      "circuit": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "race_date": "2025-03-01",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "series": "F3",
+      "round_number": 1,
+      "race_name": "Bahrain Feature",
+      "circuit": "Bahrain International Circuit",
+      "country": "Bahrain",
+      "race_date": "2025-03-02",
+      "status": "Completed",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "series": "F2",
+      "round_number": 3,
+      "race_name": "Melbourne Sprint",
+      "circuit": "Albert Park Circuit",
+      "country": "Australia",
+      "race_date": "2025-03-22",
+      "status": "Upcoming",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "series": "F2",
+      "round_number": 3,
+      "race_name": "Melbourne Feature",
+      "circuit": "Albert Park Circuit",
+      "country": "Australia",
+      "race_date": "2025-03-23",
+      "status": "Upcoming",
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "race_results": [
+    {
+      "id": 1,
+      "driver_id": 1,
+      "race_id": 1,
+      "qualifying_position": 2,
+      "race_position": 1,
+      "grid_position": 2,
+      "fastest_lap": 1,
+      "points_scored": 10,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 2,
+      "race_id": 1,
+      "qualifying_position": 1,
+      "race_position": 2,
+      "grid_position": 1,
+      "fastest_lap": 0,
+      "points_scored": 8,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+1.2s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 7,
+      "race_id": 1,
+      "qualifying_position": 3,
+      "race_position": 3,
+      "grid_position": 3,
+      "fastest_lap": 0,
+      "points_scored": 6,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+3.4s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 8,
+      "race_id": 1,
+      "qualifying_position": 4,
+      "race_position": 4,
+      "grid_position": 4,
+      "fastest_lap": 0,
+      "points_scored": 5,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+5.1s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 3,
+      "race_id": 1,
+      "qualifying_position": 6,
+      "race_position": 5,
+      "grid_position": 6,
+      "fastest_lap": 0,
+      "points_scored": 4,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+7.8s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 7,
+      "race_id": 2,
+      "qualifying_position": 1,
+      "race_position": 1,
+      "grid_position": 1,
+      "fastest_lap": 1,
+      "points_scored": 25,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "driver_id": 1,
+      "race_id": 2,
+      "qualifying_position": 3,
+      "race_position": 2,
+      "grid_position": 3,
+      "fastest_lap": 0,
+      "points_scored": 18,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+2.1s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "driver_id": 16,
+      "race_id": 2,
+      "qualifying_position": 5,
+      "race_position": 3,
+      "grid_position": 5,
+      "fastest_lap": 0,
+      "points_scored": 15,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+4.5s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "driver_id": 2,
+      "race_id": 2,
+      "qualifying_position": 2,
+      "race_position": 4,
+      "grid_position": 2,
+      "fastest_lap": 0,
+      "points_scored": 12,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+6.3s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "driver_id": 5,
+      "race_id": 2,
+      "qualifying_position": 4,
+      "race_position": 5,
+      "grid_position": 4,
+      "fastest_lap": 0,
+      "points_scored": 10,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+8.9s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "driver_id": 2,
+      "race_id": 3,
+      "qualifying_position": 1,
+      "race_position": 1,
+      "grid_position": 1,
+      "fastest_lap": 0,
+      "points_scored": 10,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "driver_id": 8,
+      "race_id": 3,
+      "qualifying_position": 3,
+      "race_position": 2,
+      "grid_position": 3,
+      "fastest_lap": 1,
+      "points_scored": 8,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+0.8s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 13,
+      "driver_id": 1,
+      "race_id": 3,
+      "qualifying_position": 2,
+      "race_position": 3,
+      "grid_position": 2,
+      "fastest_lap": 0,
+      "points_scored": 6,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+2.3s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 14,
+      "driver_id": 4,
+      "race_id": 3,
+      "qualifying_position": 7,
+      "race_position": 4,
+      "grid_position": 7,
+      "fastest_lap": 0,
+      "points_scored": 5,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+4.1s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 15,
+      "driver_id": 9,
+      "race_id": 5,
+      "qualifying_position": 1,
+      "race_position": 1,
+      "grid_position": 1,
+      "fastest_lap": 1,
+      "points_scored": 10,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 16,
+      "driver_id": 10,
+      "race_id": 5,
+      "qualifying_position": 3,
+      "race_position": 2,
+      "grid_position": 3,
+      "fastest_lap": 0,
+      "points_scored": 8,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+1.5s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 17,
+      "driver_id": 12,
+      "race_id": 5,
+      "qualifying_position": 2,
+      "race_position": 3,
+      "grid_position": 2,
+      "fastest_lap": 0,
+      "points_scored": 6,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+3.2s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 18,
+      "driver_id": 11,
+      "race_id": 5,
+      "qualifying_position": 5,
+      "race_position": 4,
+      "grid_position": 5,
+      "fastest_lap": 0,
+      "points_scored": 5,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+5.6s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 19,
+      "driver_id": 12,
+      "race_id": 6,
+      "qualifying_position": 1,
+      "race_position": 1,
+      "grid_position": 1,
+      "fastest_lap": 0,
+      "points_scored": 25,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": null,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 20,
+      "driver_id": 9,
+      "race_id": 6,
+      "qualifying_position": 2,
+      "race_position": 2,
+      "grid_position": 2,
+      "fastest_lap": 1,
+      "points_scored": 18,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+1.8s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 21,
+      "driver_id": 14,
+      "race_id": 6,
+      "qualifying_position": 8,
+      "race_position": 3,
+      "grid_position": 8,
+      "fastest_lap": 0,
+      "points_scored": 15,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+3.1s",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 22,
+      "driver_id": 10,
+      "race_id": 6,
+      "qualifying_position": 3,
+      "race_position": 4,
+      "grid_position": 3,
+      "fastest_lap": 0,
+      "points_scored": 12,
+      "dnf": 0,
+      "dnf_reason": null,
+      "gap_to_leader": "+4.7s",
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "performance_metrics": [
+    {
+      "id": 1,
+      "driver_id": 1,
+      "avg_qualifying_delta": -0.085,
+      "avg_race_pace_delta": -0.042,
+      "wet_weather_rating": 88,
+      "tire_management_rating": 92,
+      "overtaking_rating": 85,
+      "consistency_rating": 90,
+      "racecraft_rating": 91,
+      "starts_rating": 87,
+      "reaction_time_avg": 0.215,
+      "reaction_time_best": 0.198,
+      "top_speed_kph": 332.4,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S2",
+      "mental_resilience_rating": 89,
+      "adaptability_rating": 91,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 2,
+      "avg_qualifying_delta": -0.102,
+      "avg_race_pace_delta": -0.055,
+      "wet_weather_rating": 82,
+      "tire_management_rating": 85,
+      "overtaking_rating": 92,
+      "consistency_rating": 84,
+      "racecraft_rating": 89,
+      "starts_rating": 90,
+      "reaction_time_avg": 0.208,
+      "reaction_time_best": 0.191,
+      "top_speed_kph": 334.1,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S1",
+      "mental_resilience_rating": 85,
+      "adaptability_rating": 83,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 3,
+      "avg_qualifying_delta": -0.065,
+      "avg_race_pace_delta": -0.031,
+      "wet_weather_rating": 76,
+      "tire_management_rating": 80,
+      "overtaking_rating": 78,
+      "consistency_rating": 85,
+      "racecraft_rating": 80,
+      "starts_rating": 82,
+      "reaction_time_avg": 0.225,
+      "reaction_time_best": 0.208,
+      "top_speed_kph": 330.2,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S3",
+      "mental_resilience_rating": 82,
+      "adaptability_rating": 80,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 4,
+      "avg_qualifying_delta": -0.048,
+      "avg_race_pace_delta": -0.025,
+      "wet_weather_rating": 72,
+      "tire_management_rating": 78,
+      "overtaking_rating": 80,
+      "consistency_rating": 80,
+      "racecraft_rating": 82,
+      "starts_rating": 79,
+      "reaction_time_avg": 0.23,
+      "reaction_time_best": 0.215,
+      "top_speed_kph": 329.5,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S1",
+      "mental_resilience_rating": 78,
+      "adaptability_rating": 85,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 5,
+      "avg_qualifying_delta": -0.072,
+      "avg_race_pace_delta": -0.038,
+      "wet_weather_rating": 80,
+      "tire_management_rating": 88,
+      "overtaking_rating": 83,
+      "consistency_rating": 87,
+      "racecraft_rating": 85,
+      "starts_rating": 84,
+      "reaction_time_avg": 0.218,
+      "reaction_time_best": 0.202,
+      "top_speed_kph": 331.8,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S2",
+      "mental_resilience_rating": 86,
+      "adaptability_rating": 84,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 6,
+      "avg_qualifying_delta": -0.055,
+      "avg_race_pace_delta": -0.03,
+      "wet_weather_rating": 85,
+      "tire_management_rating": 82,
+      "overtaking_rating": 75,
+      "consistency_rating": 78,
+      "racecraft_rating": 80,
+      "starts_rating": 76,
+      "reaction_time_avg": 0.228,
+      "reaction_time_best": 0.21,
+      "top_speed_kph": 329.8,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S1",
+      "mental_resilience_rating": 80,
+      "adaptability_rating": 82,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "driver_id": 7,
+      "avg_qualifying_delta": -0.125,
+      "avg_race_pace_delta": -0.065,
+      "wet_weather_rating": 92,
+      "tire_management_rating": 88,
+      "overtaking_rating": 95,
+      "consistency_rating": 85,
+      "racecraft_rating": 94,
+      "starts_rating": 91,
+      "reaction_time_avg": 0.198,
+      "reaction_time_best": 0.185,
+      "top_speed_kph": 335.2,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S2",
+      "mental_resilience_rating": 88,
+      "adaptability_rating": 95,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "driver_id": 8,
+      "avg_qualifying_delta": -0.09,
+      "avg_race_pace_delta": -0.048,
+      "wet_weather_rating": 84,
+      "tire_management_rating": 86,
+      "overtaking_rating": 82,
+      "consistency_rating": 88,
+      "racecraft_rating": 86,
+      "starts_rating": 85,
+      "reaction_time_avg": 0.22,
+      "reaction_time_best": 0.205,
+      "top_speed_kph": 333,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S3",
+      "mental_resilience_rating": 90,
+      "adaptability_rating": 88,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "driver_id": 9,
+      "avg_qualifying_delta": -0.11,
+      "avg_race_pace_delta": -0.052,
+      "wet_weather_rating": 78,
+      "tire_management_rating": 75,
+      "overtaking_rating": 88,
+      "consistency_rating": 82,
+      "racecraft_rating": 87,
+      "starts_rating": 88,
+      "reaction_time_avg": 0.212,
+      "reaction_time_best": 0.195,
+      "top_speed_kph": 318.5,
+      "avg_top_speed_series": 315.2,
+      "sector_speciality": "S1",
+      "mental_resilience_rating": 84,
+      "adaptability_rating": 86,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "driver_id": 10,
+      "avg_qualifying_delta": -0.068,
+      "avg_race_pace_delta": -0.035,
+      "wet_weather_rating": 74,
+      "tire_management_rating": 82,
+      "overtaking_rating": 76,
+      "consistency_rating": 84,
+      "racecraft_rating": 79,
+      "starts_rating": 80,
+      "reaction_time_avg": 0.232,
+      "reaction_time_best": 0.218,
+      "top_speed_kph": 316.8,
+      "avg_top_speed_series": 315.2,
+      "sector_speciality": "S2",
+      "mental_resilience_rating": 80,
+      "adaptability_rating": 78,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "driver_id": 11,
+      "avg_qualifying_delta": -0.058,
+      "avg_race_pace_delta": -0.028,
+      "wet_weather_rating": 70,
+      "tire_management_rating": 76,
+      "overtaking_rating": 82,
+      "consistency_rating": 78,
+      "racecraft_rating": 80,
+      "starts_rating": 77,
+      "reaction_time_avg": 0.235,
+      "reaction_time_best": 0.22,
+      "top_speed_kph": 317.2,
+      "avg_top_speed_series": 315.2,
+      "sector_speciality": "S3",
+      "mental_resilience_rating": 76,
+      "adaptability_rating": 80,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "driver_id": 12,
+      "avg_qualifying_delta": -0.082,
+      "avg_race_pace_delta": -0.04,
+      "wet_weather_rating": 86,
+      "tire_management_rating": 84,
+      "overtaking_rating": 80,
+      "consistency_rating": 86,
+      "racecraft_rating": 83,
+      "starts_rating": 83,
+      "reaction_time_avg": 0.222,
+      "reaction_time_best": 0.208,
+      "top_speed_kph": 319,
+      "avg_top_speed_series": 315.2,
+      "sector_speciality": "S1",
+      "mental_resilience_rating": 85,
+      "adaptability_rating": 82,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 13,
+      "driver_id": 15,
+      "avg_qualifying_delta": -0.03,
+      "avg_race_pace_delta": -0.015,
+      "wet_weather_rating": 85,
+      "tire_management_rating": 90,
+      "overtaking_rating": 88,
+      "consistency_rating": 92,
+      "racecraft_rating": 90,
+      "starts_rating": 86,
+      "reaction_time_avg": 0.195,
+      "reaction_time_best": 0.182,
+      "top_speed_kph": 350.2,
+      "avg_top_speed_series": 345,
+      "sector_speciality": null,
+      "mental_resilience_rating": 92,
+      "adaptability_rating": 78,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 14,
+      "driver_id": 16,
+      "avg_qualifying_delta": -0.095,
+      "avg_race_pace_delta": -0.05,
+      "wet_weather_rating": 86,
+      "tire_management_rating": 90,
+      "overtaking_rating": 84,
+      "consistency_rating": 89,
+      "racecraft_rating": 87,
+      "starts_rating": 85,
+      "reaction_time_avg": 0.21,
+      "reaction_time_best": 0.195,
+      "top_speed_kph": 332.8,
+      "avg_top_speed_series": 328.1,
+      "sector_speciality": "S2",
+      "mental_resilience_rating": 88,
+      "adaptability_rating": 86,
+      "updated_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "scouting_reports": [
+    {
+      "id": 1,
+      "driver_id": 7,
+      "race_id": 2,
+      "scout_name": "neXT Scout Team",
+      "overall_grade": "A+",
+      "speed_grade": "A+",
+      "racecraft_grade": "A",
+      "consistency_grade": "A",
+      "race_iq_grade": "A+",
+      "strengths": "Extraordinary raw pace, fearless overtaking, adaptable in all conditions",
+      "weaknesses": "Occasional over-aggression in wheel-to-wheel, young and still maturing",
+      "notes": "Antonelli is the generational talent. His Bahrain Feature win was dominant — fastest in every sector. He has the same instinctive speed Verstappen showed in F3.",
+      "projection": "F1 race seat 2026 — future WDC contender",
+      "comparison": "Max Verstappen",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 1,
+      "race_id": 1,
+      "scout_name": "neXT Scout Team",
+      "overall_grade": "A",
+      "speed_grade": "A",
+      "racecraft_grade": "A-",
+      "consistency_grade": "A+",
+      "race_iq_grade": "A",
+      "strengths": "Brilliant tire management, smooth and consistent, great in traffic",
+      "weaknesses": "Qualifying pace sometimes lacking vs top competitors",
+      "notes": "Bortoleto is the complete package. His consistency is remarkable — always in the points, rarely makes mistakes. Sprint race win in Bahrain was clinical.",
+      "projection": "F1 race seat 2026",
+      "comparison": "Carlos Sainz",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 2,
+      "race_id": 3,
+      "scout_name": "Haas neXT Analysis",
+      "overall_grade": "A",
+      "speed_grade": "A+",
+      "racecraft_grade": "A",
+      "consistency_grade": "B+",
+      "race_iq_grade": "A-",
+      "strengths": "Blistering one-lap pace, aggressive but clean overtaking",
+      "weaknesses": "Consistency needs work — can have quiet weekends mixed with brilliant ones",
+      "notes": "Hadjar is lightning quick. His Saudi sprint win was a masterclass in qualifying-to-race conversion. When he's on it, nobody can touch him.",
+      "projection": "F1 race seat 2026-2027",
+      "comparison": "Charles Leclerc",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 8,
+      "race_id": 3,
+      "scout_name": "Alpine neXT Analysis",
+      "overall_grade": "A-",
+      "speed_grade": "A-",
+      "racecraft_grade": "A",
+      "consistency_grade": "A",
+      "race_iq_grade": "A-",
+      "strengths": "Already has F1 experience (Haas sub), mature beyond his years, consistent",
+      "weaknesses": "Needs more dominant wins, qualifying can improve",
+      "notes": "Bearman has already tasted F1 and proved he belongs. His Saudi P2 shows he's ready to step up.",
+      "projection": "F1 race seat 2025-2026",
+      "comparison": "Lando Norris",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 15,
+      "race_id": null,
+      "scout_name": "Haas neXT Analysis",
+      "overall_grade": "A",
+      "speed_grade": "A+",
+      "racecraft_grade": "A",
+      "consistency_grade": "A+",
+      "race_iq_grade": "B+",
+      "strengths": "IndyCar champion-level pace, oval experience unique, aggressive racer",
+      "weaknesses": "Super License situation complicated, no single-seater feeder series recently",
+      "notes": "Herta is the American F1 dream. His raw speed is undeniable. The question isn't talent — it's logistics and super license.",
+      "projection": "F1 test/reserve 2026, race seat if SL resolved",
+      "comparison": "Daniel Ricciardo",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 9,
+      "race_id": 5,
+      "scout_name": "neXT Scout Team",
+      "overall_grade": "A-",
+      "speed_grade": "A",
+      "racecraft_grade": "A-",
+      "consistency_grade": "B+",
+      "race_iq_grade": "A-",
+      "strengths": "Exceptional raw pace for his age, strong starts, fearless wheel-to-wheel",
+      "weaknesses": "Still learning tire management at this level, can overdrive",
+      "notes": "Lindblad is the future. At 17, he's already dominating F3 qualifying. His Bahrain sprint win was clinical.",
+      "projection": "F1 race seat 2028",
+      "comparison": "Lewis Hamilton (early career)",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "driver_id": 4,
+      "race_id": 3,
+      "scout_name": "Haas neXT Analysis",
+      "overall_grade": "B+",
+      "speed_grade": "B+",
+      "racecraft_grade": "B+",
+      "consistency_grade": "B",
+      "race_iq_grade": "B+",
+      "strengths": "American talent pipeline, solid racecraft, improving every weekend",
+      "weaknesses": "Not yet at the level of top F2 peers, needs more race wins",
+      "notes": "Crawford represents the American F1 pipeline. His P4 in Saudi shows improvement. Haas would benefit from an American driver for marketing.",
+      "projection": "F2 champion contender, F1 reserve 2027",
+      "comparison": "Alexander Rossi",
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "driver_market": [
+    {
+      "id": 1,
+      "driver_id": 1,
+      "contract_status": "Option Year",
+      "current_contract_end": "2025-12-31",
+      "availability_likelihood": 75,
+      "interested_teams": "Haas, Alpine, Sauber",
+      "reason": "Alpine Academy graduate, contract expires end of 2025. Multiple teams interested.",
+      "estimated_salary": 500000,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 7,
+      "contract_status": "Under Contract",
+      "current_contract_end": "2026-12-31",
+      "availability_likelihood": 30,
+      "interested_teams": "Mercedes",
+      "reason": "Locked into Mercedes pathway but could be loaned to a customer team.",
+      "estimated_salary": 800000,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 15,
+      "contract_status": "Free Agent",
+      "current_contract_end": null,
+      "availability_likelihood": 85,
+      "interested_teams": "Haas, Alpine",
+      "reason": "No current F1 contract. Super license situation the only barrier. American marketing value enormous for Haas.",
+      "estimated_salary": 2000000,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 16,
+      "contract_status": "Option Year",
+      "current_contract_end": "2025-12-31",
+      "availability_likelihood": 70,
+      "interested_teams": "Alpine, Haas, Williams",
+      "reason": "Sauber Academy but contract situation unclear. Strong F2 results making him attractive.",
+      "estimated_salary": 600000,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 8,
+      "contract_status": "Under Contract",
+      "current_contract_end": "2026-12-31",
+      "availability_likelihood": 60,
+      "interested_teams": "Haas, Sauber",
+      "reason": "Ferrari Academy but could be placed at Haas (Ferrari partnership). Already has F1 race experience.",
+      "estimated_salary": 700000,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 4,
+      "contract_status": "Under Contract",
+      "current_contract_end": "2025-12-31",
+      "availability_likelihood": 55,
+      "interested_teams": "Haas",
+      "reason": "American driver with F2 experience. Perfect marketing fit for Haas US fanbase.",
+      "estimated_salary": 300000,
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "social_actions": [],
+  "fan_votes": [
+    {
+      "id": 1,
+      "user_id": "fan_100",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "user_id": "fan_101",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "user_id": "fan_102",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "user_id": "fan_103",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "user_id": "fan_104",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "user_id": "fan_105",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "user_id": "fan_106",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "user_id": "fan_107",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "user_id": "fan_108",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "user_id": "fan_109",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "user_id": "fan_110",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "user_id": "fan_111",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 13,
+      "user_id": "fan_112",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 14,
+      "user_id": "fan_113",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 15,
+      "user_id": "fan_114",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 16,
+      "user_id": "fan_115",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 17,
+      "user_id": "fan_116",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 18,
+      "user_id": "fan_117",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 19,
+      "user_id": "fan_118",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 20,
+      "user_id": "fan_119",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 21,
+      "user_id": "fan_120",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 22,
+      "user_id": "fan_121",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 23,
+      "user_id": "fan_122",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 24,
+      "user_id": "fan_123",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 25,
+      "user_id": "fan_124",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 26,
+      "user_id": "fan_125",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 27,
+      "user_id": "fan_126",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 28,
+      "user_id": "fan_127",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 29,
+      "user_id": "fan_128",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 30,
+      "user_id": "fan_129",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 31,
+      "user_id": "fan_130",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 32,
+      "user_id": "fan_131",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 33,
+      "user_id": "fan_132",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 34,
+      "user_id": "fan_133",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 35,
+      "user_id": "fan_134",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 36,
+      "user_id": "fan_135",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 37,
+      "user_id": "fan_136",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 38,
+      "user_id": "fan_137",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 39,
+      "user_id": "fan_138",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 40,
+      "user_id": "fan_139",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 41,
+      "user_id": "fan_140",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 42,
+      "user_id": "fan_141",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 43,
+      "user_id": "fan_142",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 44,
+      "user_id": "fan_143",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 45,
+      "user_id": "fan_144",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 46,
+      "user_id": "fan_145",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 47,
+      "user_id": "fan_146",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 48,
+      "user_id": "fan_147",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 49,
+      "user_id": "fan_148",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 50,
+      "user_id": "fan_149",
+      "driver_id": 15,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 51,
+      "user_id": "fan_200",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 52,
+      "user_id": "fan_201",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 53,
+      "user_id": "fan_202",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 54,
+      "user_id": "fan_203",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 55,
+      "user_id": "fan_204",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 56,
+      "user_id": "fan_205",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 57,
+      "user_id": "fan_206",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 58,
+      "user_id": "fan_207",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 59,
+      "user_id": "fan_208",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 60,
+      "user_id": "fan_209",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 61,
+      "user_id": "fan_210",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 62,
+      "user_id": "fan_211",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 63,
+      "user_id": "fan_212",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 64,
+      "user_id": "fan_213",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 65,
+      "user_id": "fan_214",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 66,
+      "user_id": "fan_215",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 67,
+      "user_id": "fan_216",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 68,
+      "user_id": "fan_217",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 69,
+      "user_id": "fan_218",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 70,
+      "user_id": "fan_219",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 71,
+      "user_id": "fan_220",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 72,
+      "user_id": "fan_221",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 73,
+      "user_id": "fan_222",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 74,
+      "user_id": "fan_223",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 75,
+      "user_id": "fan_224",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 76,
+      "user_id": "fan_225",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 77,
+      "user_id": "fan_226",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 78,
+      "user_id": "fan_227",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 79,
+      "user_id": "fan_228",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 80,
+      "user_id": "fan_229",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 81,
+      "user_id": "fan_230",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 82,
+      "user_id": "fan_231",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 83,
+      "user_id": "fan_232",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 84,
+      "user_id": "fan_233",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 85,
+      "user_id": "fan_234",
+      "driver_id": 8,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 86,
+      "user_id": "fan_300",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 87,
+      "user_id": "fan_301",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 88,
+      "user_id": "fan_302",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 89,
+      "user_id": "fan_303",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 90,
+      "user_id": "fan_304",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 91,
+      "user_id": "fan_305",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 92,
+      "user_id": "fan_306",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 93,
+      "user_id": "fan_307",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 94,
+      "user_id": "fan_308",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 95,
+      "user_id": "fan_309",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 96,
+      "user_id": "fan_310",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 97,
+      "user_id": "fan_311",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 98,
+      "user_id": "fan_312",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 99,
+      "user_id": "fan_313",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 100,
+      "user_id": "fan_314",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 101,
+      "user_id": "fan_315",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 102,
+      "user_id": "fan_316",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 103,
+      "user_id": "fan_317",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 104,
+      "user_id": "fan_318",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 105,
+      "user_id": "fan_319",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 106,
+      "user_id": "fan_320",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 107,
+      "user_id": "fan_321",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 108,
+      "user_id": "fan_322",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 109,
+      "user_id": "fan_323",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 110,
+      "user_id": "fan_324",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 111,
+      "user_id": "fan_325",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 112,
+      "user_id": "fan_326",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 113,
+      "user_id": "fan_327",
+      "driver_id": 7,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 114,
+      "user_id": "fan_400",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 115,
+      "user_id": "fan_401",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 116,
+      "user_id": "fan_402",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 117,
+      "user_id": "fan_403",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 118,
+      "user_id": "fan_404",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 119,
+      "user_id": "fan_405",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 120,
+      "user_id": "fan_406",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 121,
+      "user_id": "fan_407",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 122,
+      "user_id": "fan_408",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 123,
+      "user_id": "fan_409",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 124,
+      "user_id": "fan_410",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 125,
+      "user_id": "fan_411",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 126,
+      "user_id": "fan_412",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 127,
+      "user_id": "fan_413",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 128,
+      "user_id": "fan_414",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 129,
+      "user_id": "fan_415",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 130,
+      "user_id": "fan_416",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 131,
+      "user_id": "fan_417",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 132,
+      "user_id": "fan_418",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 133,
+      "user_id": "fan_419",
+      "driver_id": 4,
+      "target_team": "haas",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 134,
+      "user_id": "fan_500",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 135,
+      "user_id": "fan_501",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 136,
+      "user_id": "fan_502",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 137,
+      "user_id": "fan_503",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 138,
+      "user_id": "fan_504",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 139,
+      "user_id": "fan_505",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 140,
+      "user_id": "fan_506",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 141,
+      "user_id": "fan_507",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 142,
+      "user_id": "fan_508",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 143,
+      "user_id": "fan_509",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 144,
+      "user_id": "fan_510",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 145,
+      "user_id": "fan_511",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 146,
+      "user_id": "fan_512",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 147,
+      "user_id": "fan_513",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 148,
+      "user_id": "fan_514",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 149,
+      "user_id": "fan_515",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 150,
+      "user_id": "fan_516",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 151,
+      "user_id": "fan_517",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 152,
+      "user_id": "fan_518",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 153,
+      "user_id": "fan_519",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 154,
+      "user_id": "fan_520",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 155,
+      "user_id": "fan_521",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 156,
+      "user_id": "fan_522",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 157,
+      "user_id": "fan_523",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 158,
+      "user_id": "fan_524",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 159,
+      "user_id": "fan_525",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 160,
+      "user_id": "fan_526",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 161,
+      "user_id": "fan_527",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 162,
+      "user_id": "fan_528",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 163,
+      "user_id": "fan_529",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 164,
+      "user_id": "fan_530",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 165,
+      "user_id": "fan_531",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 166,
+      "user_id": "fan_532",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 167,
+      "user_id": "fan_533",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 168,
+      "user_id": "fan_534",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 169,
+      "user_id": "fan_535",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 170,
+      "user_id": "fan_536",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 171,
+      "user_id": "fan_537",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 172,
+      "user_id": "fan_538",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 173,
+      "user_id": "fan_539",
+      "driver_id": 1,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 174,
+      "user_id": "fan_600",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 175,
+      "user_id": "fan_601",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 176,
+      "user_id": "fan_602",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 177,
+      "user_id": "fan_603",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 178,
+      "user_id": "fan_604",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 179,
+      "user_id": "fan_605",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 180,
+      "user_id": "fan_606",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 181,
+      "user_id": "fan_607",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 182,
+      "user_id": "fan_608",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 183,
+      "user_id": "fan_609",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 184,
+      "user_id": "fan_610",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 185,
+      "user_id": "fan_611",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 186,
+      "user_id": "fan_612",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 187,
+      "user_id": "fan_613",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 188,
+      "user_id": "fan_614",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 189,
+      "user_id": "fan_615",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 190,
+      "user_id": "fan_616",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 191,
+      "user_id": "fan_617",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 192,
+      "user_id": "fan_618",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 193,
+      "user_id": "fan_619",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 194,
+      "user_id": "fan_620",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 195,
+      "user_id": "fan_621",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 196,
+      "user_id": "fan_622",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 197,
+      "user_id": "fan_623",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 198,
+      "user_id": "fan_624",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 199,
+      "user_id": "fan_625",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 200,
+      "user_id": "fan_626",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 201,
+      "user_id": "fan_627",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 202,
+      "user_id": "fan_628",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 203,
+      "user_id": "fan_629",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 204,
+      "user_id": "fan_630",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 205,
+      "user_id": "fan_631",
+      "driver_id": 16,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 206,
+      "user_id": "fan_700",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 207,
+      "user_id": "fan_701",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 208,
+      "user_id": "fan_702",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 209,
+      "user_id": "fan_703",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 210,
+      "user_id": "fan_704",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 211,
+      "user_id": "fan_705",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 212,
+      "user_id": "fan_706",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 213,
+      "user_id": "fan_707",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 214,
+      "user_id": "fan_708",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 215,
+      "user_id": "fan_709",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 216,
+      "user_id": "fan_710",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 217,
+      "user_id": "fan_711",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 218,
+      "user_id": "fan_712",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 219,
+      "user_id": "fan_713",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 220,
+      "user_id": "fan_714",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 221,
+      "user_id": "fan_715",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 222,
+      "user_id": "fan_716",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 223,
+      "user_id": "fan_717",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 224,
+      "user_id": "fan_718",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 225,
+      "user_id": "fan_719",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 226,
+      "user_id": "fan_720",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 227,
+      "user_id": "fan_721",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 228,
+      "user_id": "fan_722",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 229,
+      "user_id": "fan_723",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 230,
+      "user_id": "fan_724",
+      "driver_id": 6,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 231,
+      "user_id": "fan_800",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 232,
+      "user_id": "fan_801",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 233,
+      "user_id": "fan_802",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 234,
+      "user_id": "fan_803",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 235,
+      "user_id": "fan_804",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 236,
+      "user_id": "fan_805",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 237,
+      "user_id": "fan_806",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 238,
+      "user_id": "fan_807",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 239,
+      "user_id": "fan_808",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 240,
+      "user_id": "fan_809",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 241,
+      "user_id": "fan_810",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 242,
+      "user_id": "fan_811",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 243,
+      "user_id": "fan_812",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 244,
+      "user_id": "fan_813",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 245,
+      "user_id": "fan_814",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 246,
+      "user_id": "fan_815",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 247,
+      "user_id": "fan_816",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 248,
+      "user_id": "fan_817",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 249,
+      "user_id": "fan_818",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 250,
+      "user_id": "fan_819",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 251,
+      "user_id": "fan_820",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 252,
+      "user_id": "fan_821",
+      "driver_id": 7,
+      "target_team": "alpine",
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "feed_posts": [
+    {
+      "id": 1,
+      "author": "Haas neXT",
+      "content": "RACE RECAP: Antonelli dominates Bahrain Feature Race! The 18-year-old Italian put on a masterclass, leading every lap from pole. This kid is special. Fan Vote is LIVE — should he test with Haas?",
+      "post_type": "race_recap",
+      "driver_id": 7,
+      "team_context": "haas",
+      "likes_count": 1245,
+      "shares_count": 389,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "author": "Alpine neXT",
+      "content": "DRIVER INTEL: Gabriel Bortoleto's tire management data from Bahrain is extraordinary. His deg numbers are better than some current F1 drivers. Alpine Academy product — could he be France's next F1 star?",
+      "post_type": "intel",
+      "driver_id": 1,
+      "team_context": "alpine",
+      "likes_count": 892,
+      "shares_count": 234,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "author": "Haas neXT",
+      "content": "FAN VOTE UPDATE: Colton Herta leads the Haas neXT vote with 2,340 votes! The American driver has massive fan support. Super License situation remains the key question.",
+      "post_type": "vote",
+      "driver_id": 15,
+      "team_context": "haas",
+      "likes_count": 2341,
+      "shares_count": 567,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "author": "Alpine neXT",
+      "content": "RISE+ CHALLENGE: Scout 5 F3 drivers this weekend and earn 250 RISE+ points! Top scouts get an exclusive invite to the Alpine garage at Silverstone.",
+      "post_type": "intel",
+      "driver_id": null,
+      "team_context": "alpine",
+      "likes_count": 678,
+      "shares_count": 145,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "author": "Haas neXT",
+      "content": "MARKET ALERT: Oliver Bearman's contract with Ferrari Academy could see him placed at Haas for 2026. The British teenager already has F1 race experience from his Jeddah sub.",
+      "post_type": "signing",
+      "driver_id": 8,
+      "team_context": "haas",
+      "likes_count": 1567,
+      "shares_count": 423,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "author": "neXT Feed",
+      "content": "BREAKING: Arvid Lindblad wins F3 Bahrain Sprint at just 17 years old! Red Bull Junior dominating the feeder series. Remember this name.",
+      "post_type": "race_recap",
+      "driver_id": 9,
+      "team_context": null,
+      "likes_count": 945,
+      "shares_count": 312,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "author": "Alpine neXT",
+      "content": "RISE+ EVENT: Meet the next gen at Silverstone! RISE+ members get paddock access, driver meet & greets, and pit lane walks during the F2/F3 support races. Points required: 5,000",
+      "post_type": "update",
+      "driver_id": null,
+      "team_context": "alpine",
+      "likes_count": 1123,
+      "shares_count": 289,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "author": "Haas neXT",
+      "content": "SCOUTING REPORT: Jak Crawford's P4 in Saudi shows steady improvement. The American is exactly what Haas needs for their US market strategy. Full analysis on his profile.",
+      "post_type": "intel",
+      "driver_id": 4,
+      "team_context": "haas",
+      "likes_count": 456,
+      "shares_count": 98,
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "merch_items": [
+    {
+      "id": 1,
+      "driver_id": 1,
+      "name": "Bortoleto Team Cap",
+      "description": null,
+      "price": 35,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 1,
+      "name": "Bortoleto Race Tee",
+      "description": null,
+      "price": 40,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 1,
+      "name": "1:43 Model Car",
+      "description": null,
+      "price": 55,
+      "image_url": null,
+      "category": "Model",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 7,
+      "name": "Antonelli Trucker Hat",
+      "description": null,
+      "price": 30,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 7,
+      "name": "Antonelli Hoodie",
+      "description": null,
+      "price": 70,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 7,
+      "name": "Signed Driver Card",
+      "description": null,
+      "price": 25,
+      "image_url": null,
+      "category": "Collectibles",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "driver_id": 2,
+      "name": "Hadjar Race Cap",
+      "description": null,
+      "price": 35,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "driver_id": 2,
+      "name": "Hadjar Performance Tee",
+      "description": null,
+      "price": 40,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 9,
+      "driver_id": 8,
+      "name": "Bearman Team Cap",
+      "description": null,
+      "price": 35,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 10,
+      "driver_id": 8,
+      "name": "Bearman Race Tee",
+      "description": null,
+      "price": 40,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 11,
+      "driver_id": 15,
+      "name": "Herta USA Cap",
+      "description": null,
+      "price": 35,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 12,
+      "driver_id": 15,
+      "name": "Herta Stars & Stripes Tee",
+      "description": null,
+      "price": 45,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 13,
+      "driver_id": 15,
+      "name": "Herta Race Hoodie",
+      "description": null,
+      "price": 75,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 14,
+      "driver_id": 9,
+      "name": "Lindblad Rising Star Tee",
+      "description": null,
+      "price": 35,
+      "image_url": null,
+      "category": "Apparel",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 15,
+      "driver_id": 12,
+      "name": "Browning Team Cap",
+      "description": null,
+      "price": 30,
+      "image_url": null,
+      "category": "Headwear",
+      "in_stock": 1,
+      "created_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "f1_projections": [
+    {
+      "id": 1,
+      "driver_id": 7,
+      "f1_probability": 98,
+      "projected_year": 2025,
+      "target_team": "Mercedes",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Max Verstappen",
+      "f1_comp_similarity": 82,
+      "secondary_comparison": "Charles Leclerc",
+      "driver_archetype": "Complete Driver",
+      "championship_probability": 35,
+      "career_podium_est": 80,
+      "projected_first_contract": 5000000,
+      "projected_peak_salary": 25000000,
+      "career_earnings_est": 200000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 2,
+      "driver_id": 1,
+      "f1_probability": 88,
+      "projected_year": 2026,
+      "target_team": "Alpine / Haas",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Carlos Sainz",
+      "f1_comp_similarity": 78,
+      "secondary_comparison": "Fernando Alonso",
+      "driver_archetype": "Consistent Racer",
+      "championship_probability": 15,
+      "career_podium_est": 45,
+      "projected_first_contract": 2000000,
+      "projected_peak_salary": 12000000,
+      "career_earnings_est": 80000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 3,
+      "driver_id": 2,
+      "f1_probability": 85,
+      "projected_year": 2026,
+      "target_team": "Red Bull / VCARB",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Charles Leclerc",
+      "f1_comp_similarity": 75,
+      "secondary_comparison": "Pierre Gasly",
+      "driver_archetype": "Qualifying Specialist",
+      "championship_probability": 12,
+      "career_podium_est": 35,
+      "projected_first_contract": 2500000,
+      "projected_peak_salary": 15000000,
+      "career_earnings_est": 90000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 4,
+      "driver_id": 8,
+      "f1_probability": 90,
+      "projected_year": 2025,
+      "target_team": "Haas",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Lando Norris",
+      "f1_comp_similarity": 72,
+      "secondary_comparison": "Carlos Sainz",
+      "driver_archetype": "Complete Driver",
+      "championship_probability": 10,
+      "career_podium_est": 40,
+      "projected_first_contract": 1500000,
+      "projected_peak_salary": 10000000,
+      "career_earnings_est": 70000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 5,
+      "driver_id": 15,
+      "f1_probability": 65,
+      "projected_year": 2026,
+      "target_team": "Haas",
+      "projected_role": "Test Driver",
+      "f1_comparison": "Daniel Ricciardo",
+      "f1_comp_similarity": 80,
+      "secondary_comparison": "Alexander Rossi",
+      "driver_archetype": "Racecraft Master",
+      "championship_probability": 5,
+      "career_podium_est": 20,
+      "projected_first_contract": 3000000,
+      "projected_peak_salary": 8000000,
+      "career_earnings_est": 40000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 6,
+      "driver_id": 16,
+      "f1_probability": 82,
+      "projected_year": 2026,
+      "target_team": "Alpine",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Pierre Gasly",
+      "f1_comp_similarity": 76,
+      "secondary_comparison": "Esteban Ocon",
+      "driver_archetype": "Complete Driver",
+      "championship_probability": 8,
+      "career_podium_est": 30,
+      "projected_first_contract": 1800000,
+      "projected_peak_salary": 10000000,
+      "career_earnings_est": 60000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 7,
+      "driver_id": 9,
+      "f1_probability": 78,
+      "projected_year": 2028,
+      "target_team": "Red Bull Junior",
+      "projected_role": "Race Seat",
+      "f1_comparison": "Lewis Hamilton",
+      "f1_comp_similarity": 70,
+      "secondary_comparison": "Max Verstappen",
+      "driver_archetype": "Future Champion",
+      "championship_probability": 25,
+      "career_podium_est": 60,
+      "projected_first_contract": 3000000,
+      "projected_peak_salary": 20000000,
+      "career_earnings_est": 150000000,
+      "updated_at": "2026-03-10 05:33:09"
+    },
+    {
+      "id": 8,
+      "driver_id": 12,
+      "f1_probability": 55,
+      "projected_year": 2027,
+      "target_team": "Williams",
+      "projected_role": "Race Seat",
+      "f1_comparison": "George Russell",
+      "f1_comp_similarity": 68,
+      "secondary_comparison": "Lando Norris",
+      "driver_archetype": "Consistent Racer",
+      "championship_probability": 5,
+      "career_podium_est": 15,
+      "projected_first_contract": 1000000,
+      "projected_peak_salary": 5000000,
+      "career_earnings_est": 30000000,
+      "updated_at": "2026-03-10 05:33:09"
+    }
+  ],
+  "driver_contracts": []
+}
