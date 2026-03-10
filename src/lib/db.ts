@@ -1,13 +1,23 @@
 import Database from "better-sqlite3";
 import path from "path";
+import fs from "fs";
 
-const DB_PATH = path.join(process.cwd(), "mikev-scout.db");
+const SOURCE_DB = path.join(process.cwd(), "mikev-scout.db");
+const VERCEL_DB = "/tmp/mikev-scout.db";
+
+function getDbPath() {
+  if (process.env.VERCEL) {
+    if (!fs.existsSync(VERCEL_DB)) fs.copyFileSync(SOURCE_DB, VERCEL_DB);
+    return VERCEL_DB;
+  }
+  return SOURCE_DB;
+}
 
 let db: Database.Database | null = null;
 
 export function getDb(): Database.Database {
   if (!db) {
-    db = new Database(DB_PATH);
+    db = new Database(getDbPath());
     db.pragma("journal_mode = WAL");
     db.pragma("foreign_keys = ON");
     initSchema(db);
