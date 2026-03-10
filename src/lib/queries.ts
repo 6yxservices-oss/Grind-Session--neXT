@@ -1,15 +1,29 @@
-import { getDb } from "./db";
-import type { Driver, Team, Race, RaceResult, ScoutingReport, PerformanceMetrics, F1Projection, DriverMarketEntry, FeedPost, MerchItem, SocialAction, DriverContract, FanVote } from "./types";
+import { getData } from "./db";
+import type {
+  Driver, Team, Race, RaceResult, ScoutingReport, PerformanceMetrics,
+  F1Projection, DriverMarketEntry, FeedPost, MerchItem, SocialAction,
+  DriverContract, FanVote,
+} from "./types";
+
+// Helper to cast rows
+function as<T>(rows: Record<string, unknown>[]): T[] {
+  return rows as unknown as T[];
+}
+function asOne<T>(row: Record<string, unknown> | undefined): T | null {
+  return (row as unknown as T) ?? null;
+}
 
 // ── Teams ──────────────────────────────────────────────
 export function getAllTeams(): Team[] {
-  return getDb().prepare("SELECT * FROM teams ORDER BY name").all() as Team[];
+  return as<Team>(getData().teams.slice().sort((a, b) => String(a.name).localeCompare(String(b.name))));
 }
 
 export function getTeamById(id: number): (Team & { drivers: Driver[] }) | null {
-  const team = getDb().prepare("SELECT * FROM teams WHERE id = ?").get(id) as Team | undefined;
+  const team = asOne<Team>(getData().teams.find((t) => t.id === id));
   if (!team) return null;
-  const drivers = getDb().prepare("SELECT * FROM drivers WHERE team_id = ? ORDER BY last_name").all(id) as Driver[];
+  const drivers = as<Driver>(
+    getData().drivers.filter((d) => d.team_id === id).sort((a, b) => String(a.last_name).localeCompare(String(b.last_name)))
+  );
   return { ...team, drivers };
 }
 
@@ -21,161 +35,312 @@ export function getAllDrivers(filters?: {
   search?: string;
   targetTeam?: string;
 }): Driver[] {
-  let query = `SELECT d.*, t.name as team_name FROM drivers d LEFT JOIN teams t ON d.team_id = t.id WHERE 1=1`;
-  const params: unknown[] = [];
-  if (filters?.series) { query += " AND d.current_series = ?"; params.push(filters.series); }
-  if (filters?.nationality) { query += " AND d.nationality = ?"; params.push(filters.nationality); }
-  if (filters?.teamId) { query += " AND d.team_id = ?"; params.push(filters.teamId); }
-  if (filters?.search) { query += " AND (d.first_name || ' ' || d.last_name LIKE ?)"; params.push(`%${filters.search}%`); }
-  if (filters?.targetTeam) { query += " AND (d.f1_target_team = ? OR d.f1_target_team = 'Both')"; params.push(filters.targetTeam); }
-  query += " ORDER BY d.rating DESC, d.ranking ASC";
-  return getDb().prepare(query).all(...params) as Driver[];
+  const data = getData();
+  let rows = data.drivers.map((d: any) => {
+    const team = data.teams.find((t) => t.id === d.team_id);
+    return { ...d, team_name: team ? team.name : null };
+  });
+
+  if (filters?.series) rows = rows.filter((d) => d.current_series === filters.series);
+  if (filters?.nationality) rows = rows.filter((d) => d.nationality === filters.nationality);
+  if (filters?.teamId) rows = rows.filter((d) => d.team_id === filters.teamId);
+  if (filters?.search) {
+    const s = String(filters.search).toLowerCase();
+    rows = rows.filter((d) => `${d.first_name} ${d.last_name}`.toLowerCase().includes(s));
+  }
+  if (filters?.targetTeam) {
+    rows = rows.filter((d) => d.f1_target_team === filters.targetTeam || d.f1_target_team === "Both");
+  }
+
+  rows.sort((a, b) => Number(b.rating) - Number(a.rating) || (Number(a.ranking) || 999) - (Number(b.ranking) || 999));
+  return as<Driver>(rows);
 }
 
-export function getDriverById(id: number): (Driver & {
-  results: RaceResult[];
-  reports: ScoutingReport[];
-  metrics: PerformanceMetrics | null;
-  f1_projection: F1Projection | null;
-  merch: MerchItem[];
-  social_counts: Record<string, number>;
-  market_entry: DriverMarketEntry | null;
-  vote_counts: { haas: number; alpine: number };
-}) | null {
-  const driver = getDb().prepare(`SELECT d.*, t.name as team_name FROM drivers d LEFT JOIN teams t ON d.team_id = t.id WHERE d.id = ?`).get(id) as Driver | undefined;
-  if (!driver) return null;
+export function getDriverById(id: number) {
+  const data = getData();
+  const raw = data.drivers.find((d) => d.id === id);
+  if (!raw) return null;
 
-  const results = getDb().prepare(`SELECT rr.*, r.race_name || ' (' || r.circuit || ')' as race_info FROM race_results rr JOIN races r ON rr.race_id = r.id WHERE rr.driver_id = ? ORDER BY r.race_date DESC`).all(id) as RaceResult[];
-  const reports = getDb().prepare(`SELECT sr.* FROM scouting_reports sr WHERE sr.driver_id = ? ORDER BY sr.created_at DESC`).all(id) as ScoutingReport[];
-  const metrics = (getDb().prepare("SELECT * FROM performance_metrics WHERE driver_id = ?").get(id) as PerformanceMetrics | undefined) ?? null;
-  const f1_projection = (getDb().prepare("SELECT * FROM f1_projections WHERE driver_id = ?").get(id) as F1Projection | undefined) ?? null;
-  const merch = getDb().prepare("SELECT * FROM merch_items WHERE driver_id = ? AND in_stock = 1").all(id) as MerchItem[];
-  const market_entry = (getDb().prepare("SELECT * FROM driver_market WHERE driver_id = ?").get(id) as DriverMarketEntry | undefined) ?? null;
+  const team = data.teams.find((t) => t.id === raw.team_id);
+  const driver = { ...raw, team_name: team ? team.name : null } as unknown as Driver;
 
-  const follows = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE driver_id = ? AND action_type = 'follow'").get(id) as { c: number }).c;
-  const likes = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE driver_id = ? AND action_type = 'like'").get(id) as { c: number }).c;
-  const shortlisted = (getDb().prepare("SELECT COUNT(*) as c FROM social_actions WHERE driver_id = ? AND action_type = 'shortlist'").get(id) as { c: number }).c;
+  const filteredResults = data.race_results.filter((rr) => rr.driver_id === id);
+  filteredResults.sort((a, b) => {
+    const ra = data.races.find((r) => r.id === a.race_id);
+    const rb = data.races.find((r) => r.id === b.race_id);
+    return String(rb?.race_date ?? "").localeCompare(String(ra?.race_date ?? ""));
+  });
+  const results = as<RaceResult>(filteredResults.map((rr) => {
+    const race = data.races.find((r) => r.id === rr.race_id);
+    return { ...rr, race_info: race ? `${race.race_name} (${race.circuit})` : "" };
+  }));
 
-  const haasVotes = (getDb().prepare("SELECT COUNT(*) as c FROM fan_votes WHERE driver_id = ? AND target_team = 'haas'").get(id) as { c: number }).c;
-  const alpineVotes = (getDb().prepare("SELECT COUNT(*) as c FROM fan_votes WHERE driver_id = ? AND target_team = 'alpine'").get(id) as { c: number }).c;
+  const reports = as<ScoutingReport>(
+    data.scouting_reports.filter((sr) => sr.driver_id === id).sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+  );
 
-  return { ...driver, results, reports, metrics, f1_projection, merch, market_entry, social_counts: { follows, likes, shortlisted }, vote_counts: { haas: haasVotes, alpine: alpineVotes } };
+  const metrics = asOne<PerformanceMetrics>(data.performance_metrics.find((pm) => pm.driver_id === id));
+  const f1_projection = asOne<F1Projection>(data.f1_projections.find((fp) => fp.driver_id === id));
+  const merch = as<MerchItem>(data.merch_items.filter((m) => m.driver_id === id && m.in_stock === 1));
+  const market_entry = asOne<DriverMarketEntry>(data.driver_market.find((dm) => dm.driver_id === id));
+
+  const follows = data.social_actions.filter((sa) => sa.driver_id === id && sa.action_type === "follow").length;
+  const likes = data.social_actions.filter((sa) => sa.driver_id === id && sa.action_type === "like").length;
+  const shortlisted = data.social_actions.filter((sa) => sa.driver_id === id && sa.action_type === "shortlist").length;
+
+  const haasVotes = data.fan_votes.filter((fv) => fv.driver_id === id && fv.target_team === "haas").length;
+  const alpineVotes = data.fan_votes.filter((fv) => fv.driver_id === id && fv.target_team === "alpine").length;
+
+  return {
+    ...driver, results, reports, metrics, f1_projection, merch, market_entry,
+    social_counts: { follows, likes, shortlisted },
+    vote_counts: { haas: haasVotes, alpine: alpineVotes },
+  };
 }
 
 // ── Races ──────────────────────────────────────────────
 export function getAllRaces(filters?: { series?: string; status?: string }): Race[] {
-  let query = `SELECT * FROM races WHERE 1=1`;
-  const params: unknown[] = [];
-  if (filters?.series) { query += " AND series = ?"; params.push(filters.series); }
-  if (filters?.status) { query += " AND status = ?"; params.push(filters.status); }
-  query += " ORDER BY race_date DESC";
-  return getDb().prepare(query).all(...params) as Race[];
+  let rows = getData().races.slice();
+  if (filters?.series) rows = rows.filter((r) => r.series === filters.series);
+  if (filters?.status) rows = rows.filter((r) => r.status === filters.status);
+  rows.sort((a, b) => String(b.race_date).localeCompare(String(a.race_date)));
+  return as<Race>(rows);
 }
 
-export function getRaceById(id: number): (Race & { results: (RaceResult & { driver_name: string })[] }) | null {
-  const race = getDb().prepare(`SELECT * FROM races WHERE id = ?`).get(id) as Race | undefined;
+export function getRaceById(id: number) {
+  const data = getData();
+  const race = data.races.find((r) => r.id === id);
   if (!race) return null;
-  const results = getDb().prepare(`SELECT rr.*, d.first_name || ' ' || d.last_name as driver_name FROM race_results rr JOIN drivers d ON rr.driver_id = d.id WHERE rr.race_id = ? ORDER BY COALESCE(rr.race_position, 999) ASC`).all(id) as (RaceResult & { driver_name: string })[];
-  return { ...race, results };
+  const raceResults = data.race_results.filter((rr) => rr.race_id === id);
+  raceResults.sort((a, b) => (Number(a.race_position) || 999) - (Number(b.race_position) || 999));
+  const results = raceResults.map((rr) => {
+    const d = data.drivers.find((dr) => dr.id === rr.driver_id);
+    return { ...rr, driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown" };
+  });
+  return { ...(race as unknown as Race), results: results as unknown as (RaceResult & { driver_name: string })[] };
 }
 
 // ── Scouting Reports ──────────────────────────────────
 export function getAllReports(): ScoutingReport[] {
-  return getDb().prepare(`SELECT sr.*, d.first_name || ' ' || d.last_name as driver_name FROM scouting_reports sr JOIN drivers d ON sr.driver_id = d.id ORDER BY sr.created_at DESC`).all() as ScoutingReport[];
+  const data = getData();
+  const sorted = data.scouting_reports.slice().sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+  return as<ScoutingReport>(sorted.map((sr) => {
+    const d = data.drivers.find((dr) => dr.id === sr.driver_id);
+    return { ...sr, driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown" };
+  }));
 }
 
 export function getReportById(id: number): ScoutingReport | null {
-  return (getDb().prepare(`SELECT sr.*, d.first_name || ' ' || d.last_name as driver_name FROM scouting_reports sr JOIN drivers d ON sr.driver_id = d.id WHERE sr.id = ?`).get(id) as ScoutingReport | undefined) ?? null;
+  const data = getData();
+  const sr = data.scouting_reports.find((r) => r.id === id);
+  if (!sr) return null;
+  const d = data.drivers.find((dr) => dr.id === sr.driver_id);
+  return { ...sr, driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown" } as unknown as ScoutingReport;
 }
 
-export function createReport(data: Record<string, unknown>): number {
-  const result = getDb().prepare(`INSERT INTO scouting_reports (driver_id, race_id, scout_name, overall_grade, speed_grade, racecraft_grade, consistency_grade, race_iq_grade, strengths, weaknesses, notes, projection, comparison) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(data.driver_id, data.race_id ?? null, data.scout_name, data.overall_grade, data.speed_grade ?? null, data.racecraft_grade ?? null, data.consistency_grade ?? null, data.race_iq_grade ?? null, data.strengths ?? null, data.weaknesses ?? null, data.notes ?? null, data.projection ?? null, data.comparison ?? null);
-  return Number(result.lastInsertRowid);
+export function createReport(body: Record<string, unknown>): number {
+  const data = getData();
+  const id = data.scouting_reports.length + 100;
+  data.scouting_reports.push({
+    id,
+    driver_id: body.driver_id,
+    race_id: body.race_id ?? null,
+    scout_name: body.scout_name,
+    overall_grade: body.overall_grade,
+    speed_grade: body.speed_grade ?? null,
+    racecraft_grade: body.racecraft_grade ?? null,
+    consistency_grade: body.consistency_grade ?? null,
+    race_iq_grade: body.race_iq_grade ?? null,
+    strengths: body.strengths ?? null,
+    weaknesses: body.weaknesses ?? null,
+    notes: body.notes ?? null,
+    projection: body.projection ?? null,
+    comparison: body.comparison ?? null,
+    created_at: new Date().toISOString(),
+  });
+  return id;
 }
 
 // ── Driver Market ────────────────────────────────────
 export function getDriverMarketFeed(): DriverMarketEntry[] {
-  return getDb().prepare(`SELECT dm.*, d.first_name || ' ' || d.last_name as driver_name, d.nationality, d.current_series, d.rating, d.market_value, t.name as team_name FROM driver_market dm JOIN drivers d ON dm.driver_id = d.id LEFT JOIN teams t ON d.team_id = t.id ORDER BY dm.availability_likelihood DESC`).all() as DriverMarketEntry[];
+  const data = getData();
+  return as<DriverMarketEntry>(
+    data.driver_market
+      .map((dm) => {
+        const d = data.drivers.find((dr) => dr.id === dm.driver_id);
+        const t = d ? data.teams.find((te) => te.id === d.team_id) : null;
+        return {
+          ...dm,
+          driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown",
+          nationality: d?.nationality,
+          current_series: d?.current_series,
+          rating: d?.rating,
+          market_value: d?.market_value,
+          team_name: t?.name ?? null,
+        };
+      })
+      .sort((a, b) => Number(b.availability_likelihood) - Number(a.availability_likelihood))
+  );
 }
 
 // ── Social ─────────────────────────────────────────────
 export function toggleSocialAction(userId: string, driverId: number, actionType: string): boolean {
-  const existing = getDb().prepare("SELECT id FROM social_actions WHERE user_id = ? AND driver_id = ? AND action_type = ?").get(userId, driverId, actionType);
-  if (existing) {
-    getDb().prepare("DELETE FROM social_actions WHERE user_id = ? AND driver_id = ? AND action_type = ?").run(userId, driverId, actionType);
+  const data = getData();
+  const idx = data.social_actions.findIndex(
+    (sa) => sa.user_id === userId && sa.driver_id === driverId && sa.action_type === actionType
+  );
+  if (idx >= 0) {
+    data.social_actions.splice(idx, 1);
     return false;
   }
-  getDb().prepare("INSERT INTO social_actions (user_id, driver_id, action_type) VALUES (?, ?, ?)").run(userId, driverId, actionType);
+  data.social_actions.push({ id: Date.now(), user_id: userId, driver_id: driverId, action_type: actionType, created_at: new Date().toISOString() });
   return true;
 }
 
 export function getUserActions(userId: string): SocialAction[] {
-  return getDb().prepare("SELECT * FROM social_actions WHERE user_id = ?").all(userId) as SocialAction[];
+  return as<SocialAction>(getData().social_actions.filter((sa) => sa.user_id === userId));
 }
 
 export function getShortlistedDrivers(userId: string): Driver[] {
-  return getDb().prepare(`SELECT d.*, t.name as team_name FROM drivers d LEFT JOIN teams t ON d.team_id = t.id JOIN social_actions sa ON d.id = sa.driver_id WHERE sa.user_id = ? AND sa.action_type = 'shortlist' ORDER BY d.rating DESC`).all(userId) as Driver[];
+  const data = getData();
+  const shortIds = new Set(data.social_actions.filter((sa) => sa.user_id === userId && sa.action_type === "shortlist").map((sa) => sa.driver_id));
+  return as<Driver>(
+    data.drivers
+      .filter((d) => shortIds.has(d.id))
+      .map((d) => {
+        const t = data.teams.find((te) => te.id === d.team_id);
+        return { ...d, team_name: t?.name ?? null };
+      })
+      .sort((a, b) => Number(b.rating) - Number(a.rating))
+  );
 }
 
 // ── Fan Votes ─────────────────────────────────────────
 export function castVote(userId: string, driverId: number, targetTeam: string): boolean {
-  const existing = getDb().prepare("SELECT id FROM fan_votes WHERE user_id = ? AND driver_id = ? AND target_team = ?").get(userId, driverId, targetTeam);
-  if (existing) {
-    getDb().prepare("DELETE FROM fan_votes WHERE user_id = ? AND driver_id = ? AND target_team = ?").run(userId, driverId, targetTeam);
+  const data = getData();
+  const idx = data.fan_votes.findIndex(
+    (fv) => fv.user_id === userId && fv.driver_id === driverId && fv.target_team === targetTeam
+  );
+  if (idx >= 0) {
+    data.fan_votes.splice(idx, 1);
     return false;
   }
-  getDb().prepare("INSERT INTO fan_votes (user_id, driver_id, target_team) VALUES (?, ?, ?)").run(userId, driverId, targetTeam);
+  data.fan_votes.push({ id: Date.now(), user_id: userId, driver_id: driverId, target_team: targetTeam, created_at: new Date().toISOString() });
   return true;
 }
 
-export function getVoteLeaderboard(targetTeam: string): { driver_id: number; driver_name: string; nationality: string; current_series: string; rating: number; votes: number }[] {
-  return getDb().prepare(`SELECT d.id as driver_id, d.first_name || ' ' || d.last_name as driver_name, d.nationality, d.current_series, d.rating, COUNT(fv.id) as votes FROM drivers d JOIN fan_votes fv ON d.id = fv.driver_id WHERE fv.target_team = ? GROUP BY d.id ORDER BY votes DESC LIMIT 20`).all(targetTeam) as { driver_id: number; driver_name: string; nationality: string; current_series: string; rating: number; votes: number }[];
+export function getVoteLeaderboard(targetTeam: string) {
+  const data = getData();
+  const votes = data.fan_votes.filter((fv) => fv.target_team === targetTeam);
+  const countMap = new Map<number, number>();
+  for (const v of votes) countMap.set(Number(v.driver_id), (countMap.get(Number(v.driver_id)) || 0) + 1);
+
+  return Array.from(countMap.entries())
+    .map(([driverId, count]) => {
+      const d = data.drivers.find((dr) => dr.id === driverId);
+      return {
+        driver_id: driverId,
+        driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown",
+        nationality: d?.nationality ?? "",
+        current_series: d?.current_series ?? "",
+        rating: Number(d?.rating ?? 0),
+        votes: count,
+      };
+    })
+    .sort((a, b) => b.votes - a.votes)
+    .slice(0, 20);
 }
 
 // ── Feed ───────────────────────────────────────────────
 export function getFeedPosts(teamContext?: string): FeedPost[] {
-  let query = `SELECT fp.*, d.first_name || ' ' || d.last_name as driver_name FROM feed_posts fp LEFT JOIN drivers d ON fp.driver_id = d.id WHERE 1=1`;
-  const params: unknown[] = [];
-  if (teamContext) { query += " AND (fp.team_context = ? OR fp.team_context IS NULL)"; params.push(teamContext); }
-  query += " ORDER BY fp.created_at DESC";
-  return getDb().prepare(query).all(...params) as FeedPost[];
+  const data = getData();
+  let rows = data.feed_posts.map((fp) => {
+    const d = fp.driver_id ? data.drivers.find((dr) => dr.id === fp.driver_id) : null;
+    return { ...fp, driver_name: d ? `${d.first_name} ${d.last_name}` : null };
+  });
+  if (teamContext) rows = rows.filter((fp) => fp.team_context === teamContext || !fp.team_context);
+  rows.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+  return as<FeedPost>(rows);
 }
 
 // ── Driver Contracts ──────────────────────────────────
 export function getDriverContract(driverId: number): DriverContract | null {
-  return (getDb().prepare("SELECT * FROM driver_contracts WHERE driver_id = ?").get(driverId) as DriverContract | undefined) ?? null;
+  return asOne<DriverContract>(getData().driver_contracts.find((dc) => dc.driver_id === driverId));
 }
 
-export function createDriverContract(data: {
+export function createDriverContract(body: {
   driver_id: number;
   driver_legal_name: string;
   driver_email: string;
   digital_signature: string;
   ip_address?: string;
 }): number {
-  const result = getDb().prepare(
-    `INSERT INTO driver_contracts (driver_id, driver_legal_name, driver_email, digital_signature, ip_address)
-     VALUES (?, ?, ?, ?, ?)`
-  ).run(data.driver_id, data.driver_legal_name, data.driver_email, data.digital_signature, data.ip_address ?? null);
-  return Number(result.lastInsertRowid);
+  const data = getData();
+  const id = data.driver_contracts.length + 100;
+  data.driver_contracts.push({
+    id,
+    driver_id: body.driver_id,
+    driver_legal_name: body.driver_legal_name,
+    driver_email: body.driver_email,
+    license_type: "non-exclusive",
+    revenue_split_driver: 70,
+    revenue_split_team: 30,
+    merch_categories: "Apparel,Headwear,Accessories",
+    contract_status: "active",
+    signed_at: new Date().toISOString(),
+    ip_address: body.ip_address ?? null,
+    digital_signature: body.digital_signature,
+    terms_version: "1.0",
+    created_at: new Date().toISOString(),
+  });
+  return id;
 }
 
 // ── Dashboard ──────────────────────────────────────────
 export function getDashboardStats() {
-  const db = getDb();
-  const driverCount = (db.prepare("SELECT COUNT(*) as c FROM drivers").get() as { c: number }).c;
-  const teamCount = (db.prepare("SELECT COUNT(*) as c FROM teams").get() as { c: number }).c;
-  const raceCount = (db.prepare("SELECT COUNT(*) as c FROM races").get() as { c: number }).c;
-  const reportCount = (db.prepare("SELECT COUNT(*) as c FROM scouting_reports").get() as { c: number }).c;
+  const data = getData();
 
-  const topDrivers = db.prepare(`SELECT d.id, d.first_name, d.last_name, d.nationality, d.current_series, d.rating, d.market_value, d.f1_target_team, d.super_license_points, t.name as team_name, COALESCE(SUM(rr.points_scored), 0) as total_points, COUNT(rr.id) as races FROM drivers d LEFT JOIN teams t ON d.team_id = t.id LEFT JOIN race_results rr ON d.id = rr.driver_id GROUP BY d.id ORDER BY d.rating DESC, total_points DESC LIMIT 10`).all();
+  const driverCount = data.drivers.length;
+  const teamCount = data.teams.length;
+  const raceCount = data.races.length;
+  const reportCount = data.scouting_reports.length;
 
-  const recentReports = db.prepare(`SELECT sr.id, sr.overall_grade, sr.scout_name, sr.created_at, d.first_name || ' ' || d.last_name as driver_name FROM scouting_reports sr JOIN drivers d ON sr.driver_id = d.id ORDER BY sr.created_at DESC LIMIT 5`).all();
+  // Top drivers with total points
+  const topDrivers = data.drivers
+    .map((d) => {
+      const t = data.teams.find((te) => te.id === d.team_id);
+      const driverResults = data.race_results.filter((rr) => rr.driver_id === d.id);
+      const total_points = driverResults.reduce((sum, rr) => sum + Number(rr.points_scored || 0), 0);
+      return {
+        id: d.id, first_name: d.first_name, last_name: d.last_name,
+        nationality: d.nationality, current_series: d.current_series,
+        rating: d.rating, market_value: d.market_value, f1_target_team: d.f1_target_team,
+        super_license_points: d.super_license_points,
+        team_name: t?.name ?? null, total_points, races: driverResults.length,
+      };
+    })
+    .sort((a, b) => Number(b.rating) - Number(a.rating) || b.total_points - a.total_points)
+    .slice(0, 10);
 
-  const marketWatch = db.prepare(`SELECT dm.*, d.first_name || ' ' || d.last_name as driver_name, d.nationality, d.current_series, d.market_value FROM driver_market dm JOIN drivers d ON dm.driver_id = d.id WHERE dm.availability_likelihood >= 50 ORDER BY dm.availability_likelihood DESC LIMIT 5`).all();
+  const recentReports = data.scouting_reports
+    .map((sr) => {
+      const d = data.drivers.find((dr) => dr.id === sr.driver_id);
+      return { id: sr.id, overall_grade: sr.overall_grade, scout_name: sr.scout_name, created_at: sr.created_at, driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown" };
+    })
+    .sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)))
+    .slice(0, 5);
 
-  const haasVoteCount = (db.prepare("SELECT COUNT(*) as c FROM fan_votes WHERE target_team = 'haas'").get() as { c: number }).c;
-  const alpineVoteCount = (db.prepare("SELECT COUNT(*) as c FROM fan_votes WHERE target_team = 'alpine'").get() as { c: number }).c;
+  const marketWatch = data.driver_market
+    .filter((dm) => Number(dm.availability_likelihood) >= 50)
+    .map((dm) => {
+      const d = data.drivers.find((dr) => dr.id === dm.driver_id);
+      return { ...dm, driver_name: d ? `${d.first_name} ${d.last_name}` : "Unknown", nationality: d?.nationality, current_series: d?.current_series, market_value: d?.market_value };
+    })
+    .sort((a, b) => Number(b.availability_likelihood) - Number(a.availability_likelihood))
+    .slice(0, 5);
+
+  const haasVoteCount = data.fan_votes.filter((fv) => fv.target_team === "haas").length;
+  const alpineVoteCount = data.fan_votes.filter((fv) => fv.target_team === "alpine").length;
 
   return { driverCount, teamCount, raceCount, reportCount, topDrivers, recentReports, marketWatch, haasVoteCount, alpineVoteCount };
 }

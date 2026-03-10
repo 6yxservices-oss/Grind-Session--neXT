@@ -1,4 +1,4 @@
-import { getDb } from "./db";
+import { getData } from "./db";
 
 interface F1ReadinessScore {
   driver_id: number;
@@ -19,12 +19,14 @@ export function getF1ReadinessScores(filters?: {
   series?: string;
   targetTeam?: string;
 }): F1ReadinessScore[] {
-  const drivers = getDb().prepare(`SELECT d.id, d.first_name, d.last_name, d.nationality, d.current_series, d.rating, d.market_value, d.super_license_points, d.super_license_eligible, d.career_wins, d.career_podiums, d.f1_target_team, t.name as team_name, COUNT(rr.id) as races FROM drivers d LEFT JOIN teams t ON d.team_id = t.id LEFT JOIN race_results rr ON d.id = rr.driver_id GROUP BY d.id`).all() as Array<Record<string, number | string | null>>;
+  const data = getData();
 
-  const results: F1ReadinessScore[] = drivers.map((d) => {
-    const stars = (d.rating as number) || 0;
-    const slPoints = (d.super_license_points as number) || 0;
-    const wins = (d.career_wins as number) || 0;
+  const results: F1ReadinessScore[] = data.drivers.map((d) => {
+    const team = data.teams.find((t) => t.id === d.team_id);
+    const raceCount = data.race_results.filter((rr) => rr.driver_id === d.id).length;
+    const stars = Number(d.rating) || 0;
+    const slPoints = Number(d.super_license_points) || 0;
+    const wins = Number(d.career_wins) || 0;
     const readiness = Math.min(99, Math.max(5, Math.round(stars * 16 + (slPoints / 40) * 10 + wins * 3 + Math.random() * 8)));
     let tier: string;
     if (readiness >= 85) tier = "F1 Race Seat Ready";
@@ -32,18 +34,18 @@ export function getF1ReadinessScores(filters?: {
     else if (readiness >= 50) tier = "1-2 Seasons Away";
     else if (readiness >= 30) tier = "Development Phase";
     else tier = "Early Career";
-    const confidence = Math.min(100, 30 + ((d.races as number) || 0) * 5 + (slPoints > 25 ? 15 : 0));
+    const confidence = Math.min(100, 30 + raceCount * 5 + (slPoints > 25 ? 15 : 0));
 
     return {
       driver_id: d.id as number,
       driver_name: `${d.first_name} ${d.last_name}`,
-      team_name: d.team_name as string | null,
+      team_name: (team?.name as string) ?? null,
       nationality: d.nationality as string,
       current_series: d.current_series as string,
       rating: stars,
       f1_readiness: readiness,
       projected_tier: tier,
-      market_value: (d.market_value as number) || 0,
+      market_value: Number(d.market_value) || 0,
       super_license_points: slPoints,
       confidence,
     };
