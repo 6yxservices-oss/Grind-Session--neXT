@@ -2,6 +2,8 @@ import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
 
+const SOURCE_DB = path.join(process.cwd(), "eybl-scout.db");
+const VERCEL_DB = "/tmp/eybl-scout.db";
 const SOURCE_DB = path.join(process.cwd(), "mikev-scout.db");
 const VERCEL_DB = "/tmp/mikev-scout.db";
 
