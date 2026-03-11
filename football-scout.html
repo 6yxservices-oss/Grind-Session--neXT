@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HVU Insider - Football Scout</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0e1a;color:#e2e8f0;min-height:100vh}
+.header{background:#041E42;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #CFB991;position:sticky;top:0;z-index:100}
+.header h1{font-size:20px;color:#fff;font-weight:700}
+.header h1 span{color:#CFB991}
+.nav{display:flex;gap:4px;background:#0d1325;padding:8px 12px;overflow-x:auto;border-bottom:1px solid #1e293b}
+.nav button{background:none;border:none;color:#94a3b8;padding:8px 16px;cursor:pointer;font-size:13px;font-weight:600;border-radius:6px;white-space:nowrap;transition:all .2s}
+.nav button:hover{color:#e2e8f0;background:#1e293b}
+.nav button.active{background:#041E42;color:#CFB991}
+.container{max-width:1200px;margin:0 auto;padding:16px}
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.card{background:#111827;border:1px solid #1e293b;border-radius:10px;padding:16px;transition:all .2s}
+.card:hover{border-color:#CFB991;transform:translateY(-1px)}
+.card-click{cursor:pointer}
+.stat-card{text-align:center;padding:20px}
+.stat-card .num{font-size:28px;font-weight:800;color:#CFB991}
+.stat-card .label{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.stars{color:#CFB991;font-size:14px}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700}
+.badge-a{background:#065f46;color:#6ee7b7}.badge-b{background:#92400e;color:#fbbf24}.badge-c{background:#7c2d12;color:#fb923c}
+.badge-pos{background:#1e3a5f;color:#60a5fa}.badge-status{background:#312e81;color:#a5b4fc}
+.player-name{font-size:15px;font-weight:700;color:#fff}
+.player-meta{font-size:12px;color:#94a3b8;margin-top:2px}
+.section-title{font-size:16px;font-weight:700;color:#fff;margin:20px 0 10px;padding-bottom:6px;border-bottom:2px solid #CFB991;display:inline-block}
+.report-card{border-left:3px solid #CFB991}
+.grades{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.detail-back{color:#CFB991;cursor:pointer;font-size:13px;margin-bottom:12px;display:inline-block}
+.detail-back:hover{text-decoration:underline}
+.feed-post{border-left:3px solid #CFB991;padding-left:12px;margin-bottom:16px}
+.feed-post .author{color:#CFB991;font-weight:700;font-size:13px}
+.feed-post .content{color:#cbd5e1;font-size:13px;margin-top:4px;line-height:1.5}
+.feed-post .meta{color:#64748b;font-size:11px;margin-top:4px}
+.type{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;margin-left:6px}
+.type-intel{background:#1e3a5f;color:#60a5fa}.type-commit{background:#065f46;color:#6ee7b7}.type-challenge{background:#7c2d12;color:#fb923c}.type-update{background:#312e81;color:#a5b4fc}
+.portal-bar{height:8px;border-radius:4px;background:#1e293b;overflow:hidden;margin-top:6px}
+.portal-fill{height:100%;border-radius:4px}
+.filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.filter-row select{background:#1e293b;color:#e2e8f0;border:1px solid #334155;padding:6px 10px;border-radius:6px;font-size:12px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:8px}
+.metric-item{background:#0d1325;padding:10px;border-radius:6px}
+.metric-item .val{font-size:18px;font-weight:700;color:#CFB991}
+.metric-item .lbl{font-size:11px;color:#94a3b8}
+@media(max-width:640px){.grid-4{grid-template-columns:1fr 1fr}.header h1{font-size:16px}.container{padding:10px}}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>HVU <span>Insider</span> Football Scout</h1>
+<div style="color:#94a3b8;font-size:12px">2027 Recruiting</div>
+</div>
+<div class="nav" id="navBar"></div>
+<div class="container" id="app"></div>
+<script>
+const DATA = {"teams":[{"id":1,"name":"Penn State","conference":"Big Ten","city":"State College","state":"PA","logo_url":null,"created_at":"2026-03-10"},{"id":2,"name":"Oregon","conference":"Big Ten","city":"Eugene","state":"OR","logo_url":null,"created_at":"2026-03-10"},{"id":3,"name":"Notre Dame","conference":"Independent","city":"South Bend","state":"IN","logo_url":null,"created_at":"2026-03-10"},{"id":4,"name":"Michigan","conference":"Big Ten","city":"Ann Arbor","state":"MI","logo_url":null,"created_at":"2026-03-10"},{"id":5,"name":"Ohio State","conference":"Big Ten","city":"Columbus","state":"OH","logo_url":null,"created_at":"2026-03-10"},{"id":6,"name":"Clemson","conference":"ACC","city":"Clemson","state":"SC","logo_url":null,"created_at":"2026-03-10"},{"id":7,"name":"Georgia","conference":"SEC","city":"Athens","state":"GA","logo_url":null,"created_at":"2026-03-10"},{"id":8,"name":"Auburn","conference":"SEC","city":"Auburn","state":"AL","logo_url":null,"created_at":"2026-03-10"},{"id":9,"name":"Miami","conference":"ACC","city":"Miami","state":"FL","logo_url":null,"created_at":"2026-03-10"},{"id":10,"name":"Virginia Tech","conference":"ACC","city":"Blacksburg","state":"VA","logo_url":null,"created_at":"2026-03-10"},{"id":11,"name":"Syracuse","conference":"ACC","city":"Syracuse","state":"NY","logo_url":null,"created_at":"2026-03-10"},{"id":12,"name":"Pittsburgh","conference":"ACC","city":"Pittsburgh","state":"PA","logo_url":null,"created_at":"2026-03-10"}],"players":[{"id":1,"first_name":"Will","last_name":"Mencl","team_id":null,"position":"QB","height":"6'3","weight":205,"class_year":2027,"high_school":"Chandler HS","hometown":"Chandler","state":"AZ","star_rating":5,"ranking":1,"nil_value":150000,"status":"Uncommitted","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":2,"first_name":"Peter","last_name":"Borque","team_id":null,"position":"QB","height":"6'4","weight":220,"class_year":2027,"high_school":"Tabor Academy","hometown":"Marion","state":"MA","star_rating":4,"ranking":86,"nil_value":75000,"status":"Decommitted","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":3,"first_name":"Will","last_name":"Wood","team_id":null,"position":"QB","height":"6'2","weight":220,"class_year":2027,"high_school":"Xaverian Brothers HS","hometown":"Natick","state":"MA","star_rating":3,"ranking":null,"nil_value":25000,"status":"Uncommitted","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":4,"first_name":"Tre","last_name":"Segarra","team_id":null,"position":"RB","height":"5'10","weight":205,"class_year":2027,"high_school":"Byrnes HS","hometown":"Duncan","state":"SC","star_rating":4,"ranking":5,"nil_value":100000,"status":"Uncommitted","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":5,"first_name":"Aiden","last_name":"Gibson","team_id":null,"position":"RB","height":"5'11","weight":195,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":3,"ranking":null,"nil_value":15000,"status":"PSU Visit Locked","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":6,"first_name":"Gary","last_name":"Walker","team_id":null,"position":"RB","height":"6'0","weight":200,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":3,"ranking":null,"nil_value":10000,"status":"PSU Visit Scheduled","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":7,"first_name":"Dajon","last_name":"Talley-Rhodes","team_id":null,"position":"RB","height":"5'10","weight":190,"class_year":2027,"high_school":"St. John's College HS","hometown":"Washington","state":"DC","star_rating":3,"ranking":null,"nil_value":8000,"status":"Pitt Lead","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":8,"first_name":"Case","last_name":"Alexander","team_id":null,"position":"ATH","height":"6'3","weight":210,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":3,"ranking":null,"nil_value":20000,"status":"PSU Legacy","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":9,"first_name":"Blake","last_name":"Betton","team_id":null,"position":"S","height":"6'1","weight":195,"class_year":2027,"high_school":"Shakopee HS","hometown":"Shakopee","state":"MN","star_rating":3,"ranking":null,"nil_value":15000,"status":"PSU Visit Locked","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":10,"first_name":"Brandon","last_name":"Lockley Jr.","team_id":null,"position":"LB","height":"6'2","weight":220,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":3,"ranking":null,"nil_value":10000,"status":"Regional Target","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":11,"first_name":"Tyson","last_name":"Washington","team_id":null,"position":"DB","height":"6'0","weight":185,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":3,"ranking":null,"nil_value":8000,"status":"PSU Target","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":12,"first_name":"Abraham","last_name":"Sesay","team_id":null,"position":"DE","height":"6'5","weight":225,"class_year":2027,"high_school":"TBD","hometown":"Exton","state":"PA","star_rating":4,"ranking":50,"nil_value":125000,"status":"Uncommitted","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":13,"first_name":"Mekai","last_name":"Brown","team_id":null,"position":"DE","height":"6'4","weight":240,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"PA","star_rating":4,"ranking":null,"nil_value":60000,"status":"PSU Re-Offered","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":14,"first_name":"Keysan","last_name":"Taylor","team_id":null,"position":"EDGE","height":"6'3","weight":235,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"TBD","star_rating":4,"ranking":26,"nil_value":50000,"status":"PSU Monitoring","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":15,"first_name":"Aidan","last_name":"O'Neil","team_id":null,"position":"DL","height":"6'4","weight":260,"class_year":2027,"high_school":"TBD","hometown":"TBD","state":"TBD","star_rating":3,"ranking":null,"nil_value":10000,"status":"Evaluation Stage","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":16,"first_name":"Kemon","last_name":"Spell","team_id":7,"position":"RB","height":"5'11","weight":210,"class_year":2027,"high_school":"McKeesport HS","hometown":"McKeesport","state":"PA","star_rating":5,"ranking":3,"nil_value":200000,"status":"Active","committed_to":"Georgia","photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":17,"first_name":"Marcus","last_name":"Rivera","team_id":4,"position":"WR","height":"6'2","weight":195,"class_year":2025,"high_school":"Detroit Catholic Central","hometown":"Detroit","state":"MI","star_rating":4,"ranking":null,"nil_value":180000,"status":"Active","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":18,"first_name":"Jaylen","last_name":"Thompson","team_id":5,"position":"CB","height":"6'0","weight":185,"class_year":2025,"high_school":"Pickerington Central","hometown":"Columbus","state":"OH","star_rating":4,"ranking":null,"nil_value":150000,"status":"Active","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":19,"first_name":"Derek","last_name":"Williams","team_id":2,"position":"LB","height":"6'3","weight":235,"class_year":2025,"high_school":"Central Catholic","hometown":"Portland","state":"OR","star_rating":3,"ranking":null,"nil_value":90000,"status":"Active","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"},{"id":20,"first_name":"Tyler","last_name":"Jackson","team_id":9,"position":"S","height":"6'1","weight":200,"class_year":2025,"high_school":"Gulliver Prep","hometown":"Miami","state":"FL","star_rating":4,"ranking":null,"nil_value":200000,"status":"Active","committed_to":null,"photo_url":null,"merch_store_url":null,"created_at":"2026-03-10"}],"games":[{"id":1,"home_team_id":1,"away_team_id":5,"week_number":1,"venue":"Beaver Stadium","city":"State College","state":"PA","game_date":"2025-08-30","home_score":28,"away_score":24,"status":"Final","created_at":"2026-03-10"},{"id":2,"home_team_id":3,"away_team_id":1,"week_number":3,"venue":"Notre Dame Stadium","city":"South Bend","state":"IN","game_date":"2025-09-13","home_score":21,"away_score":31,"status":"Final","created_at":"2026-03-10"},{"id":3,"home_team_id":1,"away_team_id":4,"week_number":5,"venue":"Beaver Stadium","city":"State College","state":"PA","game_date":"2025-09-27","home_score":35,"away_score":17,"status":"Final","created_at":"2026-03-10"},{"id":4,"home_team_id":1,"away_team_id":2,"week_number":7,"venue":"Beaver Stadium","city":"State College","state":"PA","game_date":"2025-10-11","home_score":27,"away_score":24,"status":"Final","created_at":"2026-03-10"},{"id":5,"home_team_id":1,"away_team_id":6,"week_number":10,"venue":"Beaver Stadium","city":"State College","state":"PA","game_date":"2025-11-01","home_score":null,"away_score":null,"status":"Scheduled","created_at":"2026-03-10"},{"id":6,"home_team_id":4,"away_team_id":1,"week_number":12,"venue":"Michigan Stadium","city":"Ann Arbor","state":"MI","game_date":"2025-11-15","home_score":null,"away_score":null,"status":"Scheduled","created_at":"2026-03-10"}],"player_stats":[],"football_metrics":[{"id":1,"player_id":1,"top_speed_mph":19.8,"top_speed_times_reached":12,"avg_top_speed_pos":19.2,"forty_yard":4.62,"shuttle":4.15,"vertical_jump":33.5,"broad_jump":118,"bench_press_reps":8,"throw_velocity_mph":62,"throw_velocity_avg_pos":55,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'6","hand_size":10,"arm_length":33.5,"updated_at":"2026-03-10"},{"id":2,"player_id":2,"top_speed_mph":18.9,"top_speed_times_reached":8,"avg_top_speed_pos":19.2,"forty_yard":4.72,"shuttle":4.22,"vertical_jump":31,"broad_jump":112,"bench_press_reps":10,"throw_velocity_mph":59,"throw_velocity_avg_pos":55,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'8","hand_size":10.25,"arm_length":34,"updated_at":"2026-03-10"},{"id":3,"player_id":3,"top_speed_mph":19.5,"top_speed_times_reached":15,"avg_top_speed_pos":19.2,"forty_yard":4.58,"shuttle":4.1,"vertical_jump":35,"broad_jump":120,"bench_press_reps":6,"throw_velocity_mph":57,"throw_velocity_avg_pos":55,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'4","hand_size":9.75,"arm_length":32.5,"updated_at":"2026-03-10"},{"id":4,"player_id":4,"top_speed_mph":21.8,"top_speed_times_reached":22,"avg_top_speed_pos":21,"forty_yard":4.42,"shuttle":4.02,"vertical_jump":38.5,"broad_jump":126,"bench_press_reps":12,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"5'11","hand_size":9.25,"arm_length":31,"updated_at":"2026-03-10"},{"id":5,"player_id":5,"top_speed_mph":21.2,"top_speed_times_reached":14,"avg_top_speed_pos":21,"forty_yard":4.48,"shuttle":4.08,"vertical_jump":36,"broad_jump":122,"bench_press_reps":10,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'0","hand_size":9,"arm_length":31.5,"updated_at":"2026-03-10"},{"id":6,"player_id":8,"top_speed_mph":20.5,"top_speed_times_reached":8,"avg_top_speed_pos":20,"forty_yard":4.55,"shuttle":4.12,"vertical_jump":34,"broad_jump":119,"bench_press_reps":6,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'5","hand_size":9.5,"arm_length":33,"updated_at":"2026-03-10"},{"id":7,"player_id":9,"top_speed_mph":20.8,"top_speed_times_reached":18,"avg_top_speed_pos":20.5,"forty_yard":4.5,"shuttle":4.05,"vertical_jump":37,"broad_jump":124,"bench_press_reps":8,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":520,"block_force_lbs":null,"nfl_avg_tackle_force":680,"nfl_avg_block_force":null,"wingspan":"6'3","hand_size":9.25,"arm_length":32.5,"updated_at":"2026-03-10"},{"id":8,"player_id":10,"top_speed_mph":19.2,"top_speed_times_reached":6,"avg_top_speed_pos":19.5,"forty_yard":4.65,"shuttle":4.18,"vertical_jump":32,"broad_jump":116,"bench_press_reps":14,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":610,"block_force_lbs":null,"nfl_avg_tackle_force":680,"nfl_avg_block_force":null,"wingspan":"6'4","hand_size":10,"arm_length":33,"updated_at":"2026-03-10"},{"id":9,"player_id":12,"top_speed_mph":19.5,"top_speed_times_reached":20,"avg_top_speed_pos":18.8,"forty_yard":4.58,"shuttle":4.15,"vertical_jump":35.5,"broad_jump":122,"bench_press_reps":16,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":720,"block_force_lbs":null,"nfl_avg_tackle_force":680,"nfl_avg_block_force":null,"wingspan":"6'8","hand_size":10.5,"arm_length":34.5,"updated_at":"2026-03-10"},{"id":10,"player_id":13,"top_speed_mph":19,"top_speed_times_reached":14,"avg_top_speed_pos":18.8,"forty_yard":4.65,"shuttle":4.2,"vertical_jump":34,"broad_jump":119,"bench_press_reps":18,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":680,"block_force_lbs":750,"nfl_avg_tackle_force":680,"nfl_avg_block_force":820,"wingspan":"6'7","hand_size":10.25,"arm_length":34,"updated_at":"2026-03-10"},{"id":11,"player_id":14,"top_speed_mph":18.8,"top_speed_times_reached":10,"avg_top_speed_pos":18.8,"forty_yard":4.68,"shuttle":4.22,"vertical_jump":33.5,"broad_jump":118,"bench_press_reps":15,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":650,"block_force_lbs":null,"nfl_avg_tackle_force":680,"nfl_avg_block_force":null,"wingspan":"6'6","hand_size":10,"arm_length":33.5,"updated_at":"2026-03-10"},{"id":12,"player_id":16,"top_speed_mph":22.4,"top_speed_times_reached":28,"avg_top_speed_pos":21,"forty_yard":4.35,"shuttle":3.98,"vertical_jump":40,"broad_jump":130,"bench_press_reps":14,"throw_velocity_mph":null,"throw_velocity_avg_pos":null,"tackle_force_lbs":null,"block_force_lbs":null,"nfl_avg_tackle_force":null,"nfl_avg_block_force":null,"wingspan":"6'1","hand_size":9.5,"arm_length":31.5,"updated_at":"2026-03-10"}],"scouting_reports":[{"id":1,"player_id":1,"game_id":null,"scout_name":"Mike V","overall_grade":"A+","offensive_grade":"A+","defensive_grade":null,"athleticism_grade":"A","football_iq_grade":"A+","strengths":"Completed 70%+ for 3,815 yards. Not a project — a ready passer. Navy All-American Bowl participant as a junior.","weaknesses":"Family has deep Florida ties — culture pitch matters as much as scheme.","notes":"If Mencl ends up at PSU, it rewrites the QB room ceiling for the entire class. Oregon leads, PSU in active pursuit alongside Auburn and Miami.","projection":"Elite P5 Starter, NFL Draft Day 1-2","comparison":"Justin Herbert","created_at":"2026-03-10"},{"id":2,"player_id":2,"game_id":null,"scout_name":"Mike V","overall_grade":"A","offensive_grade":"A","defensive_grade":null,"athleticism_grade":"B+","football_iq_grade":"A","strengths":"Won Gatorade Player of the Year in Massachusetts. Led Tabor to 9-0 title. Efficient, clean, decisive. Older maturity shows on film.","weaknesses":"Reclassified back to 2027 — needs to prove consistent against top competition.","notes":"Pulled Michigan pledge due to coaching staff uncertainty. PSU is now an early leader per ESPN. Scheduling spring visits — PSU needs to be on that list fast.","projection":"Power 5 Starter, possible NFL mid-round","comparison":"Mac Jones","created_at":"2026-03-10"},{"id":3,"player_id":3,"game_id":null,"scout_name":"Mike V","overall_grade":"B+","offensive_grade":"A-","defensive_grade":null,"athleticism_grade":"A-","football_iq_grade":"B+","strengths":"42 touchdowns, 1 interception. Led Xaverian to 3rd straight state championship. 2,828 passing + 440 rushing — dual threat who plays within the offense.","weaknesses":"ACC interest emerging but no Power 4 blue-blood offers yet. Needs to prove against national-level competition.","notes":"If PSU can't land Mencl or Borque, Wood is a legitimate option with upside still being discovered. Syracuse offered.","projection":"Mid-Major to Power 5 upside","comparison":"Gardner Minshew","created_at":"2026-03-10"},{"id":4,"player_id":4,"game_id":null,"scout_name":"Mike V","overall_grade":"A","offensive_grade":"A+","defensive_grade":null,"athleticism_grade":"A+","football_iq_grade":"A-","strengths":"1,374 rushing yards + 12 TDs. 348 receiving yards. Plays in space AND between the tackles. Greer Touchdown Club Offensive POY.","weaknesses":"Catholic faith is a real factor — Notre Dame's messaging has been intentional. Marcus Freeman made in-home visit.","notes":"Notre Dame has serious momentum. HC Marcus Freeman visited in-person. PSU needs to match that energy for a South Carolina kid.","projection":"Power 5 RB1, NFL Day 2","comparison":"Saquon Barkley lite","created_at":"2026-03-10"},{"id":5,"player_id":12,"game_id":null,"scout_name":"Mike V","overall_grade":"A+","offensive_grade":null,"defensive_grade":"A+","athleticism_grade":"A+","football_iq_grade":"A","strengths":"Top-ranked EDGE in updated 2027 Rivals300. In-state kid from Exton, PA. 6'5, 225 with top-program interest across SEC and Big Ten.","weaknesses":"Ohio State has RPM momentum. SC/PSU/ND battle ongoing.","notes":"PSU cannot let this one leave the state. In-state elite EDGE prospects don't come around often. This is a top-3 priority.","projection":"1st Round NFL Draft Pick","comparison":"Micah Parsons","created_at":"2026-03-10"},{"id":6,"player_id":13,"game_id":null,"scout_name":"Mike V","overall_grade":"A-","offensive_grade":null,"defensive_grade":"A","athleticism_grade":"A","football_iq_grade":"B+","strengths":"New PSU staff made Brown a priority — in-home visit done, offer extended. Spring visit already scheduled.","weaknesses":"Needs continued development of pass rush technique. Raw but toolsy.","notes":"Fast movement from new staff. PSU's DL development under last staff produced first-round picks. New staff leaning into that legacy.","projection":"Power 5 Starter, NFL Day 2-3","comparison":"Nolan Smith","created_at":"2026-03-10"},{"id":7,"player_id":16,"game_id":null,"scout_name":"Mike V","overall_grade":"A+","offensive_grade":"A+","defensive_grade":null,"athleticism_grade":"A+","football_iq_grade":"A-","strengths":"Former PSU commit. 5-star McKeesport RB. Electric speed, vision, and contact balance that's rare at this age.","weaknesses":"Lost to Georgia after January visit. Speed of recruitment matters — this is the cautionary tale.","notes":"Flipped to Georgia. That recruitment is closed. The lesson: PSU can't let the next one get away.","projection":"1st Round NFL Draft Pick","comparison":"Bijan Robinson","created_at":"2026-03-10"}],"transfer_portal":[{"id":1,"player_id":17,"transfer_likelihood":75,"reason":"Buried on depth chart behind 2 seniors. Only 25% snap share. Looking for starting opportunity.","current_playing_time_pct":25,"projected_nil_increase":40,"portal_entry_date":null,"status":"Watch","destination":null,"created_at":"2026-03-10"},{"id":2,"player_id":18,"transfer_likelihood":60,"reason":"Coaching staff changes. New DC runs different scheme. May not fit new system.","current_playing_time_pct":55,"projected_nil_increase":25,"portal_entry_date":null,"status":"Watch","destination":null,"created_at":"2026-03-10"},{"id":3,"player_id":19,"transfer_likelihood":85,"reason":"Publicly expressed frustration with playing time on social media. Portal entry expected.","current_playing_time_pct":15,"projected_nil_increase":60,"portal_entry_date":null,"status":"In Portal","destination":null,"created_at":"2026-03-10"},{"id":4,"player_id":20,"transfer_likelihood":45,"reason":"NIL situation. Current deal below market value. Testing waters for better NIL package.","current_playing_time_pct":70,"projected_nil_increase":35,"portal_entry_date":null,"status":"Watch","destination":null,"created_at":"2026-03-10"}],"social_actions":[],"feed_posts":[{"id":1,"author":"Coach Mike V","content":"INTEL DROP: Will Mencl (5★ QB, Chandler AZ) completed 70%+ for 3,815 yards last season. Not a project — a ready passer. Oregon leads but PSU is in active pursuit. The offensive identity pitch vs Oregon determines if PSU is real here.","post_type":"intel","player_id":1,"likes_count":342,"shares_count":89,"created_at":"2026-03-10T08:00:00Z"},{"id":2,"author":"Coach Mike V","content":"DECOMMIT ALERT: Peter Borque has pulled his Michigan pledge. PSU + Virginia Tech are early leaders. Won Gatorade POY in Massachusetts. The timing of this decommit is a SIGNIFICANT opening. PSU needs to lock a visit NOW.","post_type":"commit","player_id":2,"likes_count":567,"shares_count":201,"created_at":"2026-03-09T14:30:00Z"},{"id":3,"author":"Coach Mike V","content":"HVU INSIDER CHALLENGE: 2027 QB Call — Penn State needs a quarterback. Who gets there first?\n\n1. Does PSU land Mencl, Borque, or Wood?\n2. Who is PSU's biggest QB competition in 2027?\n3. Does PSU lock a 2027 QB commit before Spring Game?\n\nComplete -> 1,000 XP + 3 Sweepstakes Entries","post_type":"challenge","player_id":null,"likes_count":891,"shares_count":312,"created_at":"2026-03-10T10:00:00Z"},{"id":4,"author":"Coach Mike V","content":"EDGE WATCH: Abraham Sesay (4★, Exton PA) — Top-ranked EDGE in updated Rivals300. In-state. 6'5, 225. Ohio State has RPM momentum but this isn't closed. PSU CANNOT let this one leave the state. Top-3 priority.","post_type":"intel","player_id":12,"likes_count":445,"shares_count":156,"created_at":"2026-03-08T16:00:00Z"},{"id":5,"author":"Coach Mike V","content":"LESSON LEARNED: Kemon Spell (5★ RB, McKeesport) flipped to Georgia after January visit. That recruitment is CLOSED. The lesson? Speed matters. PSU can't let the next one get away.","post_type":"intel","player_id":16,"likes_count":678,"shares_count":234,"created_at":"2026-03-07T12:00:00Z"},{"id":6,"author":"Coach Mike V","content":"RB BOARD UPDATE: Tre Segarra (4★, Byrnes HS) — Marcus Freeman made the in-person visit. Notre Dame has serious momentum. Catholic faith is a real factor. Can PSU's staff generate that level of urgency for a South Carolina kid?","post_type":"intel","player_id":4,"likes_count":389,"shares_count":134,"created_at":"2026-03-06T09:00:00Z"},{"id":7,"author":"Coach Mike V","content":"SPRING VISIT LOCKED: Mekai Brown (4★ DE) has a spring visit to State College scheduled. New staff made him a priority — in-home visit done, offer extended. PSU's DL development is the strongest pitch in the room.","post_type":"intel","player_id":13,"likes_count":234,"shares_count":87,"created_at":"2026-03-05T11:00:00Z"},{"id":8,"author":"Coach Mike V","content":"PRO DAY EXPERIENCE: Full Pro Day Credential, Lasch Building & Stadium Tours, Meet PSU GM Derek Hoodjer, Signed Jersey, Lunch with Mike V, Framed Signed Print, and Social Media Recognition. Enter at insider.happyvalleyunited.com","post_type":"update","player_id":null,"likes_count":1203,"shares_count":456,"created_at":"2026-03-04T08:00:00Z"}],"merch_items":[{"id":1,"player_id":1,"name":"Will Mencl Jersey","description":"Official replica jersey","price":89.99,"image_url":null,"category":"Jersey","in_stock":1,"created_at":"2026-03-10"},{"id":2,"player_id":1,"name":"Will Mencl Signed Poster","description":"Limited edition signed print","price":49.99,"image_url":null,"category":"Poster","in_stock":1,"created_at":"2026-03-10"},{"id":3,"player_id":1,"name":"Mencl #1 Hat","description":"Snapback cap","price":34.99,"image_url":null,"category":"Hat","in_stock":1,"created_at":"2026-03-10"},{"id":4,"player_id":4,"name":"Tre Segarra Jersey","description":"Official replica jersey","price":89.99,"image_url":null,"category":"Jersey","in_stock":1,"created_at":"2026-03-10"},{"id":5,"player_id":4,"name":"Tre Segarra Signed Poster","description":"Limited edition signed print","price":49.99,"image_url":null,"category":"Poster","in_stock":1,"created_at":"2026-03-10"},{"id":6,"player_id":4,"name":"Segarra #4 Hat","description":"Snapback cap","price":34.99,"image_url":null,"category":"Hat","in_stock":1,"created_at":"2026-03-10"},{"id":7,"player_id":12,"name":"Abraham Sesay Jersey","description":"Official replica jersey","price":89.99,"image_url":null,"category":"Jersey","in_stock":1,"created_at":"2026-03-10"},{"id":8,"player_id":12,"name":"Abraham Sesay Signed Poster","description":"Limited edition signed print","price":49.99,"image_url":null,"category":"Poster","in_stock":1,"created_at":"2026-03-10"},{"id":9,"player_id":12,"name":"Sesay #12 Hat","description":"Snapback cap","price":34.99,"image_url":null,"category":"Hat","in_stock":1,"created_at":"2026-03-10"},{"id":10,"player_id":16,"name":"Kemon Spell Jersey","description":"Official replica jersey","price":89.99,"image_url":null,"category":"Jersey","in_stock":1,"created_at":"2026-03-10"},{"id":11,"player_id":16,"name":"Kemon Spell Signed Poster","description":"Limited edition signed print","price":49.99,"image_url":null,"category":"Poster","in_stock":1,"created_at":"2026-03-10"},{"id":12,"player_id":16,"name":"Spell #16 Hat","description":"Snapback cap","price":34.99,"image_url":null,"category":"Hat","in_stock":1,"created_at":"2026-03-10"}],"nfl_projections":[{"id":1,"player_id":1,"draft_probability":82,"projected_round":1,"projected_pick_range":"8-20","projected_role":"Starting QB","nfl_comparison":"Justin Herbert","nfl_comp_similarity":72,"secondary_comparison":"Dak Prescott","player_archetype":"Pro-Style Pocket Passer","bust_probability":12,"pro_bowl_probability":28,"projected_rookie_contract":32000000,"projected_second_contract":180000000,"career_earnings_est":350000000,"updated_at":"2026-03-10"},{"id":2,"player_id":2,"draft_probability":55,"projected_round":2,"projected_pick_range":"35-55","projected_role":"Starting QB","nfl_comparison":"Mac Jones","nfl_comp_similarity":68,"secondary_comparison":"Kirk Cousins","player_archetype":"Efficient Game Manager","bust_probability":22,"pro_bowl_probability":12,"projected_rookie_contract":8000000,"projected_second_contract":80000000,"career_earnings_est":180000000,"updated_at":"2026-03-10"},{"id":3,"player_id":4,"draft_probability":70,"projected_round":1,"projected_pick_range":"15-30","projected_role":"Starting RB","nfl_comparison":"Saquon Barkley","nfl_comp_similarity":65,"secondary_comparison":"Josh Jacobs","player_archetype":"Three-Down Back","bust_probability":15,"pro_bowl_probability":22,"projected_rookie_contract":18000000,"projected_second_contract":60000000,"career_earnings_est":150000000,"updated_at":"2026-03-10"},{"id":4,"player_id":12,"draft_probability":88,"projected_round":1,"projected_pick_range":"1-10","projected_role":"Starting EDGE","nfl_comparison":"Micah Parsons","nfl_comp_similarity":78,"secondary_comparison":"Myles Garrett","player_archetype":"Elite Pass Rusher","bust_probability":8,"pro_bowl_probability":35,"projected_rookie_contract":40000000,"projected_second_contract":120000000,"career_earnings_est":300000000,"updated_at":"2026-03-10"},{"id":5,"player_id":16,"draft_probability":90,"projected_round":1,"projected_pick_range":"1-5","projected_role":"Feature Back","nfl_comparison":"Bijan Robinson","nfl_comp_similarity":80,"secondary_comparison":"Saquon Barkley","player_archetype":"Generational RB","bust_probability":6,"pro_bowl_probability":40,"projected_rookie_contract":35000000,"projected_second_contract":70000000,"career_earnings_est":200000000,"updated_at":"2026-03-10"}],"scholastic_data":[{"id":1,"player_id":1,"gpa":3.45,"gpa_scale":4,"sat_score":1180,"act_score":26,"ncaa_eligible":1,"core_gpa":3.35,"academic_standing":"Good Standing","intended_major":"Business","updated_at":"2026-03-10"},{"id":2,"player_id":2,"gpa":3.62,"gpa_scale":4,"sat_score":1210,"act_score":27,"ncaa_eligible":1,"core_gpa":3.52,"academic_standing":"Good Standing","intended_major":"Communications","updated_at":"2026-03-10"},{"id":3,"player_id":3,"gpa":3.28,"gpa_scale":4,"sat_score":1150,"act_score":25,"ncaa_eligible":1,"core_gpa":3.18,"academic_standing":"Good Standing","intended_major":"Kinesiology","updated_at":"2026-03-10"},{"id":4,"player_id":4,"gpa":3.51,"gpa_scale":4,"sat_score":1190,"act_score":26,"ncaa_eligible":1,"core_gpa":3.41,"academic_standing":"Good Standing","intended_major":"Sports Management","updated_at":"2026-03-10"},{"id":5,"player_id":5,"gpa":3.15,"gpa_scale":4,"sat_score":1100,"act_score":24,"ncaa_eligible":1,"core_gpa":3.05,"academic_standing":"Good Standing","intended_major":"Liberal Arts","updated_at":"2026-03-10"},{"id":6,"player_id":6,"gpa":2.95,"gpa_scale":4,"sat_score":1050,"act_score":23,"ncaa_eligible":1,"core_gpa":2.85,"academic_standing":"Good Standing","intended_major":"Undecided","updated_at":"2026-03-10"},{"id":7,"player_id":7,"gpa":3.38,"gpa_scale":4,"sat_score":1170,"act_score":25,"ncaa_eligible":1,"core_gpa":3.28,"academic_standing":"Good Standing","intended_major":"Business","updated_at":"2026-03-10"},{"id":8,"player_id":8,"gpa":3.72,"gpa_scale":4,"sat_score":1230,"act_score":27,"ncaa_eligible":1,"core_gpa":3.62,"academic_standing":"Good Standing","intended_major":"Communications","updated_at":"2026-03-10"},{"id":9,"player_id":9,"gpa":3.05,"gpa_scale":4,"sat_score":1080,"act_score":23,"ncaa_eligible":1,"core_gpa":2.95,"academic_standing":"Good Standing","intended_major":"Kinesiology","updated_at":"2026-03-10"},{"id":10,"player_id":10,"gpa":3.42,"gpa_scale":4,"sat_score":1160,"act_score":25,"ncaa_eligible":1,"core_gpa":3.32,"academic_standing":"Good Standing","intended_major":"Sports Management","updated_at":"2026-03-10"},{"id":11,"player_id":11,"gpa":2.88,"gpa_scale":4,"sat_score":1020,"act_score":22,"ncaa_eligible":1,"core_gpa":2.78,"academic_standing":"Good Standing","intended_major":"Liberal Arts","updated_at":"2026-03-10"},{"id":12,"player_id":12,"gpa":3.55,"gpa_scale":4,"sat_score":1200,"act_score":26,"ncaa_eligible":1,"core_gpa":3.45,"academic_standing":"Good Standing","intended_major":"Business","updated_at":"2026-03-10"},{"id":13,"player_id":13,"gpa":3.18,"gpa_scale":4,"sat_score":1130,"act_score":24,"ncaa_eligible":1,"core_gpa":3.08,"academic_standing":"Good Standing","intended_major":"Communications","updated_at":"2026-03-10"},{"id":14,"player_id":14,"gpa":3.35,"gpa_scale":4,"sat_score":1170,"act_score":25,"ncaa_eligible":1,"core_gpa":3.25,"academic_standing":"Good Standing","intended_major":"Undecided","updated_at":"2026-03-10"},{"id":15,"player_id":15,"gpa":2.92,"gpa_scale":4,"sat_score":1040,"act_score":22,"ncaa_eligible":1,"core_gpa":2.82,"academic_standing":"Good Standing","intended_major":"Kinesiology","updated_at":"2026-03-10"},{"id":16,"player_id":16,"gpa":3.68,"gpa_scale":4,"sat_score":1220,"act_score":27,"ncaa_eligible":1,"core_gpa":3.58,"academic_standing":"Good Standing","intended_major":"Sports Management","updated_at":"2026-03-10"}],"nil_contracts":[]};
+let currentTab='dashboard',detailPlayer=null;
+const TABS=['dashboard','players','teams','games','reports','portal','feed'];
+
+function init(){
+  const nav=document.getElementById('navBar');
+  nav.innerHTML=TABS.map(t=>'<button onclick="showTab(\''+t+'\')">'+t.charAt(0).toUpperCase()+t.slice(1)+'</button>').join('');
+  showTab('dashboard');
+}
+function showTab(t){currentTab=t;detailPlayer=null;document.querySelectorAll('.nav button').forEach((b,i)=>b.className=TABS[i]===t?'active':'');render()}
+function showPlayer(id){detailPlayer=id;render();window.scrollTo(0,0)}
+function stars(n){return String.fromCharCode(9733).repeat(n)+String.fromCharCode(9734).repeat(5-n)}
+function gradeBadge(g){if(!g)return'';return'<span class="badge badge-'+(g.startsWith('A')?'a':g.startsWith('B')?'b':'c')+'">'+g+'</span>'}
+function getTeam(id){return DATA.teams.find(function(t){return t.id===id})}
+function getPlayer(id){return DATA.players.find(function(p){return p.id===id})}
+
+function render(){
+  var el=document.getElementById('app');
+  if(detailPlayer)return renderDetail(el);
+  var fn={dashboard:renderDash,players:renderPlayers,teams:renderTeams,games:renderGames,reports:renderReports,portal:renderPortal,feed:renderFeed};
+  (fn[currentTab]||renderDash)(el);
+}
+
+function renderDash(el){
+  var h='<div class="grid grid-4" style="margin-bottom:20px">';
+  h+='<div class="card stat-card"><div class="num">'+DATA.players.length+'</div><div class="label">Players</div></div>';
+  h+='<div class="card stat-card"><div class="num">'+DATA.teams.length+'</div><div class="label">Teams</div></div>';
+  h+='<div class="card stat-card"><div class="num">'+DATA.games.length+'</div><div class="label">Games</div></div>';
+  h+='<div class="card stat-card"><div class="num">'+DATA.scouting_reports.length+'</div><div class="label">Reports</div></div></div>';
+  h+='<div class="section-title">Top Prospects</div><div class="grid grid-2">';
+  DATA.players.filter(function(p){return p.star_rating>=4}).sort(function(a,b){return(a.ranking||999)-(b.ranking||999)}).slice(0,8).forEach(function(p){
+    h+='<div class="card card-click" onclick="showPlayer('+p.id+')">';
+    h+='<div class="player-name">'+p.first_name+' '+p.last_name+'</div>';
+    h+='<div class="player-meta"><span class="badge badge-pos">'+p.position+'</span> '+p.height+' / '+p.weight+'lbs &middot; Class '+p.class_year+'</div>';
+    h+='<div style="margin-top:4px"><span class="stars">'+stars(p.star_rating)+'</span> '+(p.ranking?'<span style="color:#94a3b8;font-size:11px">#'+p.ranking+'</span>':'')+'</div>';
+    h+='<div style="font-size:11px;color:#94a3b8;margin-top:4px">'+p.status+(p.committed_to?' &rarr; '+p.committed_to:'')+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="section-title">Latest Intel</div>';
+  DATA.feed_posts.slice(0,4).forEach(function(fp){
+    h+='<div class="feed-post"><div class="author">'+fp.author+'<span class="type type-'+fp.post_type+'">'+fp.post_type+'</span></div>';
+    h+='<div class="content">'+fp.content.substring(0,200)+(fp.content.length>200?'...':'')+'</div>';
+    h+='<div class="meta">'+fp.likes_count+' likes &middot; '+fp.shares_count+' shares</div></div>';
+  });
+  el.innerHTML=h;
+}
+
+function renderPlayers(el){
+  var positions=[];DATA.players.forEach(function(p){if(positions.indexOf(p.position)<0)positions.push(p.position)});positions.sort();
+  var years=[];DATA.players.forEach(function(p){if(years.indexOf(p.class_year)<0)years.push(p.class_year)});years.sort();
+  var h='<div class="filter-row"><select id="fPos" onchange="render()"><option value="">All Positions</option>';
+  positions.forEach(function(p){h+='<option>'+p+'</option>'});
+  h+='</select><select id="fYear" onchange="render()"><option value="">All Classes</option>';
+  years.forEach(function(y){h+='<option>'+y+'</option>'});
+  h+='</select></div><div class="grid grid-2" id="plist"></div>';
+  el.innerHTML=h;
+  var fp=document.getElementById('fPos').value,fy=document.getElementById('fYear').value;
+  var players=DATA.players.slice();
+  if(fp)players=players.filter(function(p){return p.position===fp});
+  if(fy)players=players.filter(function(p){return p.class_year==fy});
+  players.sort(function(a,b){return b.star_rating-a.star_rating||(a.ranking||999)-(b.ranking||999)});
+  h='';players.forEach(function(p){
+    var team=p.team_id?getTeam(p.team_id):null;
+    h+='<div class="card card-click" onclick="showPlayer('+p.id+')">';
+    h+='<div class="player-name">'+p.first_name+' '+p.last_name+'</div>';
+    h+='<div class="player-meta"><span class="badge badge-pos">'+p.position+'</span> '+p.height+' / '+p.weight+'lbs &middot; Class '+p.class_year+'</div>';
+    h+='<div style="margin-top:4px"><span class="stars">'+stars(p.star_rating)+'</span> '+(p.ranking?'<span style="color:#94a3b8;font-size:11px">#'+p.ranking+'</span>':'')+'</div>';
+    h+='<div style="font-size:11px;margin-top:4px"><span class="badge badge-status">'+p.status+'</span> '+(team?team.name:'')+(p.committed_to?' &rarr; '+p.committed_to:'')+'</div>';
+    if(p.nil_value)h+='<div style="font-size:11px;color:#6ee7b7;margin-top:2px">NIL: $'+p.nil_value.toLocaleString()+'</div>';
+    h+='</div>';
+  });
+  document.getElementById('plist').innerHTML=h;
+}
+
+function renderDetail(el){
+  var p=getPlayer(detailPlayer);if(!p){el.innerHTML='Not found';return}
+  var team=p.team_id?getTeam(p.team_id):null;
+  var reports=DATA.scouting_reports.filter(function(r){return r.player_id===p.id});
+  var metrics=DATA.football_metrics.find(function(m){return m.player_id===p.id});
+  var schol=DATA.scholastic_data.find(function(s){return s.player_id===p.id});
+  var nfl=DATA.nfl_projections.find(function(n){return n.player_id===p.id});
+  var h='<div class="detail-back" onclick="detailPlayer=null;render()">&larr; Back</div>';
+  h+='<div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px"><div>';
+  h+='<div style="font-size:22px;font-weight:800;color:#fff">'+p.first_name+' '+p.last_name+'</div>';
+  h+='<div style="margin-top:4px"><span class="badge badge-pos">'+p.position+'</span> <span class="stars">'+stars(p.star_rating)+'</span> '+(p.ranking?'<span style="color:#94a3b8;font-size:12px">#'+p.ranking+'</span>':'')+'</div>';
+  h+='<div style="color:#94a3b8;font-size:13px;margin-top:4px">'+p.height+' / '+p.weight+'lbs &middot; Class '+p.class_year+'</div>';
+  h+='<div style="color:#94a3b8;font-size:13px">'+p.high_school+' &middot; '+p.hometown+', '+p.state+'</div>';
+  if(team)h+='<div style="color:#60a5fa;font-size:13px;margin-top:2px">'+team.name+' ('+team.conference+')</div>';
+  h+='<div style="margin-top:4px"><span class="badge badge-status">'+p.status+'</span>'+(p.committed_to?' <span style="color:#6ee7b7">&rarr; '+p.committed_to+'</span>':'')+'</div></div>';
+  if(p.nil_value)h+='<div style="text-align:right"><div style="font-size:24px;font-weight:800;color:#6ee7b7">$'+p.nil_value.toLocaleString()+'</div><div style="font-size:11px;color:#94a3b8">Est. NIL Value</div></div>';
+  h+='</div></div>';
+  if(metrics){
+    h+='<div class="section-title">Athletic Metrics</div><div class="metric-grid">';
+    var ms=[['forty_yard','s','40-Yard Dash'],['top_speed_mph',' mph','Top Speed'],['vertical_jump','"','Vertical Jump'],['broad_jump','"','Broad Jump'],['shuttle','s','Shuttle'],['bench_press_reps','','Bench Reps'],['throw_velocity_mph',' mph','Throw Velocity'],['wingspan','','Wingspan'],['tackle_force_lbs',' lbs','Tackle Force']];
+    ms.forEach(function(m){if(metrics[m[0]]!=null)h+='<div class="metric-item"><div class="val">'+metrics[m[0]]+m[1]+'</div><div class="lbl">'+m[2]+'</div></div>'});
+    h+='</div>';
+  }
+  if(nfl){
+    h+='<div class="section-title">NFL Projection</div><div class="card"><div style="display:flex;gap:20px;flex-wrap:wrap">';
+    h+='<div><div style="font-size:32px;font-weight:800;color:#CFB991">'+nfl.draft_probability+'%</div><div style="font-size:11px;color:#94a3b8">Draft Prob</div></div>';
+    h+='<div><div style="font-size:18px;font-weight:700;color:#fff">Round '+nfl.projected_round+'</div><div style="font-size:11px;color:#94a3b8">Pick: '+nfl.projected_pick_range+'</div></div>';
+    h+='<div><div style="font-size:14px;color:#60a5fa">'+nfl.nfl_comparison+'</div><div style="font-size:11px;color:#94a3b8">Comp ('+nfl.nfl_comp_similarity+'%)</div></div></div>';
+    h+='<div style="margin-top:8px;font-size:13px;color:#94a3b8">'+nfl.player_archetype+' &middot; '+nfl.projected_role+'</div>';
+    h+='<div style="margin-top:8px;display:flex;gap:16px;font-size:12px">';
+    h+='<div><span style="color:#6ee7b7">Rookie:</span> $'+(nfl.projected_rookie_contract/1e6).toFixed(0)+'M</div>';
+    h+='<div><span style="color:#60a5fa">2nd:</span> $'+(nfl.projected_second_contract/1e6).toFixed(0)+'M</div>';
+    h+='<div><span style="color:#CFB991">Career:</span> $'+(nfl.career_earnings_est/1e6).toFixed(0)+'M</div></div></div>';
+  }
+  if(schol){
+    h+='<div class="section-title">Academics</div><div class="card"><div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px">';
+    h+='<div><strong style="color:#CFB991">'+schol.gpa+'</strong> GPA</div>';
+    h+='<div><strong style="color:#CFB991">'+schol.sat_score+'</strong> SAT</div>';
+    h+='<div><strong style="color:#CFB991">'+schol.act_score+'</strong> ACT</div>';
+    h+='<div><span class="badge '+(schol.ncaa_eligible?'badge-a':'badge-c')+'">'+(schol.ncaa_eligible?'NCAA Eligible':'Ineligible')+'</span></div>';
+    h+='<div>Major: '+schol.intended_major+'</div></div></div>';
+  }
+  if(reports.length){
+    h+='<div class="section-title">Scouting Reports</div>';
+    reports.forEach(function(r){
+      h+='<div class="card report-card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center">';
+      h+='<div style="font-weight:700;color:#CFB991;font-size:13px">'+r.scout_name+'</div>';
+      h+='<div class="grades">'+gradeBadge(r.overall_grade)+(r.offensive_grade?' '+gradeBadge(r.offensive_grade):'')+(r.defensive_grade?' '+gradeBadge(r.defensive_grade):'')+(r.athleticism_grade?' '+gradeBadge(r.athleticism_grade):'')+'</div></div>';
+      if(r.strengths)h+='<div style="font-size:12px;margin-top:6px"><strong style="color:#6ee7b7">Strengths:</strong> '+r.strengths+'</div>';
+      if(r.weaknesses)h+='<div style="font-size:12px;margin-top:4px"><strong style="color:#fbbf24">Weaknesses:</strong> '+r.weaknesses+'</div>';
+      if(r.notes)h+='<div style="font-size:12px;margin-top:4px;color:#94a3b8">'+r.notes+'</div>';
+      if(r.projection)h+='<div style="font-size:12px;margin-top:4px"><strong style="color:#60a5fa">Projection:</strong> '+r.projection+'</div>';
+      if(r.comparison)h+='<div style="font-size:12px"><strong style="color:#a78bfa">Comp:</strong> '+r.comparison+'</div>';
+      h+='</div>';
+    });
+  }
+  el.innerHTML=h;
+}
+
+function renderTeams(el){
+  var h='<div class="grid grid-2">';
+  DATA.teams.forEach(function(t){
+    var c=DATA.players.filter(function(p){return p.team_id===t.id}).length;
+    h+='<div class="card"><div style="font-size:16px;font-weight:700;color:#fff">'+t.name+'</div>';
+    h+='<div style="font-size:12px;color:#94a3b8">'+t.conference+' &middot; '+t.city+', '+t.state+'</div>';
+    if(c)h+='<div style="font-size:11px;color:#CFB991;margin-top:4px">'+c+' player'+(c>1?'s':'')+' tracked</div>';
+    h+='</div>';
+  });
+  el.innerHTML=h+'</div>';
+}
+
+function renderGames(el){
+  var h='<div class="section-title">Penn State 2025 Schedule</div><div class="grid" style="gap:8px">';
+  DATA.games.forEach(function(g){
+    var ht=getTeam(g.home_team_id),at=getTeam(g.away_team_id);
+    var isPSU=g.home_team_id===1;
+    h+='<div class="card" style="display:flex;justify-content:space-between;align-items:center"><div>';
+    h+='<div style="font-weight:700;color:#fff">Wk '+g.week_number+': '+(ht?ht.name:'?')+' vs '+(at?at.name:'?')+'</div>';
+    h+='<div style="font-size:12px;color:#94a3b8">'+g.venue+' &middot; '+g.game_date+'</div></div><div style="text-align:right">';
+    if(g.status==='Final'){
+      var win=(isPSU&&g.home_score>g.away_score)||(!isPSU&&g.away_score>g.home_score);
+      h+='<div style="font-size:18px;font-weight:800;color:'+(win?'#6ee7b7':'#f87171')+'">'+g.home_score+' - '+g.away_score+'</div><div style="font-size:10px;color:#94a3b8">FINAL</div>';
+    }else h+='<span class="badge badge-status">Scheduled</span>';
+    h+='</div></div>';
+  });
+  el.innerHTML=h+'</div>';
+}
+
+function renderReports(el){
+  var h='<div class="section-title">Scouting Reports</div>';
+  DATA.scouting_reports.forEach(function(r){
+    var p=getPlayer(r.player_id);
+    h+='<div class="card report-card" style="margin-bottom:10px;cursor:pointer" onclick="showPlayer('+r.player_id+')">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap"><div>';
+    h+='<div class="player-name">'+(p?p.first_name+' '+p.last_name:'?')+' <span class="badge badge-pos">'+(p?p.position:'')+'</span></div>';
+    h+='<div style="font-size:12px;color:#94a3b8">by '+r.scout_name+'</div></div>';
+    h+='<div class="grades">'+gradeBadge(r.overall_grade)+(r.offensive_grade?' '+gradeBadge(r.offensive_grade):'')+(r.defensive_grade?' '+gradeBadge(r.defensive_grade):'')+(r.athleticism_grade?' '+gradeBadge(r.athleticism_grade):'')+'</div></div>';
+    if(r.strengths)h+='<div style="font-size:12px;margin-top:8px"><strong style="color:#6ee7b7">Strengths:</strong> '+r.strengths+'</div>';
+    if(r.weaknesses)h+='<div style="font-size:12px;margin-top:4px"><strong style="color:#fbbf24">Weaknesses:</strong> '+r.weaknesses+'</div>';
+    if(r.notes)h+='<div style="font-size:12px;margin-top:4px;color:#94a3b8">'+r.notes+'</div>';
+    if(r.projection)h+='<div style="font-size:12px;margin-top:4px"><strong style="color:#60a5fa">Projection:</strong> '+r.projection+'</div>';
+    if(r.comparison)h+='<div style="font-size:12px"><strong style="color:#a78bfa">Comp:</strong> '+r.comparison+'</div>';
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+
+function renderPortal(el){
+  var h='<div class="section-title">Transfer Portal Watch</div><div class="grid" style="gap:10px">';
+  DATA.transfer_portal.forEach(function(tp){
+    var p=getPlayer(tp.player_id),team=p&&p.team_id?getTeam(p.team_id):null;
+    var color=tp.transfer_likelihood>=70?'#ef4444':tp.transfer_likelihood>=50?'#fbbf24':'#60a5fa';
+    h+='<div class="card"><div style="display:flex;justify-content:space-between;align-items:start"><div>';
+    h+='<div class="player-name" style="cursor:pointer" onclick="showPlayer('+tp.player_id+')">'+(p?p.first_name+' '+p.last_name:'?')+' <span class="badge badge-pos">'+(p?p.position:'')+'</span></div>';
+    h+='<div style="font-size:12px;color:#94a3b8">'+(team?team.name+' ('+team.conference+')':'')+'</div></div>';
+    h+='<div style="text-align:right"><div style="font-size:24px;font-weight:800;color:'+color+'">'+tp.transfer_likelihood+'%</div><div style="font-size:10px;color:#94a3b8">Transfer Likelihood</div></div></div>';
+    h+='<div class="portal-bar"><div class="portal-fill" style="width:'+tp.transfer_likelihood+'%;background:'+color+'"></div></div>';
+    h+='<div style="font-size:12px;color:#cbd5e1;margin-top:8px">'+tp.reason+'</div>';
+    h+='<div style="display:flex;gap:12px;font-size:11px;margin-top:6px;color:#94a3b8">';
+    h+='<div>Playing Time: '+tp.current_playing_time_pct+'%</div><div>NIL Increase: +'+tp.projected_nil_increase+'%</div><span class="badge badge-status">'+tp.status+'</span></div></div>';
+  });
+  el.innerHTML=h+'</div>';
+}
+
+function renderFeed(el){
+  var h='<div class="section-title">Coach Mike V Feed</div>';
+  DATA.feed_posts.forEach(function(fp){
+    h+='<div class="feed-post"><div class="author">'+fp.author+'<span class="type type-'+fp.post_type+'">'+fp.post_type+'</span></div>';
+    h+='<div class="content">'+fp.content+'</div>';
+    h+='<div class="meta">'+fp.likes_count+' likes &middot; '+fp.shares_count+' shares</div></div>';
+  });
+  el.innerHTML=h;
+}
+
+init();
+</script>
+</body>
+</html>
