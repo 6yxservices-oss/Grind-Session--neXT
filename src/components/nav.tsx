@@ -14,6 +14,7 @@ const links = [
   { href: "/analytics", label: "Analytics", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
   { href: "/shortlist", label: "My Board", icon: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" },
   { href: "/feed", label: "Feed", icon: "M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" },
+  { href: "/sonar", label: "Sonar Intel", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
 ];
 
 export default function Nav() {
@@ -85,6 +86,7 @@ export default function Nav() {
               </svg>
               {link.label}
               {link.label === "Fan Vote" && <span className="ml-auto text-[9px] bg-haas-red/20 text-haas-red px-1.5 py-0.5 rounded font-bold">LIVE</span>}
+              {link.label === "Sonar Intel" && <span className="ml-auto text-[9px] bg-alpine-cyan/20 text-alpine-cyan px-1.5 py-0.5 rounded font-bold">AI</span>}
             </Link>
           );
         })}
