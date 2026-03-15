@@ -37,5 +37,6 @@ next-env.d.ts
 *.db-shm
 *.db-wal
 
-# claude worktrees
-.claude/
+# claude worktrees (keep commands/)
+.claude/*
+!.claude/commands/
