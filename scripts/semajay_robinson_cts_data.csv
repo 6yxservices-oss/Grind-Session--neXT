@@ -1,0 +1,12 @@
+game_date,opponent,opponent_state,opponent_tier,tier_rationale,game_type,score_for,score_against,margin,result,robinson_tackles,robinson_ints,robinson_pbus,robinson_tds,opponent_d1_wr_count,opponent_top_receiver,opponent_top_receiver_rating,data_confidence
+2025-08-22,Dr. Phillips,FL,3,"Orlando 8A program; historically produces D1 talent",non-district,39,6,33,W,,,,,,,,LOW
+2025-09-05,Unknown Opp 1,FL,,,non-district,,,,,,,,,,,NONE
+2025-09-12,Unknown Opp 2,FL,,,non-district,,,,,,,,,,,NONE
+2025-09-14,Boyd Anderson,FL,4,"Broward County 5A; Robinson's former school",non-district,59,6,53,W,,,,,,,,NONE
+2025-09-26,Unknown Opp 3,FL,,,district,,,,,,,,,,,NONE
+2025-10-03,Unknown Opp 4,FL,,,district,,,,,,,,,,,NONE
+2025-10-10,Unknown Opp 5,FL,,,district,,,,,,,,,,,NONE
+2025-10-24,Boynton Beach,FL,4,"District 4A-14 opponent",district,41,13,28,W,,,,,,,,NONE
+2025-10-30,Deerfield Beach,FL,2,"Broward powerhouse; historically stacked with D1 WR talent",non-district,56,0,56,W,,,,,,,,LOW
+2025-11-07,Unknown Opp 6,FL,,,playoff_r1,,,,,,,,,,,NONE
+2025-11-14,Plantation,FL,3,"FHSAA 4A playoff opponent; only loss of season",playoff_r2,14,21,-7,L,,,,,,,,LOW
