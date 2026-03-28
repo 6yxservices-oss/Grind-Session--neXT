@@ -1,12 +1,12 @@
-game_date,opponent,opponent_state,opponent_tier,tier_rationale,game_type,score_for,score_against,margin,result,robinson_tackles,robinson_ints,robinson_pbus,robinson_tds,opponent_d1_wr_count,opponent_top_receiver,opponent_top_receiver_rating,data_confidence
-2025-08-22,Dr. Phillips,FL,3,"Orlando 8A program; historically produces D1 talent",non-district,39,6,33,W,,,,,,,,LOW
-2025-09-05,Unknown Opp 1,FL,,,non-district,,,,,,,,,,,NONE
-2025-09-12,Unknown Opp 2,FL,,,non-district,,,,,,,,,,,NONE
-2025-09-14,Boyd Anderson,FL,4,"Broward County 5A; Robinson's former school",non-district,59,6,53,W,,,,,,,,NONE
-2025-09-26,Unknown Opp 3,FL,,,district,,,,,,,,,,,NONE
-2025-10-03,Unknown Opp 4,FL,,,district,,,,,,,,,,,NONE
-2025-10-10,Unknown Opp 5,FL,,,district,,,,,,,,,,,NONE
-2025-10-24,Boynton Beach,FL,4,"District 4A-14 opponent",district,41,13,28,W,,,,,,,,NONE
-2025-10-30,Deerfield Beach,FL,2,"Broward powerhouse; historically stacked with D1 WR talent",non-district,56,0,56,W,,,,,,,,LOW
-2025-11-07,Unknown Opp 6,FL,,,playoff_r1,,,,,,,,,,,NONE
-2025-11-14,Plantation,FL,3,"FHSAA 4A playoff opponent; only loss of season",playoff_r2,14,21,-7,L,,,,,,,,LOW
+game_date,opponent,opponent_state,opponent_class,opponent_tier,tier_rationale,game_type,score_for,score_against,margin,result,opponent_d1_wr_count,opponent_top_receiver,opponent_top_receiver_rating,key_film_game,data_confidence
+2025-08-22,Dr. Phillips,FL,7A,3,"Large Orlando program; historical talent",non-district,39,6,33,W,0,"None tracked","",FALSE,LOW
+2025-08-29,Stranahan,FL,3A,5,"Finished 2-8; weak opponent",non-district,50,10,40,W,0,"None","",FALSE,NONE
+2025-09-05,Northeast,FL,4A,5,"District; finished 2-8; 0-4 in district",district,66,0,66,W,0,"None","",FALSE,NONE
+2025-09-13,Boyd Anderson,FL,3A,5,"Robinson's former school; weak opponent",non-district,63,0,63,W,0,"None","",FALSE,NONE
+2025-09-20,Miramar,FL,8A,2,"Largest classification opponent (8A); tightest game of regular season",non-district,14,7,7,W,0,"Possible (8A size; Kyle Anthony WR historically)","",TRUE,MEDIUM
+2025-09-25,Suncoast,FL,4A,5,"District opponent; weak",district,66,0,66,W,0,"None","",FALSE,NONE
+2025-10-04,Blanche Ely,FL,5A,3,"Soul Bowl rivalry; Ely won 2024 33-28",non-district,35,0,35,W,0,"None tracked","",FALSE,LOW
+2025-10-10,Dr. Joaquin Garcia,FL,4A,3,"New school (2023); finished 7-3; Zion Vilma (4.39 speed)",district,38,24,14,W,1,"Zion Vilma (ATH, 2027, 4.39 40, Stanford/NC State interest)","",TRUE,MEDIUM
+2025-10-24,Boynton Beach,FL,4A,4,"District 4A-14 opponent",district,41,13,28,W,0,"None tracked","",FALSE,NONE
+2025-10-30,Deerfield Beach,FL,8A,2,"Historical D1 WR pipeline (Daewood Davis etc.); 8A program; down year",non-district,56,0,56,W,0,"Historical pipeline but none tracked in 2025","",TRUE,LOW
+2025-11-14,Plantation,FL,4A,3,"FHSAA 4A playoff; only loss of season",playoff,14,21,-7,L,1,"Burnon Anderson (WR, ESPN profile)","",TRUE,HIGH

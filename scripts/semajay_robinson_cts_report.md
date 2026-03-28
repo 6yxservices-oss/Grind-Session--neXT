@@ -97,23 +97,38 @@ Fort Lauderdale to State College is a long way. But Robinson has signaled he is 
 
 ### Known Game Results
 
-| Date | Opponent | Score | Margin | Opponent Tier | Notes |
-|------|----------|-------|--------|---------------|-------|
-| 08/22 | Dr. Phillips | W 39-6 | +33 | 3 | Orlando 8A program, produces D1 talent |
-| 09/14 | Boyd Anderson | W 59-6 | +53 | 4 | Robinson's former school |
-| 10/24 | Boynton Beach | W 41-13 | +28 | 4 | District 4A-14 opponent |
-| 10/30 | Deerfield Beach | W 56-0 | +56 | 2 | Broward powerhouse, D1 WR pipeline |
-| 11/14 | Plantation | L 14-21 | -7 | 3 | **Only loss — FHSAA 4A playoff elimination** |
+| Wk | Date | Opponent | Class | Score | Margin | Tier | D1 Off. Talent | Notes |
+|----|------|----------|-------|-------|--------|------|----------------|-------|
+| 1 | 08/22 | Dr. Phillips (Orlando) | 7A | W 39-6 | +33 | 3 | None tracked | Large Orlando program; historical talent |
+| 2 | 08/29 | Stranahan (Fort Lauderdale) | 3A | W 50-10 | +40 | 5 | None | Finished 2-8 |
+| 3 | 09/05 | Northeast (Oakland Park) | 4A* | W 66-0 | +66 | 5 | None | District; finished 2-8 |
+| 4 | 09/13 | Boyd Anderson (Lauderdale Lakes) | 3A | W 63-0 | +63 | 5 | None | Robinson's former school |
+| 5 | 09/20 | **Miramar** | **8A** | **W 14-7** | **+7** | **2** | Possible (8A size) | **Tightest game of regular season.** Dillard had 197 penalty yds + 2 TOs but defense held. |
+| 6 | 09/25 | Suncoast (Riviera Beach) | 4A* | W 66-0 | +66 | 5 | None | District |
+| 7 | 10/04 | Blanche Ely (Pompano Beach) | 5A | W 35-0 | +35 | 3 | None tracked | "Soul Bowl" rivalry; Ely won 2024 (33-28) |
+| 8 | 10/10 | Dr. Joaquin Garcia (Lake Worth) | 4A* | W 38-24 | +14 | 3 | **Zion Vilma (ATH, 2027, 4.39 speed)** — Stanford/NC State interest | Most points allowed in regular season (24) |
+| 9 | 10/24 | Boynton Beach | 4A* | W 41-13 | +28 | 4 | None tracked | District |
+| 10 | 10/30 | **Deerfield Beach** | **8A** | **W 56-0** | **+56** | **2** | Historical D1 WR pipeline (Daewood Davis etc.) | Down year but still 8A program. 56-0 shutout is a statement. |
+| PO | 11/14 | **Plantation** | **4A** | **L 14-21** | **-7** | **3** | Burnon Anderson (WR, ESPN profile) | **Only loss. Playoff elimination. Critical film game.** Plantation then lost to American Heritage 7-48. |
 
-> **Note:** 6 additional games from the schedule were not identified in research. Dillard's full 11-game schedule needs manual verification via MaxPreps.
+*(\* = District 4A-14 game)*
 
-### Key Observation: Deerfield Beach (W 56-0)
+### Dillard Teammate Context
+- **Anthony Jennings III** (WR/CB, 2027): 823 rec yds, 11 TDs. **#30 WR nationally**. Offers from Georgia, Auburn, FSU, Boston College, Florida. Robinson's teammate, not opponent — but indicates the caliber of athlete in this program.
 
-Deerfield Beach is historically one of Broward County's most talented programs and a known D1 WR pipeline. A 56-0 shutout against Deerfield Beach is a significant defensive statement. If Robinson was the primary boundary corner in this game, his coverage contributed to blanking a talent-rich offense.
+### Key Game Analysis
 
-### Key Observation: Plantation (L 14-21)
+**Game 5: Miramar (W 14-7) — BEST CTS SIGNAL**
+Largest-classification opponent (8A). Dillard committed 197 penalty yards and 2 turnovers but the defense held Miramar to just 7 points. This is the most meaningful game for evaluating Robinson's coverage — a tight, low-scoring contest where the secondary had to perform despite the offense and special teams giving away field position.
 
-The only loss. Dillard's defense allowed just 21 points — still respectable — but the offense struggled. This game is the best CTS signal: how did Robinson perform when the team lost and the opponent sustained drives?
+**Game 8: Dr. Joaquin Garcia (W 38-24) — SPEED TEST**
+Garcia scored 24 points (2nd-most allowed all season) and features Zion Vilma (ATH, 2027, 4.39 40-yard dash) with Stanford/NC State interest. Vilma's speed would have been a legitimate test for Robinson's length and recovery ability.
+
+**Game 10: Deerfield Beach (W 56-0) — STATEMENT WIN**
+Deerfield Beach is historically one of Broward County's most talented programs and a known D1 WR pipeline. Despite a down 2025 year, this is still an 8A program. A 56-0 shutout is a significant defensive statement.
+
+**Game 11 (Playoff): Plantation (L 14-21) — MUST-WATCH FILM**
+The only loss. Dillard's defense allowed 21 points — still respectable — but couldn't stop Plantation when it mattered. This is the critical CTS film: how did Robinson perform when the team lost and the opponent sustained drives in a playoff environment?
 
 ---
 
@@ -146,11 +161,14 @@ The only loss. Dillard's defense allowed just 21 points — still respectable �
 
 ### CTS Tier Split (Qualitative)
 
-| Tier | Games | Defensive Context |
-|------|-------|-------------------|
-| **Tier 1-2** (D1 WR talent likely) | Deerfield Beach, Dr. Phillips | 56-0 and 39-6 — dominant shutout/near-shutout performances |
-| **Tier 3** (competitive programs) | Plantation, other unknowns | Only loss came here (14-21) — closest competitive signal |
-| **Tier 4-5** (weaker opponents) | Boyd Anderson, Boynton Beach, district games | Blowout wins, limited CTS signal |
+| Tier | Games | Result | Defensive Context |
+|------|-------|--------|-------------------|
+| **Tier 2** (8A/large programs) | Miramar, Deerfield Beach | W 14-7, W 56-0 | Held 8A opponents to 7 combined points. Miramar game was tightest test. |
+| **Tier 3** (competitive mid-size) | Dr. Phillips, Blanche Ely, Dr. Garcia, Plantation | W/W/W/L | Garcia scored 24 (Vilma 4.39 speed). Plantation won 21-14 (playoff). |
+| **Tier 4** (weaker opponents) | Boynton Beach | W 41-13 | District game |
+| **Tier 5** (overmatched) | Stranahan, Northeast, Boyd Anderson, Suncoast | W 50-10 to W 66-0 | 6 shutouts across T4-5 games. No CTS signal. |
+
+**Schedule Strength Concern:** 7 of 10 regular season opponents were 4A or smaller. The schedule was soft — Dillard posted 6 shutouts and outscored opponents 482-81. The level of WR talent Robinson faced week-to-week was generally below D1 caliber. Only Miramar (8A, W 14-7) and Dr. Garcia (Vilma, 4.39 speed) provided meaningful coverage tests.
 
 ### Narrative CTS Verdict
 
