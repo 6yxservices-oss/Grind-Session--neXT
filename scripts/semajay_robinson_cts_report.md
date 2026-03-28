@@ -21,12 +21,14 @@ Four-star CB Semajay Robinson committed to Penn State on March 28, 2026, choosin
 | **Position** | CB (Boundary) |
 | **Height** | 6-3 |
 | **Weight** | 190 lbs |
+| **Hometown** | Tallahassee, FL (moved to South Florida summer 2024) |
 | **Schools** | Boyd Anderson → Palm Beach Central → Dillard HS (Fort Lauderdale, FL) |
 | **247 Rating** | 86 (3-star on 247; upgraded to 4-star by Rivals) |
 | **Rivals Ranking** | #252 Rivals300, #85 CB, #99 in FL |
 | **Offers** | 12+ (Penn State, FSU, Virginia, Auburn, Missouri, Kentucky, Louisville, Pitt, Syracuse, Texas Tech, Mississippi State, FAU) |
 | **GPA** | 3.5-4.0 |
 | **Committed To** | **Penn State** (March 28, 2026) |
+| **HC** | Matt Campbell | **DC** | D'Anton Lynn | **CB Coach** | Terry Smith |
 
 ---
 
@@ -120,16 +122,21 @@ The only loss. Dillard's defense allowed just 21 points — still respectable �
 ### What the Data Tells Us
 
 **COVERAGE PROFILE (from Hudl + scouting reports):**
-- 5 interceptions on film — **ball-hawk ability confirmed**
+- **5 INTs, 1 Pick-6, 2 sacks** as a sophomore at Boyd Anderson (2024) — ball-hawk ability confirmed early
+- Junior season (Palm Beach Central): 17 tackles, 1 PD — likely incomplete stat reporting
 - "Excellent tackling skills" — willingness to support run game
 - "Great vision" — route recognition and anticipation
 - "Great cover corner" / "#LockDownCorner" — primary man coverage assignment
+- Larry Blustein (top South FL recruiting journalist): **"True physical lockdown corner who is athletic, quick and has football skills that you just cannot teach"**
+- Named among **South Florida's top interception leaders** by Blustein
+- Also listed at free safety in one scouting article — **positional versatility**
 
 **PHYSICAL TRANSLATION INDICATORS:**
 - 6-3/190 is an **elite size profile** for a college CB
 - Frame comp: Joey Porter Jr. (6-2/198 at Penn State → 1st round NFL Draft)
 - Length allows press disruption at the LOS — critical for D'Anton Lynn's scheme
-- South Florida speed/athleticism baseline (Rivals Combine results exist but numbers locked in image)
+- South Florida speed/athleticism baseline (Rivals Combine results posted March 29, 2025 — numbers locked in image)
+- **Deon Broomfield** (PSU safeties coach, from Iowa State with Campbell) has track record: 3 Iowa State DBs drafted in 3 years (Anthony Johnson '23, T.J. Tampa '24, Darien Porter '25)
 
 **COMPETITION ENVIRONMENT:**
 - Broward County is one of the most talent-dense football counties in America
@@ -161,9 +168,10 @@ The only loss. Dillard's defense allowed just 21 points — still respectable �
 
 | Year | School | Notes |
 |------|--------|-------|
-| 2023-24 | Boyd Anderson (Lauderdale Lakes, FL) | Named Player of the Game vs Hollywood Hills (W 48-20) |
-| 2024-25 | Palm Beach Central (Wellington, FL) | Junior season: 17 tackles, 1 PD |
-| 2025-26 | Dillard (Fort Lauderdale, FL) | Senior season: 10-1, District Champs |
+| Pre-2024 | Tallahassee area | Hometown; moved to South Florida summer 2024 |
+| 2023-24 | Boyd Anderson (Lauderdale Lakes, FL) | Soph season: **5 INTs, 1 Pick-6, 2 sacks**. Named POTG vs Hollywood Hills (W 48-20) |
+| 2024-25 | Palm Beach Central (Wellington, FL) | Junior season: 17 tackles, 1 PD (likely incomplete reporting) |
+| 2025-26 | Dillard (Fort Lauderdale, FL) | Senior season: 10-1, District 4A-14 Champs, FHSAA 4A playoff |
 
 Three schools in three years is notable. Programs will evaluate whether this reflects:
 - Family/personal relocation (neutral)
