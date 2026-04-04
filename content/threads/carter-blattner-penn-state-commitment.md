@@ -32,6 +32,8 @@ But forget the stars for a second.
 
 He was the engine behind one of the top public school programs in New Jersey this past season. Named to the Jersey SportsZone All-Zone Public Team -- as an OFFENSIVE lineman too. This kid plays BOTH sides of the ball.
 
+Oh, and he also plays lacrosse. Multi-sport freak.
+
 ---
 
 ## TWEET 3 (Why Stars Don't Matter)
@@ -60,6 +62,8 @@ Carter Blattner blends athleticism with REAL power off the edge. He's got:
 - Versatility to play BOTH sides of the line
 
 Nearly 20 D1 offers. USC wanted him on the West Coast. Kentucky and Virginia Tech were pushing HARD.
+
+He cancelled OVs to Virginia Tech, Wisconsin, AND Kentucky.
 
 He said no to all of them.
 
@@ -125,7 +129,33 @@ Matt Campbell is building a WALL on defense. And it's only April 2026.
 
 ---
 
-## TWEET 9 (The Closer)
+## TWEET 9 (The Context)
+
+Let's not forget what happened here.
+
+Penn State's original 2027 class was ranked No. 1 NATIONALLY. Then James Franklin was fired. Every single commit decommitted -- including 5-star RB Kemon Spell (No. 1 RB in the country), who flipped to Georgia.
+
+Matt Campbell's staff is rebuilding from SCRATCH. And they're doing it with kids who WANT to be here.
+
+Blattner didn't commit to a hype train. He committed to a vision.
+
+---
+
+## TWEET 10 (Penn State DL Legacy)
+
+Penn State and defensive linemen. Name a better combo.
+
+- Abdul Carter -- No. 3 overall pick, 2025 NFL Draft (NY Giants)
+- Courtney Brown -- No. 1 overall pick, 2000 (Cleveland)
+- Bruce Clark -- No. 4 overall pick, 1980 (Green Bay)
+
+Now add Ikaika Malloe coaching the position + a 6'5 260-lb freak athlete from Jersey?
+
+The pipeline isn't slowing down. It's about to get NASTY.
+
+---
+
+## TWEET 11 (The Closer)
 
 So yeah, Carter Blattner is "only" a 3-star.
 
@@ -147,3 +177,6 @@ Remember this name. #WeAre
 - [SI: 5 Things to Know About Ikaika Malloe](https://www.si.com/college/pennstate/football/5-things-to-know-about-ikaika-malloe-penn-state-new-defensive)
 - [On3: How Penn State's New DL Coach Teaches Pass Rush](https://www.on3.com/teams/penn-state-nittany-lions/news/how-penn-states-new-defensive-line-coach-teaches-pass-rush/)
 - [Penn State Collegian: Blattner Commitment](https://www.psucollegian.com/football/penn-state-earns-2027-commitment-from-dl-carter-blattner/article_90859b0a-7970-4dee-8dba-2e9326f57d00.html)
+- [SI: Penn State's Top-Ranked 2027 Class Adds 4-Star Prospect](https://www.si.com/college/pennstate/football/penn-states-top-ranked-2027-recruiting-class-adds-4-star-prospect)
+- [SI: Matt Campbell Restarts Penn State's 2027 Recruiting Class](https://www.si.com/college/pennstate/football/matt-campbell-restarts-penn-state-2027-recruiting-class)
+- [On3: USC off to a great start with Blattner](https://www.on3.com/rivals/news/usc-is-off-to-a-great-great-start-with-carter-blattner-a-2027-4-star-dl-on-the-east-coast/)
