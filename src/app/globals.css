@@ -69,4 +69,31 @@
   .alpine-gradient {
     @apply bg-gradient-to-r from-alpine-dark via-alpine-navy to-alpine-dark;
   }
+  .asu-gradient {
+    @apply bg-gradient-to-r from-asu-maroon/80 via-asu-dark to-asu-maroon/80;
+  }
+  .badge-maroon {
+    @apply badge bg-asu-maroon/20 text-asu-gold;
+  }
+  .badge-asu-gold {
+    @apply badge bg-asu-gold/20 text-asu-gold;
+  }
+  .badge-hs {
+    @apply badge bg-green-500/20 text-green-400;
+  }
+  .badge-transfer {
+    @apply badge bg-blue-500/20 text-blue-400;
+  }
+  .badge-intl {
+    @apply badge bg-purple-500/20 text-purple-400;
+  }
+  .badge-portal-out {
+    @apply badge bg-red-500/20 text-red-400;
+  }
+  .badge-returning {
+    @apply badge bg-green-500/20 text-green-400;
+  }
+  .badge-exhausted {
+    @apply badge bg-gray-500/20 text-gray-400;
+  }
 }
