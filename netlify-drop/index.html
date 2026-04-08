@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASU Sun Devils Basketball | Roster Construction Analysis</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--maroon:#8C1D40;--gold:#FFC627;--dark:#1a0a14;--black:#1a1020;--gray:#2a1a2e;--light:#3a2a3e}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--dark);color:#e5e5e5;line-height:1.5}
+.container{max-width:1280px;margin:0 auto;padding:24px 16px}
+.hero{background:linear-gradient(to right,rgba(140,29,64,.8),var(--dark),rgba(140,29,64,.8));border-radius:12px;padding:32px;border:1px solid rgba(140,29,64,.3);margin-bottom:24px}
+.hero-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.logo{width:48px;height:48px;border-radius:8px;background:var(--maroon);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--gold);font-size:13px}
+.hero h1{font-size:24px;font-weight:700;color:#fff}
+.hero p{color:rgba(255,198,39,.8);font-size:14px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:rgba(26,16,32,.6);border-radius:8px;padding:12px;border:1px solid rgba(140,29,64,.2)}
+.stat-card .num{font-size:24px;font-weight:700;color:var(--gold)}
+.stat-card .label{font-size:11px;color:#9ca3af}
+.tabs{display:flex;gap:8px;border-bottom:1px solid rgba(140,29,64,.3);padding-bottom:12px;margin-bottom:24px;overflow-x:auto}
+.tab{padding:8px 16px;border-radius:8px 8px 0 0;font-size:13px;font-weight:500;cursor:pointer;color:#9ca3af;border:none;background:transparent;white-space:nowrap;transition:.2s}
+.tab:hover{color:#e5e5e5}
+.tab.active{background:rgba(140,29,64,.2);color:var(--gold);border-bottom:2px solid var(--gold)}
+.card{background:var(--black);border-radius:12px;padding:20px;border:1px solid rgba(140,29,64,.2);margin-bottom:16px}
+.card h2{font-size:18px;font-weight:700;color:var(--gold);margin-bottom:4px}
+.card h3{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:8px}
+.card p.sub{font-size:12px;color:#9ca3af;margin-bottom:16px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;color:#9ca3af;border-bottom:1px solid rgba(140,29,64,.3);white-space:nowrap}
+td{padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.05);white-space:nowrap}
+tr:hover{background:rgba(255,255,255,.03)}
+.badge{display:inline-block;padding:2px 8px;border-radius:9999px;font-size:10px;font-weight:600}
+.b-hs{background:rgba(34,197,94,.15);color:#4ade80}
+.b-transfer{background:rgba(59,130,246,.15);color:#60a5fa}
+.b-intl{background:rgba(168,85,247,.15);color:#c084fc}
+.b-portal-out{background:rgba(239,68,68,.15);color:#f87171}
+.b-returning{background:rgba(34,197,94,.15);color:#4ade80}
+.b-exhausted{background:rgba(107,114,128,.15);color:#9ca3af}
+.b-maroon{background:rgba(140,29,64,.2);color:var(--gold)}
+.b-stepup{background:rgba(34,197,94,.15);color:#4ade80}
+.b-lateral{background:rgba(59,130,246,.15);color:#60a5fa}
+.b-stepdown{background:rgba(239,68,68,.15);color:#f87171}
+.green{color:#4ade80}.yellow{color:#facc15}.red{color:#f87171}.gold{color:var(--gold)}.gray{color:#9ca3af}.bold{font-weight:700}
+.bar-bg{width:64px;height:8px;background:#374151;border-radius:9999px;display:inline-block;vertical-align:middle}
+.bar-fill{height:8px;border-radius:9999px;display:block}
+.bar-green .bar-fill{background:#22c55e}
+.bar-yellow .bar-fill{background:#eab308}
+.bar-red .bar-fill{background:#ef4444}
+.bar-blue .bar-fill{background:#3b82f6}
+.bar-purple .bar-fill{background:#a855f7}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr}}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:768px){.grid-3{grid-template-columns:1fr}}
+.diamond{color:var(--gold);margin-right:6px}
+.left-border-green{border-left:2px solid #22c55e}
+.left-border-red{border-left:2px solid rgba(239,68,68,.5)}
+.highlight-row{background:rgba(140,29,64,.2);border:1px solid rgba(140,29,64,.4)}
+.flow-row{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;border-radius:4px;font-size:12px;margin-bottom:4px}
+.flow-in{background:rgba(34,197,94,.05)}
+.flow-out{background:rgba(239,68,68,.05)}
+.pipeline-card{background:rgba(26,16,32,.4);border-radius:8px;padding:12px;border:1px solid rgba(140,29,64,.1);margin-bottom:8px}
+.sens-row{display:flex;align-items:center;gap:12px;font-size:12px;background:rgba(26,16,32,.4);border-radius:8px;padding:8px 12px;border:1px solid rgba(140,29,64,.1);margin-bottom:8px}
+.sens-label{width:200px;font-weight:500;color:#e5e5e5}
+.sens-val{width:80px;font-weight:700;color:var(--gold)}
+.sens-delta{width:80px;font-weight:700}
+.sens-desc{flex:1;color:#6b7280}
+.fw-card{background:rgba(26,16,32,.4);border-radius:8px;padding:16px;border:1px solid rgba(140,29,64,.1)}
+.fw-card h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.fw-card p{font-size:12px;color:#9ca3af}
+.section{display:none}.section.active{display:block}
+.dep-bar{position:relative;height:20px;background:#374151;border-radius:9999px;margin-bottom:12px}
+.dep-fill{height:20px;border-radius:9999px;position:absolute;top:0;left:0}
+.dep-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.dep-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.dep-season{width:56px;font-size:12px;font-weight:500;color:var(--gold)}
+.dep-record{width:100px;font-size:12px;color:#9ca3af}
+.traj-card{background:rgba(26,16,32,.4);border-radius:8px;padding:12px;border:1px solid rgba(140,29,64,.1);margin-bottom:12px}
+.traj-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.traj-title{font-size:14px;font-weight:700;color:var(--gold)}
+.traj-badges{display:flex;gap:8px}
+.overflow-x{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+<div class="hero-row">
+<div class="logo">ASU</div>
+<div><h1>ASU Sun Devils Basketball</h1><p>Roster Construction Analysis &bull; Hurley &rarr; Bennett Transition</p></div>
+</div>
+<div class="stat-grid">
+<div class="stat-card"><div class="num">11</div><div class="label">Hurley Seasons</div></div>
+<div class="stat-card"><div class="num">3</div><div class="label">NCAA Tournaments</div></div>
+<div class="stat-card"><div class="num">38</div><div class="label">Best KenPom</div></div>
+<div class="stat-card"><div class="num">17-16</div><div class="label">Final Season</div></div>
+</div>
+</div>
+
+<div class="tabs" id="tabBar">
+<button class="tab active" data-tab="overview">Overview</button>
+<button class="tab" data-tab="roster">Roster 25-26</button>
+<button class="tab" data-tab="portal">Portal Analysis</button>
+<button class="tab" data-tab="bennett">Bennett Model</button>
+<button class="tab" data-tab="outlook">2026-27 Outlook</button>
+<button class="tab" data-tab="war">WAR Engine</button>
+</div>
