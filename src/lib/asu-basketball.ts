@@ -301,6 +301,154 @@ export function getChampionshipBenchmark() {
   };
 }
 
+// ============ NIKOZA WAR VALUATION ENGINE ============
+// Adapted from Nik Oza's Bottom-Up WAR framework (nikoza2.substack.com)
+// 7-input model: target quality, budget, replacement level, replacement salary,
+// rotation size, player projected impact, player projected minutes
+
+export interface WARConfig {
+  targetQuality: number;      // KenPom AdjEM target (e.g., +12 for Big 12 ~50th)
+  rosterBudget: number;       // Total NIL spend in dollars
+  replacementImpact: number;  // Per-100-poss net impact of replacement player (-1.0 consensus)
+  replacementSalary: number;  // Cost of replacement player ($0 = scholarship only)
+  rotationSize: number;       // Injury-adjusted rotation spots (~8)
+  coachingEffect: number;     // Bennett coaching bump (estimated +3 to +5)
+}
+
+export interface WARValuation {
+  name: string;
+  pos: string;
+  projectedImpact: number;     // Per-100-poss net impact estimate
+  projectedMPG: number;
+  marginalContribution: number; // WAR-equivalent quality points
+  dollarValue: number;          // Calculated fair value
+  marketPrice: string;          // Estimated market ask
+  surplus: string;              // Value vs market (positive = bargain)
+  optionValue: string;          // Young player upside flag
+  systemFit: number;            // 0-100 Bennett system fit score
+  systemFitNotes: string;
+}
+
+// Default ASU 2026-27 WAR config
+export function getASUWARConfig(): WARConfig {
+  return {
+    targetQuality: 12.0,       // KenPom ~50th, realistic Year 1 Bennett
+    rosterBudget: 5500000,     // $5.5M estimated (Sun Angel Collective + Harden)
+    replacementImpact: -1.0,   // Consensus from 3 P5 sources per Oza
+    replacementSalary: 0,      // Scholarship only
+    rotationSize: 8,           // Standard
+    coachingEffect: 4.0,       // Bennett = elite coach, +4 estimated
+  };
+}
+
+// Estimate per-100-poss impact from box score stats
+// Rough BPM proxy: (PPG * 1.0 + RPG * 0.7 + APG * 1.2 + SPG * 1.5 + BPG * 1.0) / MPG * 40 - calibration
+function estimateImpact(ppg: number, rpg: number, apg: number, mpg: number): number {
+  if (mpg === 0) return -2.0;
+  const per40 = ((ppg + rpg * 0.7 + apg * 1.5) / mpg) * 40;
+  // Calibrate: average D1 starter ~15 per40 → ~0 impact; elite ~25+ → ~+8
+  return (per40 - 15) * 0.8;
+}
+
+// Bennett system fit scoring
+function calcSystemFit(pos: string, origin: string, ppg: number, rpg: number, apg: number, height: string): { score: number; notes: string } {
+  let score = 50; // baseline
+  const notes: string[] = [];
+
+  // International players fit Bennett's model
+  if (origin === "International" || origin === "SMC Follow") { score += 20; notes.push("Intl/SMC pipeline fit"); }
+
+  // Pack-line defense rewards size and rebounding
+  const heightInches = parseInt(height.split("-")[0]) * 12 + parseInt(height.split("-")[1] || "0");
+  if (heightInches >= 78) { score += 10; notes.push("Size for pack-line"); } // 6-6+
+  if (rpg >= 5) { score += 10; notes.push("Elite rebounder (Bennett top-5 OR%)"); }
+
+  // Princeton offense rewards passing
+  if (apg >= 3) { score += 10; notes.push("Playmaker for Princeton motion"); }
+
+  // Low-usage efficiency players thrive in Bennett system
+  if (ppg > 0 && ppg <= 12) { score += 5; notes.push("Role-player efficiency profile"); }
+  if (ppg > 15) { score += 5; notes.push("Alpha scorer (needed in Big 12)"); }
+
+  // Development-model players (freshmen/sophomores)
+  if (origin === "HS Recruit") { score += 5; notes.push("Development model candidate"); }
+
+  return { score: Math.min(score, 100), notes: notes.join("; ") };
+}
+
+export function calculateWARValuations(config?: WARConfig): WARValuation[] {
+  const c = config || getASUWARConfig();
+  const targets = get2627Outlook();
+
+  // Core Nikoza formula
+  const marginalQuality = c.targetQuality - (c.replacementImpact * (c.rotationSize - 3)); // 3 starter spots need quality
+  const adjustedQuality = marginalQuality - c.coachingEffect; // Bennett coaching reduces quality needed from roster
+  const costPerPoint = c.rosterBudget / Math.max(adjustedQuality, 1);
+
+  return targets.map(t => {
+    const projMPG = t.ppg > 15 ? 32 : t.ppg > 10 ? 28 : t.ppg > 5 ? 20 : t.ppg > 0 ? 15 : 12;
+    const impact = t.ppg > 0 ? estimateImpact(t.ppg, t.rpg, t.apg, projMPG) : -0.5; // HS recruit estimate
+    const contribution = (impact - c.replacementImpact) * (projMPG / 40);
+    const dollarValue = Math.max(contribution * costPerPoint, 0);
+
+    const fit = calcSystemFit(t.pos, t.type, t.ppg, t.rpg, t.apg, t.height);
+
+    // Market price estimates based on production tier
+    let marketPrice = "$0 (scholarship)";
+    let surplus = "N/A";
+    if (t.ppg >= 18) { marketPrice = "$1.5-2.5M"; surplus = dollarValue > 2000000 ? "Bargain" : dollarValue > 1000000 ? "Fair" : "Overpay risk"; }
+    else if (t.ppg >= 13) { marketPrice = "$600K-1.2M"; surplus = dollarValue > 900000 ? "Bargain" : dollarValue > 500000 ? "Fair" : "Overpay risk"; }
+    else if (t.ppg >= 8) { marketPrice = "$200-500K"; surplus = dollarValue > 350000 ? "Bargain" : "Fair"; }
+    else if (t.ppg >= 3) { marketPrice = "$50-150K"; surplus = "Development value"; }
+    else { marketPrice = "$0-50K"; surplus = "Option value"; }
+
+    // Option value for young players (Marc's identified gap in Oza framework)
+    let optionValue = "Low";
+    if (t.type === "HS Recruit") optionValue = "Very High (Oza undervalues)";
+    else if (t.type === "Returning ASU" && t.ppg > 0 && t.ppg < 10) optionValue = "High (development upside)";
+    else if (t.type === "SMC Follow" && t.ppg >= 15) optionValue = "Moderate (proven but system change)";
+
+    return {
+      name: t.name,
+      pos: t.pos,
+      projectedImpact: Math.round(impact * 10) / 10,
+      projectedMPG: projMPG,
+      marginalContribution: Math.round(contribution * 100) / 100,
+      dollarValue: Math.round(dollarValue),
+      marketPrice,
+      surplus,
+      optionValue,
+      systemFit: fit.score,
+      systemFitNotes: fit.notes,
+    };
+  });
+}
+
+// Sensitivity analysis: how valuation changes with different inputs
+export function getWARSensitivity() {
+  const base = getASUWARConfig();
+  const baseVals = calculateWARValuations(base);
+  const murauskas = baseVals.find(v => v.name === "Paulius Murauskas")!;
+
+  return {
+    playerName: "Paulius Murauskas",
+    baseValue: murauskas.dollarValue,
+    scenarios: [
+      { label: "Replacement -2.0 (conservative)", config: { ...base, replacementImpact: -2.0 }, description: "Lower replacement level increases value of all players" },
+      { label: "Replacement 0.0 (generous)", config: { ...base, replacementImpact: 0.0 }, description: "Higher replacement level means less marginal value" },
+      { label: "Budget $8M (increased NIL)", config: { ...base, rosterBudget: 8000000 }, description: "If ASU boosters step up post-Bennett hire" },
+      { label: "Budget $3M (constrained)", config: { ...base, rosterBudget: 3000000 }, description: "If NIL dollars don't materialize" },
+      { label: "Target +18 (ambitious Y1)", config: { ...base, targetQuality: 18 }, description: "Aiming for KenPom ~30, very aggressive" },
+      { label: "Target +8 (conservative Y1)", config: { ...base, targetQuality: 8 }, description: "Just trying to be competitive" },
+      { label: "No coaching effect", config: { ...base, coachingEffect: 0 }, description: "Removes Bennett coaching bump" },
+    ].map(s => ({
+      label: s.label,
+      description: s.description,
+      value: calculateWARValuations(s.config).find(v => v.name === "Paulius Murauskas")?.dollarValue || 0,
+    })),
+  };
+}
+
 // ============ ROSTER COMPOSITION ANALYSIS ============
 export function getRosterComposition() {
   const roster = getRoster2526();
