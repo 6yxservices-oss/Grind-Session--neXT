@@ -1,0 +1,41 @@
+{
+  "position_group": "LB",
+  "year": 2027,
+  "drop_date": "2026-03-15",
+  "context_narrative": "The lesson was free and it was painful. When Penn State watched two linebacker commits flip in January, the staff learned what happens when you assume linebackers grow on trees in the Keystone State. They don't. James Franklin's defense needs athletes who can run sideline to sideline and drop into coverage in Manny Diaz's scheme. The 2027 linebacker board is live — and the clock is ticking.",
+  "players": [
+    {
+      "name": "Kyngstonn Viliamu-Asa",
+      "school": "Conestoga High School",
+      "city": "Berwyn",
+      "state": "PA",
+      "measurables": {
+        "height": "6-2",
+        "weight": "225",
+        "class": "2027"
+      }
+    },
+    {
+      "name": "Jaiden Mudge",
+      "school": "Scranton Prep",
+      "city": "Scranton",
+      "state": "PA",
+      "measurables": {
+        "height": "6-1",
+        "weight": "215",
+        "class": "2027"
+      }
+    },
+    {
+      "name": "Tae'Shaun Gelsey",
+      "school": "St. Frances Academy",
+      "city": "Baltimore",
+      "state": "MD",
+      "measurables": {
+        "height": "6-3",
+        "weight": "220",
+        "class": "2027"
+      }
+    }
+  ]
+}
