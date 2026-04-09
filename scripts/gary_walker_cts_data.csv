@@ -1,0 +1,16 @@
+game_date,opponent,opponent_state,opponent_tier,tier_rationale,game_type,score_for,score_against,margin,garbage_time_flag,walker_carries,walker_yards,walker_ypc,walker_tds,walker_long,walker_receptions,walker_rec_yards,walker_rec_tds,opponent_d1_def_count,opponent_top_defender,opponent_top_defender_rating,data_confidence
+2025-08-15,Rome,GA,3,"Program pedigree but top defenders (Green/Terrell) graduated",non-region,48,28,20,FALSE,20,194,9.7,1,,,,0,"None tracked (graduated)","",HIGH
+2025-08-22,Seminole,FL,4,"Florida program; shutout suggests weaker opponent",non-region,32,0,32,FALSE,,,,,,,,0,"None found","",NONE
+2025-08-30,DeSoto,TX,1,"National powerhouse. TX 6A. Top-100 DT K'Adrian Redmond (91 rtg) + EDGE D.J. Rumph",non-region,70,28,42,TRUE,,,,,,,,3,"K'Adrian Redmond (DT, 0.9353, #102 natl)",91,LOW
+2025-09-12,Forest Park,GA,5,"Region blowout 70-0 shutout",region,70,0,70,TRUE,,,,,,,,0,"None found","",NONE
+2025-09-19,Mays,GA,5,"Atlanta Public Schools; 56-0 shutout",region,56,0,56,TRUE,,,,,,,,0,"None found","",NONE
+2025-09-25,M.L. King,GA,5,"Region shutout 69-0",region,69,0,69,TRUE,,,,,,,,0,"None found","",NONE
+2025-10-03,Pace Academy,GA,4,"Top defenders (Cole/Weeks) transferred out summer 2025; new coach",region,55,0,55,TRUE,,,,,,,,0,"None (transfers to Douglas Co)","",LOW
+2025-10-10,Drew,GA,5,"91-0 blowout; lowest-tier opponent",region,91,0,91,TRUE,,,,,,,,0,"None found","",NONE
+2025-10-24,Jackson,GA,4,"Maynard Jackson HS Atlanta area; Walker named POTG",region,44,7,37,TRUE,,,,,,,,0,"None found","",NONE
+2025-10-31,Midtown,GA,4,"79-3 blowout; Walker named POTG but passing game",region,79,3,76,TRUE,,,,,,,,0,"None found","",NONE
+2025-11-14,Dalton,GA,4,"No ranked defensive recruits found; 70-7 playoff blowout",playoff_r1,70,7,63,TRUE,7,162,23.1,3,,,,0,"None found","",HIGH
+2025-11-21,Ware County,GA,4,"Traditional South GA power but no tracked D1 defenders in 2025",playoff_r2,49,0,49,TRUE,13,258,19.8,2,93,,,0,"None tracked (graduated)","",HIGH
+2025-11-28,Lithonia,GA,2,"2 D1 def recruits incl. Tico Crittendon Jr (3-star DT, ~40 P4 offers)",playoff_r3,35,7,28,FALSE,,129,,,,,,2,"Tico Crittendon Jr. (DT, 0.84, 40 P4 offers)",84,LOW
+2025-12-05,Kell,GA,2,"4 D1 def recruits incl. Brayden Rouse (4-star LB, #68 natl, Navy All-American)",playoff_semi,35,6,29,FALSE,19,94,4.9,1,,,,4,"Brayden Rouse (LB, 0.95, #68 natl)",95,HIGH
+2025-12-15,Benedictine,GA,1,"4 D1 def recruits incl. LaDamion Guyton (5-star EDGE, #3 natl). State championship.",state_championship,42,39,3,FALSE,17,149,8.8,1,45,,,4,"LaDamion Guyton (EDGE, 0.97+, #3 natl)",97,HIGH
