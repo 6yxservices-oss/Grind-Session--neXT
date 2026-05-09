@@ -3,8 +3,8 @@ import "./globals.css";
 import Nav from "@/components/nav";
 
 export const metadata: Metadata = {
-  title: "Haas neXT | Alpine neXT - Discover the Next F1 Stars",
-  description: "Fan-powered F1 driver scouting platform. Scout F2/F3 talent, vote for who gets a shot at Haas and Alpine.",
+  title: "Synergyforce — Train, Recruit, Compete",
+  description: "The ultimate prep platform for athletes who want to play at the next level. Coach CRM, school depth charts, NCAA eligibility, and training metrics tied to your recruiting profile.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

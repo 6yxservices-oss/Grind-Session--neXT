@@ -1,0 +1,82 @@
+[
+  {
+    "position": "OH",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 70, "target": 73 },
+      "approachJump": { "min": 100, "target": 108 },
+      "blockJump": { "min": 92, "target": 98 },
+      "standingReach": { "min": 88, "target": 92 },
+      "broadJump": { "min": 86, "target": 96 },
+      "laneAgility": { "min": 12.0, "target": 11.2 },
+      "hittingPctTarget": 0.275,
+      "passingRatingTarget": 2.2
+    },
+    "notes": "Power-conference D1 OHs typically separate via approach jump touch and the ability to pass in serve receive. Prioritize verifiable approach touch over height alone."
+  },
+  {
+    "position": "OPP",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 72, "target": 74 },
+      "approachJump": { "min": 102, "target": 110 },
+      "blockJump": { "min": 94, "target": 100 },
+      "standingReach": { "min": 90, "target": 94 },
+      "broadJump": { "min": 86, "target": 96 },
+      "hittingPctTarget": 0.300
+    },
+    "notes": "Right-side hitters at the D1 level need higher block touch and the ability to terminate against the opposing OH."
+  },
+  {
+    "position": "MB",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 73, "target": 76 },
+      "approachJump": { "min": 100, "target": 108 },
+      "blockJump": { "min": 96, "target": 102 },
+      "standingReach": { "min": 91, "target": 95 },
+      "laneAgility": { "min": 12.2, "target": 11.4 },
+      "hittingPctTarget": 0.350
+    },
+    "notes": "Middle blockers are graded heavily on block touch, slide jump, and lateral movement (lane agility)."
+  },
+  {
+    "position": "S",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 68, "target": 72 },
+      "approachJump": { "min": 95, "target": 102 },
+      "blockJump": { "min": 88, "target": 94 },
+      "broadJump": { "min": 84, "target": 92 },
+      "laneAgility": { "min": 12.0, "target": 11.0 }
+    },
+    "notes": "Setters live and die by hands, decision speed, and serve. Add a 30-second delivery vs. setting accuracy clip to the highlight reel."
+  },
+  {
+    "position": "L",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 64, "target": 68 },
+      "broadJump": { "min": 80, "target": 90 },
+      "laneAgility": { "min": 11.8, "target": 10.8 },
+      "passingRatingTarget": 2.4
+    },
+    "notes": "Liberos are recruited on serve-receive passing rating, platform consistency, and reads. Verifiable serve-receive % from match film matters more than vertical."
+  },
+  {
+    "position": "DS",
+    "level": "D1",
+    "ageGroup": "15U",
+    "metrics": {
+      "height": { "min": 64, "target": 69 },
+      "broadJump": { "min": 80, "target": 90 },
+      "laneAgility": { "min": 11.8, "target": 10.8 },
+      "passingRatingTarget": 2.3
+    }
+  }
+]

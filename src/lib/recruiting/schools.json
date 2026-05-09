@@ -1,0 +1,230 @@
+[
+  {
+    "id": "stanford",
+    "name": "Stanford University",
+    "shortName": "Stanford",
+    "state": "CA",
+    "division": "D1",
+    "conference": "ACC",
+    "region": "West",
+    "rosterUrl": "https://gostanford.com/sports/womens-volleyball/roster",
+    "athleticsUrl": "https://gostanford.com",
+    "depthChart": {
+      "OH": { "returning": 4, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 2, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 3, "seniors": 1, "needs": 1 },
+      "S": { "returning": 2, "seniors": 0, "needs": 0 },
+      "L": { "returning": 1, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.95, "satRange": [1440, 1570], "actRange": [32, 35], "publicPrivate": "Private" }
+  },
+  {
+    "id": "texas",
+    "name": "University of Texas at Austin",
+    "shortName": "Texas",
+    "state": "TX",
+    "division": "D1",
+    "conference": "SEC",
+    "region": "South",
+    "rosterUrl": "https://texaslonghorns.com/sports/volleyball/roster",
+    "athleticsUrl": "https://texaslonghorns.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 2, "needs": 2 },
+      "OPP": { "returning": 1, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 0, "needs": 1 },
+      "S": { "returning": 1, "seniors": 1, "needs": 1 },
+      "L": { "returning": 2, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.75, "satRange": [1240, 1480], "actRange": [27, 33], "publicPrivate": "Public" }
+  },
+  {
+    "id": "nebraska",
+    "name": "University of Nebraska",
+    "shortName": "Nebraska",
+    "state": "NE",
+    "division": "D1",
+    "conference": "Big Ten",
+    "region": "Midwest",
+    "rosterUrl": "https://huskers.com/sports/volleyball/roster",
+    "athleticsUrl": "https://huskers.com",
+    "depthChart": {
+      "OH": { "returning": 4, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 2, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 3, "seniors": 2, "needs": 2 },
+      "S": { "returning": 2, "seniors": 1, "needs": 1 },
+      "L": { "returning": 1, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.65, "satRange": [1170, 1370], "actRange": [24, 31], "publicPrivate": "Public" }
+  },
+  {
+    "id": "wisconsin",
+    "name": "University of Wisconsin",
+    "shortName": "Wisconsin",
+    "state": "WI",
+    "division": "D1",
+    "conference": "Big Ten",
+    "region": "Midwest",
+    "rosterUrl": "https://uwbadgers.com/sports/wvball/roster",
+    "athleticsUrl": "https://uwbadgers.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 2, "seniors": 0, "needs": 0 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 2, "seniors": 1, "needs": 1 },
+      "L": { "returning": 2, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.85, "satRange": [1310, 1480], "actRange": [27, 32], "publicPrivate": "Public" }
+  },
+  {
+    "id": "penn-state",
+    "name": "Penn State University",
+    "shortName": "Penn State",
+    "state": "PA",
+    "division": "D1",
+    "conference": "Big Ten",
+    "region": "Northeast",
+    "rosterUrl": "https://gopsusports.com/sports/womens-volleyball/roster",
+    "athleticsUrl": "https://gopsusports.com",
+    "depthChart": {
+      "OH": { "returning": 4, "seniors": 2, "needs": 2 },
+      "OPP": { "returning": 1, "seniors": 0, "needs": 0 },
+      "MB": { "returning": 3, "seniors": 1, "needs": 1 },
+      "S": { "returning": 2, "seniors": 0, "needs": 0 },
+      "L": { "returning": 1, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.7, "satRange": [1190, 1390], "actRange": [25, 31], "publicPrivate": "Public" }
+  },
+  {
+    "id": "louisville",
+    "name": "University of Louisville",
+    "shortName": "Louisville",
+    "state": "KY",
+    "division": "D1",
+    "conference": "ACC",
+    "region": "South",
+    "rosterUrl": "https://gocards.com/sports/volleyball/roster",
+    "athleticsUrl": "https://gocards.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 2, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 1, "seniors": 1, "needs": 1 },
+      "L": { "returning": 2, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.55, "satRange": [1090, 1290], "actRange": [22, 29], "publicPrivate": "Public" }
+  },
+  {
+    "id": "byu",
+    "name": "Brigham Young University",
+    "shortName": "BYU",
+    "state": "UT",
+    "division": "D1",
+    "conference": "Big 12",
+    "region": "West",
+    "rosterUrl": "https://byucougars.com/sports/wvball/roster",
+    "athleticsUrl": "https://byucougars.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 0, "needs": 1 },
+      "OPP": { "returning": 1, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 2, "seniors": 0, "needs": 0 },
+      "L": { "returning": 1, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.8, "satRange": [1230, 1430], "actRange": [26, 32], "publicPrivate": "Private" }
+  },
+  {
+    "id": "florida",
+    "name": "University of Florida",
+    "shortName": "Florida",
+    "state": "FL",
+    "division": "D1",
+    "conference": "SEC",
+    "region": "Southeast",
+    "rosterUrl": "https://floridagators.com/sports/volleyball/roster",
+    "athleticsUrl": "https://floridagators.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 1, "seniors": 0, "needs": 0 },
+      "MB": { "returning": 2, "seniors": 0, "needs": 1 },
+      "S": { "returning": 1, "seniors": 1, "needs": 1 },
+      "L": { "returning": 1, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.9, "satRange": [1280, 1450], "actRange": [27, 32], "publicPrivate": "Public" }
+  },
+  {
+    "id": "creighton",
+    "name": "Creighton University",
+    "shortName": "Creighton",
+    "state": "NE",
+    "division": "D1",
+    "conference": "Big East",
+    "region": "Midwest",
+    "rosterUrl": "https://gocreighton.com/sports/volleyball/roster",
+    "athleticsUrl": "https://gocreighton.com",
+    "depthChart": {
+      "OH": { "returning": 2, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 1, "seniors": 0, "needs": 0 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 1, "seniors": 0, "needs": 1 },
+      "L": { "returning": 2, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.7, "satRange": [1180, 1380], "actRange": [25, 30], "publicPrivate": "Private" }
+  },
+  {
+    "id": "minnesota",
+    "name": "University of Minnesota",
+    "shortName": "Minnesota",
+    "state": "MN",
+    "division": "D1",
+    "conference": "Big Ten",
+    "region": "Midwest",
+    "rosterUrl": "https://gophersports.com/sports/wvball/roster",
+    "athleticsUrl": "https://gophersports.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 2, "needs": 2 },
+      "OPP": { "returning": 2, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 2, "seniors": 1, "needs": 1 },
+      "L": { "returning": 1, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.7, "satRange": [1280, 1450], "actRange": [26, 31], "publicPrivate": "Public" }
+  },
+  {
+    "id": "ucla",
+    "name": "University of California, Los Angeles",
+    "shortName": "UCLA",
+    "state": "CA",
+    "division": "D1",
+    "conference": "Big Ten",
+    "region": "West",
+    "rosterUrl": "https://uclabruins.com/sports/womens-volleyball/roster",
+    "athleticsUrl": "https://uclabruins.com",
+    "depthChart": {
+      "OH": { "returning": 3, "seniors": 1, "needs": 1 },
+      "OPP": { "returning": 1, "seniors": 0, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 1, "seniors": 1, "needs": 1 },
+      "L": { "returning": 2, "seniors": 0, "needs": 0 }
+    },
+    "academic": { "avgGpa": 3.9, "satRange": [1290, 1510], "actRange": [29, 34], "publicPrivate": "Public" }
+  },
+  {
+    "id": "asu",
+    "name": "Arizona State University",
+    "shortName": "Arizona State",
+    "state": "AZ",
+    "division": "D1",
+    "conference": "Big 12",
+    "region": "West",
+    "rosterUrl": "https://thesundevils.com/sports/volleyball/roster",
+    "athleticsUrl": "https://thesundevils.com",
+    "depthChart": {
+      "OH": { "returning": 2, "seniors": 1, "needs": 2 },
+      "OPP": { "returning": 1, "seniors": 1, "needs": 1 },
+      "MB": { "returning": 2, "seniors": 1, "needs": 1 },
+      "S": { "returning": 1, "seniors": 0, "needs": 1 },
+      "L": { "returning": 1, "seniors": 1, "needs": 1 }
+    },
+    "academic": { "avgGpa": 3.55, "satRange": [1130, 1340], "actRange": [22, 29], "publicPrivate": "Public" }
+  }
+]

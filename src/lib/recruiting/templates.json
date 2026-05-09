@@ -1,0 +1,34 @@
+[
+  {
+    "id": "intro-cold",
+    "name": "Cold Introduction",
+    "description": "First-touch email to a coach who has never heard of you. Short, specific, includes film and key metric.",
+    "subject": "{{classYear}} {{position}} {{firstName}} {{lastName}} | {{club}}",
+    "body": "Coach {{coachLastName}},\n\nMy name is {{firstName}} {{lastName}}. I'm a {{classYear}} {{position}} from {{highSchool}} in {{city}}, {{state}}, currently playing for {{club}}.\n\nQuick numbers:\n- Height: {{height}}\n- Approach jump: {{approachJump}}\n- GPA: {{gpa}} (NCAA Eligibility Center {{ncaaIdRegistered}})\n\nFilm: {{highlightReelUrl}}\n\nI'm interested in {{schoolName}} because of your {{recentResult}}. I'd love to talk about what you're looking for in your {{classYear}} class and how I might fit.\n\nThank you for your time,\n{{firstName}} {{lastName}}\n{{phone}}\n{{email}}",
+    "recommendedTiming": "Send during evaluation or contact periods. Avoid dead periods."
+  },
+  {
+    "id": "tournament-invite",
+    "name": "Tournament / Showcase Invite",
+    "description": "Send 10-14 days before a major event the coach is likely attending.",
+    "subject": "{{firstName}} {{lastName}} ({{position}} | {{club}}) - playing at {{tournamentName}}",
+    "body": "Coach {{coachLastName}},\n\nI'm playing at {{tournamentName}} in {{tournamentCity}} from {{tournamentDates}} with {{club}}. We're scheduled on Court {{court}} at {{firstMatchTime}}.\n\nI'd appreciate it if you could watch a set. Quick reference: jersey #{{jerseyNumber}}, {{position}}, {{height}}, {{approachJump}} approach.\n\nFilm in case you can't make it: {{highlightReelUrl}}\n\nThanks,\n{{firstName}} {{lastName}}",
+    "recommendedTiming": "10-14 days before the event. Always include court, time, and jersey #."
+  },
+  {
+    "id": "follow-up",
+    "name": "Follow-up After No Response",
+    "description": "Send 10-14 days after the initial cold email if there's been no reply.",
+    "subject": "Following up | {{firstName}} {{lastName}} {{classYear}} {{position}}",
+    "body": "Coach {{coachLastName}},\n\nFollowing up on my note from {{lastTouchDate}}. Since then I've added:\n- {{recentMetricUpdate}}\n- New film clips: {{highlightReelUrl}}\n\nIf {{schoolName}} is still recruiting {{position}} for {{classYear}}, I'd value any feedback or a brief call.\n\nThanks,\n{{firstName}} {{lastName}}",
+    "recommendedTiming": "10-14 days after first email. Don't follow up more than twice without a response."
+  },
+  {
+    "id": "post-event",
+    "name": "Post-Event Recap",
+    "description": "Send within 48 hours of an event a coach attended or might have attended.",
+    "subject": "{{firstName}} {{lastName}} | {{tournamentName}} recap",
+    "body": "Coach {{coachLastName}},\n\nThanks for being at {{tournamentName}}. Quick recap from my matches:\n- {{recentResult}}\n- Personal numbers: {{recentStatLine}}\n\nFull match film for sets played: {{matchFilmUrl}}\n\nI'd love your honest feedback on what I need to work on to fit your program.\n\nThanks,\n{{firstName}} {{lastName}}",
+    "recommendedTiming": "Within 48 hours of the event closing."
+  }
+]

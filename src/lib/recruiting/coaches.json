@@ -1,0 +1,135 @@
+[
+  {
+    "id": "stanford-hc",
+    "firstName": "Kevin",
+    "lastName": "Hambly",
+    "title": "Head Coach",
+    "schoolId": "stanford",
+    "email": "wvb-recruiting@stanford.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed",
+    "notes": "Direct recruiting inquiries to athletic department address. Confirm via gostanford.com staff page before contact."
+  },
+  {
+    "id": "stanford-rc",
+    "firstName": "Recruiting",
+    "lastName": "Coordinator",
+    "title": "Recruiting Coordinator",
+    "schoolId": "stanford",
+    "email": "wvb-recruiting@stanford.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L", "DS"],
+    "source": "seed"
+  },
+  {
+    "id": "texas-hc",
+    "firstName": "Jerritt",
+    "lastName": "Elliott",
+    "title": "Head Coach",
+    "schoolId": "texas",
+    "email": "volleyball@athletics.utexas.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed",
+    "notes": "Verify staff directory at texaslonghorns.com before sending."
+  },
+  {
+    "id": "nebraska-hc",
+    "firstName": "Dani",
+    "lastName": "Busboom Kelly",
+    "title": "Head Coach",
+    "schoolId": "nebraska",
+    "email": "volleyball@huskers.com",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "wisconsin-hc",
+    "firstName": "Kelly",
+    "lastName": "Sheffield",
+    "title": "Head Coach",
+    "schoolId": "wisconsin",
+    "email": "volleyball@athletics.wisc.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "penn-state-hc",
+    "firstName": "Katie",
+    "lastName": "Schumacher-Cawley",
+    "title": "Head Coach",
+    "schoolId": "penn-state",
+    "email": "wvb-recruiting@psu.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "louisville-hc",
+    "firstName": "Dani",
+    "lastName": "Busboom Kelly",
+    "title": "Head Coach (placeholder)",
+    "schoolId": "louisville",
+    "email": "vbrecruiting@gocards.com",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed",
+    "notes": "Confirm head coach name on staff page before personalizing."
+  },
+  {
+    "id": "byu-hc",
+    "firstName": "Heather",
+    "lastName": "Olmstead",
+    "title": "Head Coach",
+    "schoolId": "byu",
+    "email": "volleyball@byu.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "florida-hc",
+    "firstName": "Mary",
+    "lastName": "Wise",
+    "title": "Head Coach",
+    "schoolId": "florida",
+    "email": "volleyball@gators.ufl.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "creighton-hc",
+    "firstName": "Kirsten",
+    "lastName": "Bernthal Booth",
+    "title": "Head Coach",
+    "schoolId": "creighton",
+    "email": "volleyball@creighton.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "minnesota-hc",
+    "firstName": "Keegan",
+    "lastName": "Cook",
+    "title": "Head Coach",
+    "schoolId": "minnesota",
+    "email": "volleyball@umn.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "ucla-hc",
+    "firstName": "Alfee",
+    "lastName": "Reft",
+    "title": "Head Coach",
+    "schoolId": "ucla",
+    "email": "volleyball@athletics.ucla.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  },
+  {
+    "id": "asu-hc",
+    "firstName": "JJ",
+    "lastName": "Van Niel",
+    "title": "Head Coach",
+    "schoolId": "asu",
+    "email": "volleyball@asu.edu",
+    "recruitsPositions": ["OH", "OPP", "MB", "S", "L"],
+    "source": "seed"
+  }
+]
