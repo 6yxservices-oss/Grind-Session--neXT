@@ -150,6 +150,21 @@
   .fit .fb { font-size: 12px; font-weight: 700; margin-top: 3px; }
   .fit .ft { font-size: 10px; color: var(--muted); margin-top: 3px; }
 
+  /* Real screenshot frames */
+  .shot-mobile { display: inline-block; background: #000; border: 2px solid #2a2a2a; border-radius: 28px; padding: 8px; max-width: 260px; box-shadow: 0 30px 60px -20px rgba(225,29,46,0.3); }
+  .shot-mobile img { width: 100%; border-radius: 22px; display: block; }
+  .shot-browser { background: #18181b; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 12px 0; }
+  .shot-browser .b-bar { padding: 8px 14px; display: flex; gap: 6px; align-items: center; font-size: 11px; border-bottom: 1px solid var(--line); }
+  .shot-browser .b-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a3a3a; }
+  .shot-browser .b-bar .url { background: #0a0a0a; padding: 4px 10px; border-radius: 6px; color: var(--muted); flex: 1; margin-left: 8px; font-family: "JetBrains Mono", monospace; }
+  .shot-browser img { width: 100%; display: block; }
+  .shot-dashboard { background: #0a0e14; border: 1px solid #1a2030; border-radius: 12px; overflow: hidden; }
+  .shot-dashboard img { width: 100%; display: block; }
+  .shots-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 16px 0; align-items: start; justify-items: center; }
+  .shot-caption { font-size: 11px; color: var(--muted); text-align: center; margin-top: 8px; letter-spacing: 0.03em; }
+  .annotation { background: rgba(225,29,46,0.1); border: 1px dashed var(--accent); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #fca5af; margin-top: 12px; text-align: center; }
+  .annotation strong { color: var(--accent); }
+
   /* Pilot checklist */
   .check { padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px; }
   .check .box { flex-shrink: 0; width: 22px; height: 22px; border: 2px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-weight: 900; }
@@ -187,20 +202,19 @@
     <p class="lede">Club MVP is <strong>a logged-in layer on top of the website MVP already owns.</strong> Same domain. Same brand. Same fights. New capability: capture a fan, keep them engaged, turn them into a paying customer &mdash; for sponsors and for MVP directly.</p>
 
     <div style="margin-top: 24px;">
-      <div class="site-mock">
-        <div class="site-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">mostvaluablepromotions.com</span></div>
-        <div class="site-nav">
-          <span class="logo" style="color: var(--accent);">MVP</span>
-          <span class="navlink">News</span>
-          <span class="navlink">Fights</span>
-          <span class="navlink">Fighters</span>
-          <span class="navlink">Shop</span>
-          <span class="joinbtn">Join Club MVP &rarr;</span>
-        </div>
-        <div class="site-body">
-          <div style="font-size: 12px; color: var(--muted); text-align: center;">Same site. Same brand. One new button. Everything downstream is Club MVP.</div>
+      <div class="shot-browser">
+        <div class="b-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">mostvaluablepromotions.com</span></div>
+        <img src="images/mvp-homepage.png" alt="mostvaluablepromotions.com homepage showing Rousey vs Carano on Netflix at the Intuit Dome" />
+      </div>
+      <div class="annotation"><strong>The site already exists.</strong> ATHLETES &middot; EVENTS &middot; MVPW &middot; NEWS are live today. Club MVP adds <strong>one button</strong> in that nav: <strong>"Join Club MVP &rarr;"</strong> &mdash; the door fans walk through to become known.</div>
+
+      <div class="shots-row" style="margin-top: 24px;">
+        <div>
+          <div class="shot-browser"><img src="images/mvp-fighter-serrano.png" alt="Amanda Serrano fighter profile page on mostvaluablepromotions.com" /></div>
+          <div class="shot-caption">EXISTING: rich athlete profiles already live (Amanda Serrano)</div>
         </div>
       </div>
+      <p class="small" style="text-align: center; color: var(--muted); margin-top: 8px;">Fighter pages, event pages, ticketing &mdash; all built. Club MVP doesn't replace any of it. It captures the fans visiting it.</p>
     </div>
 
     <div class="grid-2" style="margin-top: 24px;">
@@ -250,17 +264,26 @@
         <div class="meta">Discovery &middot; on social</div>
         <h3>Fan sees the sweepstakes on TikTok / Instagram / YouTube</h3>
         <p>Fighter selfies + paid media drive traffic. The hook is a real, big prize: <em>"Win ringside seats + walkout access at the next MVP fight."</em> Every social impression now has a chance to convert into a captured fan &mdash; not just a view.</p>
-        <div class="phone-mini">
-          <div class="notch"></div>
-          <div class="screen">
-            <span class="pill blue">SOCIAL POST</span>
-            <div style="font-size: 13px; font-weight: 900; line-height: 1.2; margin-top: 8px;">Win Ringside Seats<br />+ Walkout Access</div>
-            <div class="small" style="margin-top: 4px;">@MVP_Promotions</div>
-            <div style="background: linear-gradient(135deg, #1a0d10, #0f0f10); border: 1px solid #2a1518; border-radius: 8px; padding: 10px; margin-top: 10px; text-align: center;">
-              <div class="small" style="color: var(--accent-2);">NEXT FIGHT &middot; SAT</div>
-              <div style="font-size: 12px; font-weight: 800;">FIGHTER A vs FIGHTER B</div>
+        <div class="shots-row" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <div class="phone-mini">
+              <div class="notch"></div>
+              <div class="screen">
+                <span class="pill blue">SOCIAL POST</span>
+                <div style="font-size: 13px; font-weight: 900; line-height: 1.2; margin-top: 8px;">Win Ringside Seats<br />+ Walkout Access</div>
+                <div class="small" style="margin-top: 4px;">@MVP_Promotions</div>
+                <div style="background: linear-gradient(135deg, #1a0d10, #0f0f10); border: 1px solid #2a1518; border-radius: 8px; padding: 10px; margin-top: 10px; text-align: center;">
+                  <div class="small" style="color: var(--accent-2);">NEXT FIGHT &middot; SAT</div>
+                  <div style="font-size: 12px; font-weight: 800;">FIGHTER A vs FIGHTER B</div>
+                </div>
+                <div class="mock-cta">ENTER TO WIN &rarr;</div>
+              </div>
             </div>
-            <div class="mock-cta">ENTER TO WIN &rarr;</div>
+            <div class="shot-caption">Sweepstakes hook on social</div>
+          </div>
+          <div>
+            <img src="images/mvp-fighter-card.png" alt="Amanda Serrano roster card asset" style="max-width: 200px; border-radius: 8px;" />
+            <div class="shot-caption">+ existing fighter assets (Serrano card) drive the post</div>
           </div>
         </div>
       </div>
@@ -272,22 +295,11 @@
         <div class="meta">Land &middot; on mostvaluablepromotions.com</div>
         <h3>Fan lands on the site they already know</h3>
         <p>The destination isn't a random microsite. It's <strong>mostvaluablepromotions.com</strong> &mdash; the brand fans already trust. The "Join Club MVP" button is right there in the nav. Zero friction. Zero "what is this?"</p>
-        <div class="site-mock" style="margin-top: 12px;">
-          <div class="site-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">mostvaluablepromotions.com/club</span></div>
-          <div class="site-nav">
-            <span class="logo" style="color: var(--accent);">MVP</span>
-            <span class="navlink">News</span>
-            <span class="navlink">Fights</span>
-            <span class="navlink">Fighters</span>
-            <span class="navlink">Shop</span>
-            <span class="joinbtn">Join Club MVP &rarr;</span>
-          </div>
-          <div class="site-body" style="text-align: center;">
-            <div style="font-size: 18px; font-weight: 900;">Win VIP fight night &mdash; Join Club MVP</div>
-            <div class="small" style="margin: 6px 0 12px;">Predict, score, share. Every action is more entries.</div>
-            <div style="display: inline-block; background: var(--accent); color: #fff; padding: 8px 18px; border-radius: 8px; font-weight: 800; font-size: 13px;">CREATE FREE ACCOUNT</div>
-          </div>
+        <div class="shot-browser" style="margin-top: 12px;">
+          <div class="b-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">mostvaluablepromotions.com</span></div>
+          <img src="images/mvp-homepage.png" alt="Real MVP homepage with Rousey vs Carano on the Netflix card" />
         </div>
+        <div class="annotation">The fan lands on the <strong>real Rousey vs. Carano page</strong> they came for. The "Join Club MVP" button sits in the existing nav. They join because they want to win the prize tied to <em>that</em> fight, not some generic offer.</div>
       </div>
     </div>
 
@@ -331,24 +343,18 @@
       <div>
         <div class="meta">Enter &middot; the sweepstakes</div>
         <h3>Fan enters &mdash; and the funnel begins</h3>
-        <p>Entry confirmed. Fan is in. Now the platform shows them how to <strong>earn more entries</strong> &mdash; which is where the in-funnel engagement begins.</p>
-        <div class="phone-mini">
-          <div class="notch"></div>
-          <div class="screen">
-            <span class="pill green">&bull; YOU'RE IN</span>
-            <div style="font-size: 14px; font-weight: 900; margin-top: 6px;">1 entry confirmed</div>
-            <p class="small" style="margin: 4px 0 10px;">Want better odds? Earn more entries below.</p>
-            <div style="background: #1a0d10; border: 1px solid #2a1518; border-radius: 8px; padding: 10px; margin-top: 8px;">
-              <div class="small">PICK THE WINNER <span class="pill gold" style="float: right;">+5</span></div>
-            </div>
-            <div style="background: #1a0d10; border: 1px solid #2a1518; border-radius: 8px; padding: 10px; margin-top: 6px;">
-              <div class="small">REFER A FRIEND <span class="pill gold" style="float: right;">+10</span></div>
-            </div>
-            <div style="background: #1a0d10; border: 1px solid #2a1518; border-radius: 8px; padding: 10px; margin-top: 6px;">
-              <div class="small">WATCH SPONSOR CLIP <span class="pill gold" style="float: right;">+3</span></div>
-            </div>
+        <p>Entry confirmed. Fan is in. The platform shows them the <strong>actual prize</strong> they're playing for &mdash; and how to earn more entries.</p>
+        <div class="shots-row" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <div class="shot-mobile"><img src="images/clubmvp-vip-experience.png" alt="Club MVP VIP Experience screen showing Rousey vs Carano prize" /></div>
+            <div class="shot-caption">The prize: VIP Experience to Rousey vs. Carano</div>
+          </div>
+          <div>
+            <div class="shot-mobile"><img src="images/clubmvp-sweepstake.png" alt="Club MVP sweepstake entry tiers" /></div>
+            <div class="shot-caption">Entry tiers &mdash; earn XP to unlock more entries</div>
           </div>
         </div>
+        <div class="annotation"><strong>Notice the Netflix integration</strong> in the prize screen &mdash; this is exactly the kind of co-promoter relationship that becomes a sponsor activation. Today Netflix gets a logo. With Club MVP, Netflix gets the audience file too.</div>
       </div>
     </div>
 
@@ -367,6 +373,23 @@
         <div class="meta">Earn entries &middot; daily reasons to return</div>
         <h3>Predictions, polls, sponsor content, referrals</h3>
         <p>Every day of fight week, a new entry mechanism. Predict the winner. Vote on the walkout song. Watch a 30-second sponsor clip for bonus entries. Share with a friend. The fan is now coming back to mostvaluablepromotions.com daily &mdash; pre-fight buzz MVP no longer has to rent.</p>
+
+        <div class="shots-row" style="grid-template-columns: repeat(3, 1fr); margin: 16px 0 8px;">
+          <div>
+            <div class="shot-mobile"><img src="images/clubmvp-pickems.png" alt="Club MVP Pick'Ems Rousey vs Carano" /></div>
+            <div class="shot-caption"><strong>PICK'EMS</strong> &mdash; "Who wins the super fight?"</div>
+          </div>
+          <div>
+            <div class="shot-mobile"><img src="images/clubmvp-polls.png" alt="Club MVP Polls — Ronda Rousey question" /></div>
+            <div class="shot-caption"><strong>POLLS</strong> &mdash; +10 XP per submission</div>
+          </div>
+          <div>
+            <div class="shot-mobile"><img src="images/clubmvp-polls-legacy.png" alt="Club MVP Polls — Legacy Debate" /></div>
+            <div class="shot-caption"><strong>LIVE POLLS</strong> &mdash; +10 XP, daily drops</div>
+          </div>
+        </div>
+        <div class="annotation"><strong>Sponsor inventory hiding in plain sight:</strong> every poll, pick, and challenge is a "Presented by [Brand]" placement waiting to be sold. The fan thinks they're playing. The brand sees measurable dwell time and a captured fan.</div>
+
         <div class="fan-mvp">
           <div class="fan-side">
             <div class="side-eyebrow">What the fan does</div>
@@ -506,9 +529,10 @@
 
     <div style="margin-top: 28px;">
       <div class="data-mock" style="margin-bottom: 20px;">
-        <div class="data-eyebrow">SELLABLE SEGMENTS</div>
+        <div class="data-eyebrow">SELLABLE SEGMENTS &middot; LIVE FROM DROPT</div>
         <h3>High-Value <span class="blue">Audience Segments</span></h3>
         <p class="sub">The captured audience breaks down into distinct, targetable segments &mdash; each with its own sponsor category fit.</p>
+        <div class="shot-dashboard" style="margin-bottom: 20px;"><img src="images/dropt-segments.png" alt="Dropt sellable segments dashboard" /></div>
         <div class="seg-grid">
           <div class="seg">
             <div class="seg-head"><div class="seg-icon green">&#9678;</div><div><div class="seg-name">The Weekly Player</div><div class="seg-pct">53%</div></div></div>
@@ -536,8 +560,9 @@
       </div>
 
       <div class="data-mock" style="margin-bottom: 20px;">
-        <div class="data-eyebrow">DEMOGRAPHICS</div>
+        <div class="data-eyebrow">DEMOGRAPHICS &middot; LIVE FROM DROPT</div>
         <h3>Age <span class="blue">Distribution</span></h3>
+        <div class="shot-dashboard" style="margin-bottom: 20px;"><img src="images/dropt-age.png" alt="Dropt age distribution dashboard" /></div>
         <div class="big-stat">
           <div class="n">80.5%</div>
           <div class="l">of audience is under 45 &mdash; prime spending years with high CLV</div>
@@ -551,19 +576,13 @@
       </div>
 
       <div class="data-mock">
-        <div class="data-eyebrow">PSYCHOGRAPHICS</div>
+        <div class="data-eyebrow">PSYCHOGRAPHICS &middot; LIVE FROM DROPT</div>
         <h3>Lifestyle &amp; <span class="blue">Behavior</span></h3>
-        <div style="background: #0f141d; border: 1px solid #1c2433; border-radius: 12px; padding: 18px; margin-top: 12px;">
-          <div style="font-weight: 800; margin-bottom: 8px;">The Conscious Performer</div>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0;">
-            <div style="background: #0a0e14; border: 1px solid #1c2433; border-radius: 8px; padding: 12px; text-align: center;"><div style="font-size: 22px; font-weight: 900; color: var(--blue);">55.2%</div><div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Water for Hydration</div></div>
-            <div style="background: #0a0e14; border: 1px solid #1c2433; border-radius: 8px; padding: 12px; text-align: center;"><div style="font-size: 22px; font-weight: 900; color: var(--blue);">41.3%</div><div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Healthy Eating</div></div>
-            <div style="background: #0a0e14; border: 1px solid #1c2433; border-radius: 8px; padding: 12px; text-align: center;"><div style="font-size: 22px; font-weight: 900; color: var(--blue);">53%</div><div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Active Lifestyle</div></div>
-          </div>
-          <div style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25); border-radius: 8px; padding: 14px; font-size: 13px;">
-            <span style="color: var(--blue); font-weight: 800;">Unique insight:</span> This is not the stereotypical "beer &amp; hot dog" combat-sports crowd. They're health-conscious performers who value clean fuel &mdash; perfect fit for wellness, electrolytes (LMNT, Liquid IV), and premium activewear.
-          </div>
-        </div>
+        <p class="sub">The same psychographic engine surfaces multiple sellable insights per audience &mdash; each tied to a different sponsor category.</p>
+        <div class="shot-dashboard" style="margin-bottom: 16px;"><img src="images/dropt-travel.png" alt="Dropt psychographics dashboard — Travel & Lifestyle / The Experience Seeker" /></div>
+        <div class="shot-caption" style="margin-bottom: 20px;">TAB 1: <strong>Travel &amp; Lifestyle</strong> &mdash; sells to Marriott, Delta, AmEx, premium travel</div>
+        <div class="shot-dashboard"><img src="images/dropt-health.png" alt="Dropt psychographics dashboard — Health & Wellness / The Conscious Performer" /></div>
+        <div class="shot-caption">TAB 2: <strong>Health &amp; Wellness</strong> &mdash; sells to LMNT, Liquid IV, Celsius, Therabody</div>
       </div>
     </div>
 
