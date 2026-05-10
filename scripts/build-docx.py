@@ -241,9 +241,161 @@ def main():
         ],
     )
 
-    # 02 — Fan flow
+    # 02 — Sponsorship lead
     doc.add_page_break()
-    add_heading(doc, "02  How it works — the fan flow", level=1)
+    add_heading(doc, "02  Sponsorship — two ways to print money on day one", level=1)
+    add_para(
+        doc,
+        "This is where the platform pays for itself before a fan ever logs in. Two parallel revenue prongs — "
+        "both can run from week one.",
+        size=11,
+    )
+
+    # Prong 1
+    add_heading(doc, "Prong 1 — Sell sweepstakes sponsorship (NEW INVENTORY)", level=2, color=ACCENT)
+    add_para(
+        doc,
+        "Sweepstakes are the easiest piece of inventory in the deck. Brands already have a sweepstakes "
+        "line in their marketing budget. They know how the format works. They've bought it from "
+        "broadcasters, sportsbooks, and creators for years. Now they buy it from MVP — with the audience "
+        "file attached.",
+        size=11,
+    )
+    add_para(
+        doc,
+        "Why this clears procurement fast: sweepstakes sponsorship maps to an existing approval template "
+        "at every CPG, sportsbook, and beverage. No new vendor category. No new legal review. Just a "
+        "\"Presented by\" placement and a dataset at the end.",
+        size=11, italic=True,
+    )
+    add_para(doc, "What we sell:", size=11, bold=True)
+    add_bullets(doc, [
+        ("Title sweepstakes", " — \"Win VIP fight night, presented by [Brand]\""),
+        ("Bonus-entry mechanics", " — \"Watch [Brand]'s 30-sec clip for +5 entries\" → measurable dwell time"),
+        ("Branded prize tiers", " — sponsor-supplied prizes (year of Celsius, $5K travel credit)"),
+        ("Audience hand-off", " — opt-in entrants delivered to sponsor CRM post-fight"),
+    ])
+    add_para(
+        doc,
+        "Pricing: $150K–$250K presenting · $500K–$750K fight-week · $1.5M–$3M season exclusive.",
+        size=11, bold=True, color=ACCENT,
+    )
+
+    # Prong 2
+    doc.add_paragraph()
+    add_heading(doc, "Prong 2 — Upgrade existing sponsor deals (EXTRACT CURRENT VALUE)", level=2, color=GOLD)
+    add_para(
+        doc,
+        "Most current MVP sponsors are paying for logo exposure — corner posts, ring mats, broadcast bugs. "
+        "Same deal, three years running, same flat fee. The platform turns that flat fee into a measured "
+        "asset — and a justification for renewal at 2–3x.",
+        size=11,
+    )
+    add_para(
+        doc,
+        "The renewal pitch: \"Last year you paid $X for impressions. This year, same dollar buys impressions "
+        "PLUS a sweepstakes activation, an audience file in your demo, and a measurable dwell-time report. "
+        "Or for 2x, you own the activation outright.\"",
+        size=11, italic=True,
+    )
+    add_para(doc, "How we extract more:", size=11, bold=True)
+    add_bullets(doc, [
+        ("Audit current deals", " — pull every existing sponsor and tag what they currently get vs. what they could get"),
+        ("Activation upsell", " — offer current sponsors first right of refusal on Club MVP activations before going to market"),
+        ("ROI proof retroactively", " — even on existing deals, retro-fit Dropt reporting so they renew with confidence"),
+        ("Tier ladder", " — Logo → Logo + activation → Category exclusive. Move every sponsor up one rung."),
+    ])
+    add_para(
+        doc,
+        "Expected lift on renewal: +30–100% on existing sponsor revenue with zero new logos to chase — "
+        "just better-priced renewals.",
+        size=11, bold=True, color=GOLD,
+    )
+
+    add_para(
+        doc,
+        "Combined math: 1–2 new sweepstakes sponsors per fight ($300K–$1M) PLUS uplift on 4–6 existing "
+        "renewals (+$500K–$2M/year). Day-one impact, no platform-side risk.",
+        size=12, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER,
+    )
+
+    # 03 — What Dropt captures
+    doc.add_page_break()
+    add_heading(doc, "03  What Dropt actually captures", level=1)
+    add_para(
+        doc,
+        "This isn't theoretical. Below is the exact view sponsors see — pulled from Dropt today. Every "
+        "sweepstakes entry gets fingerprinted into sellable segments, demographics, and psychographics. "
+        "This is the proof slide in every sponsor pitch.",
+        size=11,
+    )
+
+    # Sellable Segments table
+    add_heading(doc, "Sellable Audience Segments", level=2, color=ACCENT)
+    seg_table = doc.add_table(rows=5, cols=3)
+    headers = ["Segment", "Share", "What it unlocks"]
+    for i, h in enumerate(headers):
+        c = seg_table.rows[0].cells[i]
+        shade(c, "0F172A")
+        run = c.paragraphs[0].add_run(h)
+        run.bold = True
+        run.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        run.font.size = Pt(10)
+    seg_rows = [
+        ("The Weekly Player — engages every week, social by nature", "53%", "Sportsbooks: DraftKings, FanDuel, BetMGM"),
+        ("The High-Frequency Flyer — 5+ international flights/year", "12%", "Premium travel: Marriott, Delta, AmEx Plat"),
+        ("The Watch Collector — buys a watch annually+", "19%", "Luxury watches: Hublot, TAG Heuer, Breitling"),
+        ("The Conscious Consumer — prioritizes healthy options", "41%", "Wellness: LMNT, Liquid IV, Celsius"),
+    ]
+    for i, row in enumerate(seg_rows, start=1):
+        for j, val in enumerate(row):
+            c = seg_table.rows[i].cells[j]
+            r = c.paragraphs[0].add_run(val)
+            r.font.size = Pt(10)
+            if j == 1:
+                r.bold = True
+                r.font.color.rgb = ACCENT
+    doc.add_paragraph()
+
+    # Demographics
+    add_heading(doc, "Age Distribution", level=2, color=ACCENT)
+    add_para(
+        doc,
+        "80.5% of audience is under 45 — prime spending years with high customer lifetime value.",
+        size=12, bold=True,
+    )
+    add_bullets(doc, [
+        "18–24: 36.9% (Next Gen / Trendsetters)",
+        "25–34: 25.4% (Young Professionals)",
+        "35–44: 18.2% (Peak Earners)",
+        "45+: 19.5% (Established)",
+    ])
+
+    # Psychographics
+    add_heading(doc, "Psychographics — The Conscious Performer", level=2, color=ACCENT)
+    add_bullets(doc, [
+        "55.2% choose water for hydration vs 25.8% energy drinks",
+        "41.3% prioritize healthy eating",
+        "53% maintain an active lifestyle (weekly training)",
+    ])
+    add_para(
+        doc,
+        "Unique insight: This is NOT a stereotypical \"beer & hot dog\" combat-sports crowd. They're "
+        "health-conscious performers who value hydration and clean fuel — making them a perfect fit for "
+        "wellness brands, electrolytes (LMNT, Liquid IV), and premium activewear.",
+        size=11, italic=True,
+    )
+    add_para(
+        doc,
+        "Live capture from Dropt. As MVP audience scales, the same dashboard surfaces MVP-specific "
+        "segments — e.g., The Walkout Watcher, The Live Bettor, The Fight-Week Spender — each tied to a "
+        "specific sponsor category.",
+        size=10, color=MUTED, italic=True,
+    )
+
+    # 04 — Fan flow
+    doc.add_page_break()
+    add_heading(doc, "04  How it works — the fan flow", level=1)
     add_para(
         doc,
         "Five steps. The hook is prizes. The mechanism is fight-week interactions. The output for MVP is data.",
@@ -319,9 +471,9 @@ def main():
         ],
     )
 
-    # 03 — Division of labor
+    # 05 — Division of labor
     doc.add_page_break()
-    add_heading(doc, "03  What MVP does vs. what Club MVP handles", level=1)
+    add_heading(doc, "05  What MVP does vs. what Club MVP handles", level=1)
     add_para(
         doc,
         "The most important slide for a CMO worried about another tech project: MVP doesn't build, "
@@ -348,14 +500,14 @@ def main():
         ],
     )
 
-    # 04 — Three engines
-    add_heading(doc, "04  Three revenue engines", level=1)
+    # 06 — Other revenue engines
+    add_heading(doc, "06  The other revenue engines", level=1)
+    add_para(doc, "Sponsorship leads (Section 02). Two more revenue lines open the moment Club MVP captures its first 50K fans.", size=11)
     engines = [
-        ("Sponsorship reinvented", "Sell moments + audiences, not logos. \"Pick the Round, Presented by Monster.\" Sponsor gets the activation plus the audience file.", "5–10x", "CPM lift vs. broadcast"),
         ("Direct fan revenue", "Use the captured list to retarget for PPV, tickets, merch. Pixel every page, build lookalikes, run lifecycle email/SMS.", "3–5x", "Conversion vs. cold traffic"),
-        ("Year-round monetization", "VIP/loyalty memberships, premium sweepstakes, sponsor newsletter inventory, affiliate ticketing splits. The list keeps paying.", "$2–4M", "Year-one upside on a 250K-fan list"),
+        ("Year-round monetization", "VIP/loyalty memberships, premium sweepstakes, sponsor newsletter inventory, affiliate ticketing splits. The list keeps paying between fights.", "$2–4M", "Year-one upside on a 250K-fan list"),
     ]
-    table = doc.add_table(rows=1, cols=3)
+    table = doc.add_table(rows=1, cols=2)
     for i, (title, body, lift, label) in enumerate(engines):
         c = table.rows[0].cells[i]
         shade(c, "FAFAF9")
@@ -375,35 +527,8 @@ def main():
         lbr.font.color.rgb = MUTED
     doc.add_paragraph()
 
-    # 05 — Sponsor packages
-    add_heading(doc, "05  Sponsor packages", level=1)
-    add_para(doc, "Three tiers, all with audience hand-off and a Dropt performance report.", size=11)
-    pkg_table = doc.add_table(rows=4, cols=3)
-    headers = ["Package", "Scope", "Investment"]
-    for i, h in enumerate(headers):
-        c = pkg_table.rows[0].cells[i]
-        shade(c, "1F1F1F")
-        run = c.paragraphs[0].add_run(h)
-        run.bold = True
-        run.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
-        run.font.size = Pt(10)
-    rows = [
-        ("Presenting Sponsor — single activation", "~75–125K engaged actions, audience hand-off, performance report", "$150K–$250K"),
-        ("Fight-Week Partner — three activations", "~300K actions, branded leaderboard, push co-branding", "$500K–$750K"),
-        ("Season Category Exclusive — full year", "Category lockout, every event, quarterly audience refresh", "$1.5M–$3M"),
-    ]
-    for i, row in enumerate(rows, start=1):
-        for j, val in enumerate(row):
-            c = pkg_table.rows[i].cells[j]
-            r = c.paragraphs[0].add_run(val)
-            r.font.size = Pt(10)
-            if j == 2:
-                r.bold = True
-                r.font.color.rgb = ACCENT
-    doc.add_paragraph()
-
-    # 06 — Operating model
-    add_heading(doc, "06  The CMO operating model", level=1)
+    # 07 — Operating model
+    add_heading(doc, "07  The CMO operating model", level=1)
     add_para(doc, "One ratio runs the whole company.", size=11)
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -416,8 +541,8 @@ def main():
     add_para(doc, "Daily 3-number Slack digest: fans captured (24h) · cost per fan · revenue per fan.",
              size=10, align=WD_ALIGN_PARAGRAPH.CENTER, color=MUTED, italic=True)
 
-    # 07 — Pilot
-    add_heading(doc, "07  The 14-day pilot", level=1)
+    # 08 — Pilot
+    add_heading(doc, "08  The 14-day pilot", level=1)
     add_para(doc, "No new tech. No new vendors. No new budget. The cost to test is effectively zero.", size=11)
     add_bullets(doc, [
         ("One sweepstakes live", " — VIP fight experience as the prize, predictions + polls as entry mechanism, fighter-promoted across socials"),

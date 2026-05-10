@@ -95,6 +95,61 @@
   .engine .lift { font-size: 32px; font-weight: 900; color: var(--accent-2); margin: 12px 0 4px; letter-spacing: -0.02em; }
   .engine .lift-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); }
 
+  /* Sponsorship lead cards */
+  .lead-card { background: linear-gradient(180deg, #1a0d10 0%, #0f0f10 100%); border: 1px solid #2a1518; border-radius: 20px; padding: 32px; position: relative; }
+  .lead-card .tag { display: inline-block; padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .lead-card .tag.new { background: rgba(225,29,46,0.15); color: #fca5af; border: 1px solid rgba(225,29,46,0.4); }
+  .lead-card .tag.existing { background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.4); }
+  .lead-card h3 { font-size: 24px; margin-top: 0; }
+  .lead-card .why { padding: 12px 16px; background: rgba(255,255,255,0.03); border-left: 3px solid var(--accent-2); border-radius: 6px; font-size: 14px; margin: 16px 0; }
+  .lead-card ul { padding-left: 18px; margin: 8px 0 16px; }
+  .lead-card ul li { margin-bottom: 6px; font-size: 14px; }
+
+  /* Dropt data viz mocks */
+  .data-mock { background: #0a0e14; border: 1px solid #1a2030; border-radius: 16px; padding: 28px; }
+  .data-mock .data-eyebrow { font-size: 11px; letter-spacing: 0.25em; color: #38bdf8; font-weight: 800; text-align: center; }
+  .data-mock h3 { font-size: 28px; font-weight: 800; text-align: center; margin: 8px 0; }
+  .data-mock h3 .blue { color: #38bdf8; }
+  .data-mock .sub { text-align: center; color: var(--muted); font-size: 13px; max-width: 520px; margin: 0 auto 24px; }
+  .seg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .seg-grid { grid-template-columns: 1fr; } }
+  .seg { background: #0f141d; border: 1px solid #1c2433; border-radius: 14px; padding: 18px; }
+  .seg-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .seg-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .seg-icon.green { background: #14b8a6; }
+  .seg-icon.blue { background: #3b82f6; }
+  .seg-icon.orange { background: #f97316; }
+  .seg-icon.pink { background: #ec4899; }
+  .seg-name { font-weight: 700; font-size: 15px; }
+  .seg-pct { font-size: 28px; font-weight: 900; color: #38bdf8; line-height: 1; margin-top: 4px; }
+  .seg-desc { font-size: 13px; color: #d4d4d8; margin: 8px 0 6px; }
+  .seg-bullets { font-size: 12px; color: var(--muted); padding-left: 0; list-style: none; }
+  .seg-bullets li { padding-left: 12px; position: relative; margin-bottom: 4px; }
+  .seg-bullets li::before { content: "•"; color: #38bdf8; position: absolute; left: 0; }
+  .age-bar-row { display: grid; grid-template-columns: 60px 1fr 60px; align-items: center; gap: 12px; margin: 10px 0; font-size: 13px; }
+  .age-bar { height: 24px; border-radius: 4px; background: linear-gradient(90deg, #38bdf8, #0284c7); }
+  .age-bar.dim2 { background: linear-gradient(90deg, #38bdf8, #0369a1); opacity: 0.85; }
+  .age-bar.dim3 { background: linear-gradient(90deg, #0284c7, #075985); opacity: 0.7; }
+  .age-bar.dim4 { background: linear-gradient(90deg, #075985, #0c4a6e); opacity: 0.55; }
+  .age-pct { text-align: right; font-weight: 800; color: #f4f4f5; }
+  .big-stat { background: linear-gradient(180deg, #102030 0%, #0a0e14 100%); border: 1px solid #1c2a3a; border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 20px; }
+  .big-stat .n { font-size: 44px; font-weight: 900; color: #38bdf8; line-height: 1; }
+  .big-stat .l { font-size: 13px; color: #d4d4d8; margin-top: 6px; }
+  .psy-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  @media (max-width: 720px) { .psy-row { grid-template-columns: 1fr; } }
+  .psy-cell { background: #0f141d; border: 1px solid #1c2433; border-radius: 10px; padding: 16px; text-align: center; }
+  .psy-cell .pn { font-size: 28px; font-weight: 900; color: #38bdf8; }
+  .psy-cell .pl { font-size: 13px; font-weight: 700; margin-top: 4px; }
+  .psy-cell .ps { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .insight-box { background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.25); border-radius: 10px; padding: 16px; font-size: 13px; }
+  .insight-box .lbl { color: #38bdf8; font-weight: 800; display: block; margin-bottom: 4px; }
+  .sponsor-fit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 720px) { .sponsor-fit { grid-template-columns: 1fr 1fr; } }
+  .fit { padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+  .fit .fl { font-size: 11px; color: var(--accent-2); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+  .fit .fb { font-size: 13px; font-weight: 700; margin-top: 4px; }
+  .fit .ft { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
   /* Operating model big number */
   .ratio-block { background: linear-gradient(135deg, #1a0d10 0%, #0f0f10 100%); border: 1px solid #2a1518; border-radius: 20px; padding: 40px; text-align: center; }
   .ratio-eq { font-family: "JetBrains Mono", "SF Mono", Menlo, monospace; font-size: clamp(20px, 2.6vw, 32px); font-weight: 700; margin: 16px 0; }
@@ -188,7 +243,159 @@
   </section>
 
   <section>
-    <h2><span class="num">02</span>How it works &mdash; the fan flow</h2>
+    <h2><span class="num">02</span>Sponsorship &mdash; two ways to print money on day one</h2>
+    <p class="lede">This is where the platform pays for itself before a fan ever logs in. Two parallel revenue prongs &mdash; both can run from week one.</p>
+
+    <div class="grid-2" style="margin-top: 28px;">
+      <div class="lead-card">
+        <span class="tag new">Prong 1 &middot; New inventory</span>
+        <h3>Sell sweepstakes sponsorship</h3>
+        <p>Sweepstakes are <strong>the easiest piece of inventory in the deck.</strong> Brands already have a sweepstakes line in their marketing budget. They know how the format works. They've bought it from broadcasters, sportsbooks, and creators for years. Now they buy it from MVP &mdash; with the audience file attached.</p>
+
+        <div class="why">
+          <strong style="color: var(--accent-2);">Why this clears procurement fast:</strong> sweepstakes sponsorship maps to an existing approval template at every CPG, sportsbook, and beverage. No new vendor category. No new legal review. Just a "Presented by" placement and a dataset at the end.
+        </div>
+
+        <strong style="font-size: 13px; color: var(--muted); letter-spacing: 0.1em;">WHAT WE SELL:</strong>
+        <ul>
+          <li><strong>Title sweepstakes</strong> &mdash; "Win VIP fight night, presented by [Brand]"</li>
+          <li><strong>Bonus-entry mechanics</strong> &mdash; "Watch [Brand]'s 30-sec clip for +5 entries" &rarr; measurable dwell time</li>
+          <li><strong>Branded prize tiers</strong> &mdash; sponsor-supplied prizes (e.g., year of Celsius, $5K travel credit)</li>
+          <li><strong>Audience hand-off</strong> &mdash; opt-in entrants delivered to sponsor CRM post-fight</li>
+        </ul>
+
+        <div style="margin-top: 16px; padding: 14px 18px; background: #0f0f10; border: 1px dashed #2a1518; border-radius: 10px;">
+          <div style="font-size: 11px; color: var(--accent-2); letter-spacing: 0.1em; font-weight: 800;">PRICING TIERS</div>
+          <div style="font-size: 13px; margin-top: 6px;">$150K&ndash;$250K presenting &middot; $500K&ndash;$750K fight-week &middot; $1.5M&ndash;$3M season exclusive</div>
+        </div>
+      </div>
+
+      <div class="lead-card" style="border-color: rgba(212,175,55,0.4);">
+        <span class="tag existing">Prong 2 &middot; Extract current value</span>
+        <h3>Upgrade existing sponsor deals</h3>
+        <p>Most current MVP sponsors are paying for <em>logo exposure</em> &mdash; corner posts, ring mats, broadcast bugs. Same deal, three years running, same flat fee. <strong>The platform turns that flat fee into a measured asset</strong> &mdash; and a justification for renewal at 2&ndash;3x.</p>
+
+        <div class="why" style="border-left-color: var(--gold);">
+          <strong style="color: var(--gold);">The renewal pitch:</strong> "Last year you paid $X for impressions. This year, same dollar buys impressions <em>plus</em> a sweepstakes activation, an audience file in your demo, and a measurable dwell-time report. Or for 2x, you own the activation outright."
+        </div>
+
+        <strong style="font-size: 13px; color: var(--muted); letter-spacing: 0.1em;">HOW WE EXTRACT MORE:</strong>
+        <ul>
+          <li><strong>Audit current deals</strong> &mdash; pull every existing sponsor and tag what they currently get vs. what they could get</li>
+          <li><strong>Activation upsell</strong> &mdash; offer current sponsors first right of refusal on Club MVP activations before going to market</li>
+          <li><strong>ROI proof retroactively</strong> &mdash; even on existing deals, retro-fit Dropt reporting so they renew with confidence</li>
+          <li><strong>Tier ladder</strong> &mdash; Logo &rarr; Logo + activation &rarr; Category exclusive. Move every sponsor up one rung.</li>
+        </ul>
+
+        <div style="margin-top: 16px; padding: 14px 18px; background: #0f0f10; border: 1px dashed rgba(212,175,55,0.3); border-radius: 10px;">
+          <div style="font-size: 11px; color: var(--gold); letter-spacing: 0.1em; font-weight: 800;">EXPECTED LIFT ON RENEWAL</div>
+          <div style="font-size: 13px; margin-top: 6px;">+30&ndash;100% on existing sponsor revenue with zero new logos to chase &mdash; just better-priced renewals</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="lede" style="margin-top: 32px; text-align: center; font-size: 16px; color: var(--gold);"><strong>The combined math:</strong> 1&ndash;2 new sweepstakes sponsors per fight ($300K&ndash;$1M) <strong>plus</strong> uplift on 4&ndash;6 existing renewals (+$500K&ndash;$2M/year). Day-one impact, no platform-side risk.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span>What Dropt actually captures</h2>
+    <p class="lede">This isn't theoretical. Below is the exact view sponsors see &mdash; pulled from Dropt today. Every sweepstakes entry gets fingerprinted into <strong>sellable segments</strong>, <strong>demographics</strong>, and <strong>psychographics</strong>. This is the proof slide in every sponsor pitch.</p>
+
+    <div style="margin-top: 32px;">
+      <div class="data-mock" style="margin-bottom: 24px;">
+        <div class="data-eyebrow">SELLABLE SEGMENTS</div>
+        <h3>High-Value <span class="blue">Audience Segments</span></h3>
+        <p class="sub">The audience breaks down into distinct, targetable segments &mdash; each with its own sponsor category fit.</p>
+        <div class="seg-grid">
+          <div class="seg">
+            <div class="seg-head">
+              <div class="seg-icon green">&#9678;</div>
+              <div><div class="seg-name">The Weekly Player</div><div class="seg-pct">53%</div></div>
+            </div>
+            <div class="seg-desc">Hits the golf course / training session every week</div>
+            <ul class="seg-bullets"><li>58% fully obsessed with the sport</li><li>70% engage with friends (social)</li></ul>
+          </div>
+          <div class="seg">
+            <div class="seg-head">
+              <div class="seg-icon blue">&#9992;</div>
+              <div><div class="seg-name">The High-Frequency Flyer</div><div class="seg-pct">12%</div></div>
+            </div>
+            <div class="seg-desc">Takes 5+ international flights per year</div>
+            <ul class="seg-bullets"><li>Another 25.7% take 2&ndash;4 flights annually</li><li>Combined: 38% are frequent travelers</li></ul>
+          </div>
+          <div class="seg">
+            <div class="seg-head">
+              <div class="seg-icon orange">&#9202;</div>
+              <div><div class="seg-name">The Watch Collector</div><div class="seg-pct">19%</div></div>
+            </div>
+            <div class="seg-desc">Buys a new watch annually or more frequently</div>
+            <ul class="seg-bullets"><li>Active horology enthusiasts</li><li>Luxury accessories buyers</li></ul>
+          </div>
+          <div class="seg">
+            <div class="seg-head">
+              <div class="seg-icon pink">&#9829;</div>
+              <div><div class="seg-name">The Conscious Consumer</div><div class="seg-pct">41%</div></div>
+            </div>
+            <div class="seg-desc">Prioritizes healthy eating options</div>
+            <ul class="seg-bullets"><li>55.2% prefer water over energy drinks</li><li>Only 21% say "eating is cheating"</li></ul>
+          </div>
+        </div>
+
+        <div class="sponsor-fit">
+          <div class="fit"><div class="fl">FIT</div><div class="fb">Sportsbooks</div><div class="ft">DraftKings, FanDuel, BetMGM</div></div>
+          <div class="fit"><div class="fl">FIT</div><div class="fb">Premium travel</div><div class="ft">Marriott, Delta, AmEx Plat</div></div>
+          <div class="fit"><div class="fl">FIT</div><div class="fb">Luxury watches</div><div class="ft">Hublot, TAG Heuer, Breitling</div></div>
+          <div class="fit"><div class="fl">FIT</div><div class="fb">Wellness / hydration</div><div class="ft">LMNT, Liquid IV, Celsius</div></div>
+        </div>
+      </div>
+
+      <div class="data-mock" style="margin-bottom: 24px;">
+        <div class="data-eyebrow">DEMOGRAPHICS</div>
+        <h3>Age <span class="blue">Distribution</span></h3>
+        <p class="sub">The audience concentrates in prime spending years with high customer lifetime value.</p>
+        <div class="big-stat">
+          <div class="n">80.5%</div>
+          <div class="l">of audience is under 45 &mdash; prime spending years with high CLV</div>
+        </div>
+        <div style="background: #0f141d; border: 1px solid #1c2433; border-radius: 10px; padding: 20px;">
+          <div class="age-bar-row"><div style="color: var(--muted);">18&ndash;24</div><div class="age-bar" style="width: 92%;"></div><div class="age-pct">36.9%</div></div>
+          <div class="age-bar-row"><div style="color: var(--muted);">25&ndash;34</div><div class="age-bar dim2" style="width: 64%;"></div><div class="age-pct">25.4%</div></div>
+          <div class="age-bar-row"><div style="color: var(--muted);">35&ndash;44</div><div class="age-bar dim3" style="width: 46%;"></div><div class="age-pct">18.2%</div></div>
+          <div class="age-bar-row"><div style="color: var(--muted);">45+</div><div class="age-bar dim4" style="width: 49%;"></div><div class="age-pct">19.5%</div></div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #1c2433; text-align: center;">
+            <div><div style="font-size: 13px; font-weight: 800;">18&ndash;24</div><div style="font-size: 10px; color: var(--muted);">Next Gen / Trendsetters</div></div>
+            <div><div style="font-size: 13px; font-weight: 800;">25&ndash;34</div><div style="font-size: 10px; color: var(--muted);">Young Professionals</div></div>
+            <div><div style="font-size: 13px; font-weight: 800;">35&ndash;44</div><div style="font-size: 10px; color: var(--muted);">Peak Earners</div></div>
+            <div><div style="font-size: 13px; font-weight: 800;">45+</div><div style="font-size: 10px; color: var(--muted);">Established</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-mock">
+        <div class="data-eyebrow">PSYCHOGRAPHICS</div>
+        <h3>Lifestyle &amp; <span class="blue">Behavior</span></h3>
+        <p class="sub">Deep insights into what the audience does, how they live, and where they spend.</p>
+
+        <div style="background: #0f141d; border: 1px solid #1c2433; border-radius: 12px; padding: 24px;">
+          <div style="font-weight: 800; margin-bottom: 8px;">The Conscious Performer</div>
+          <div class="psy-row">
+            <div class="psy-cell"><div class="pn">55.2%</div><div class="pl">Water for Hydration</div><div class="ps">vs 25.8% energy drinks</div></div>
+            <div class="psy-cell"><div class="pn">41.3%</div><div class="pl">Prioritize Healthy Eating</div><div class="ps">"Keeping it healthy"</div></div>
+            <div class="psy-cell"><div class="pn">53%</div><div class="pl">Active Lifestyle</div><div class="ps">Weekly training</div></div>
+          </div>
+          <div class="insight-box">
+            <span class="lbl">Our Unique Insight:</span>
+            This is not a stereotypical "beer &amp; hot dog" combat-sports crowd. They're health-conscious performers who value hydration and clean fuel &mdash; making them a perfect fit for wellness brands, electrolytes (LMNT, Liquid IV), and premium activewear.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="small" style="margin-top: 24px; text-align: center; color: var(--muted); font-style: italic;">Live capture from Dropt. As the MVP audience scales, the same dashboard surfaces MVP-specific segments &mdash; e.g., <em>The Walkout Watcher</em>, <em>The Live Bettor</em>, <em>The Fight-Week Spender</em> &mdash; each tied to a specific sponsor category.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span>How it works &mdash; the fan flow</h2>
     <p class="lede">Five steps. The hook is <strong>prizes</strong>. The mechanism is <strong>fight-week interactions</strong>. The output for MVP is <strong>data</strong>.</p>
 
     <div class="step">
@@ -393,7 +600,7 @@
   </section>
 
   <section>
-    <h2><span class="num">03</span>What MVP does vs. what the platform handles</h2>
+    <h2><span class="num">05</span>What MVP does vs. what Club MVP handles</h2>
     <p class="lede">The most important slide for a CMO worried about another tech project: MVP doesn't build, integrate, or operate anything. MVP runs MVP.</p>
     <div class="grid-2" style="margin-top: 24px;">
       <div class="card" style="border-color: var(--accent);">
@@ -420,16 +627,9 @@
   </section>
 
   <section>
-    <h2><span class="num">04</span>Three revenue engines</h2>
-    <p class="lede">Sponsorship reinvented. Direct fan revenue. Year-round monetization. The platform unlocks all three at once.</p>
-    <div class="grid-3" style="margin-top: 24px;">
-      <div class="engine">
-        <div class="icon">&#128176;</div>
-        <h3>Sponsorship reinvented</h3>
-        <p>Sell <em>moments + audiences</em>, not logos. "Pick the Round, Presented by Monster." Sponsor gets the activation <strong>plus</strong> the audience file.</p>
-        <div class="lift">5&ndash;10x</div>
-        <div class="lift-label">CPM lift vs. broadcast</div>
-      </div>
+    <h2><span class="num">06</span>The other revenue engines</h2>
+    <p class="lede">Sponsorship leads (Section 02), but two more revenue lines open the moment Club MVP captures its first 50K fans.</p>
+    <div class="grid-2" style="margin-top: 24px;">
       <div class="engine">
         <div class="icon">&#127903;</div>
         <h3>Direct fan revenue</h3>
@@ -440,7 +640,7 @@
       <div class="engine">
         <div class="icon">&#128197;</div>
         <h3>Year-round monetization</h3>
-        <p>VIP/loyalty memberships, premium sweepstakes, sponsor newsletter inventory, affiliate ticketing splits. The list keeps paying.</p>
+        <p>VIP/loyalty memberships, premium sweepstakes, sponsor newsletter inventory, affiliate ticketing splits. The list keeps paying between fights.</p>
         <div class="lift">$2&ndash;4M</div>
         <div class="lift-label">Year-one upside on a 250K-fan list</div>
       </div>
@@ -448,32 +648,7 @@
   </section>
 
   <section>
-    <h2><span class="num">05</span>Sponsor packages</h2>
-    <p class="lede">Three tiers, all with audience hand-off and a Dropt performance report. Sponsors stop asking "how much reach?" and start asking "how many opted-in fans, in my demo?"</p>
-    <div class="grid-3" style="margin-top: 24px;">
-      <div class="card">
-        <span class="pill muted">PRESENTING SPONSOR</span>
-        <h3 style="margin-top: 12px;">Single activation</h3>
-        <p class="small">~75&ndash;125K engaged actions &middot; audience hand-off &middot; performance report</p>
-        <div style="font-size: 28px; font-weight: 900; color: var(--accent-2); margin-top: 12px;">$150K&ndash;$250K</div>
-      </div>
-      <div class="card" style="border-color: var(--accent);">
-        <span class="pill" style="background: rgba(225,29,46,0.15); color: #fca5af;">FIGHT-WEEK PARTNER</span>
-        <h3 style="margin-top: 12px;">Three activations</h3>
-        <p class="small">~300K actions &middot; branded leaderboard &middot; push co-branding</p>
-        <div style="font-size: 28px; font-weight: 900; color: var(--accent-2); margin-top: 12px;">$500K&ndash;$750K</div>
-      </div>
-      <div class="card">
-        <span class="pill gold">SEASON CATEGORY EXCLUSIVE</span>
-        <h3 style="margin-top: 12px;">Full year</h3>
-        <p class="small">Category lockout &middot; every event &middot; quarterly audience refresh</p>
-        <div style="font-size: 28px; font-weight: 900; color: var(--accent-2); margin-top: 12px;">$1.5M&ndash;$3M</div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="num">06</span>The CMO operating model</h2>
+    <h2><span class="num">07</span>The CMO operating model</h2>
     <p class="lede">One ratio runs the whole company. No PhD required. Everyone &mdash; CEO to intern &mdash; understands what "winning" means.</p>
     <div class="ratio-block" style="margin-top: 24px;">
       <div class="eyebrow" style="color: var(--accent-2);">THE NUMBER THAT MATTERS</div>
@@ -492,7 +667,7 @@
   </section>
 
   <section>
-    <h2><span class="num">07</span>The 14-day pilot</h2>
+    <h2><span class="num">08</span>The 14-day pilot</h2>
     <p class="lede">No new tech. No new vendors. No new budget. We're repurposing marketing hours we'd already spend. The cost to test is effectively zero. The upside is a new revenue line MVP owns forever.</p>
     <div style="margin-top: 24px;">
       <div class="check"><div class="box">&#10003;</div><div><strong>One sweepstakes live</strong> &mdash; VIP fight experience as the prize, predictions + polls as the entry mechanism, fighter-promoted across socials</div></div>
