@@ -161,7 +161,7 @@ def main():
     # Title block
     add_eyebrow(doc, "Club MVP — How It Drives Fight Promotion — Brief for Ryan Rechten")
     title = doc.add_paragraph()
-    t1 = title.add_run("From a TikTok ad to a captured fan to a paying customer — ")
+    t1 = title.add_run("From a Social Media Post to a captured fan to a paying customer — ")
     t1.bold = True
     t1.font.size = Pt(22)
     t2 = title.add_run("on the site MVP already owns.")
