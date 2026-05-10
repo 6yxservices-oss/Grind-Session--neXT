@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
-"""Build the Club MVP strategy brief as a .docx for sharing with Ryan."""
+"""Build the Club MVP strategy brief as a .docx for sharing with Ryan.
+
+Funnel-shaped narrative:
+  TOP    — sweepstakes + social capture fans into Club MVP
+  MIDDLE — predictions/live keep them engaged through fight week
+  BOTTOM — sponsors pay + MVP sells PPV/tickets/merch direct
+"""
 from docx import Document
-from docx.shared import Pt, RGBColor, Inches, Cm
+from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
@@ -15,6 +21,8 @@ GOLD = RGBColor(0xD4, 0xAF, 0x37)
 MUTED = RGBColor(0x6B, 0x72, 0x80)
 DARK = RGBColor(0x14, 0x14, 0x14)
 GREEN = RGBColor(0x16, 0xA3, 0x4A)
+BLUE = RGBColor(0x38, 0xBD, 0xF8)
+AMBER = RGBColor(0xF5, 0x9E, 0x0B)
 
 
 def shade(cell, hex_color):
@@ -57,11 +65,11 @@ def add_para(doc, text, bold=False, color=None, size=11, align=None, italic=Fals
     return p
 
 
-def add_eyebrow(doc, text):
+def add_eyebrow(doc, text, color=ACCENT):
     p = doc.add_paragraph()
     run = p.add_run(text.upper())
     run.font.size = Pt(9)
-    run.font.color.rgb = ACCENT
+    run.font.color.rgb = color
     run.bold = True
     p.paragraph_format.space_after = Pt(2)
     return p
@@ -104,53 +112,46 @@ def add_two_col(doc, left_title, left_items, right_title, right_items, left_colo
     doc.add_paragraph()
 
 
-def add_step(doc, n, fan_title, fan_text, mvp_title, mvp_data):
-    add_eyebrow(doc, f"Step {n}")
-    add_heading(doc, fan_title, level=2)
-
-    table = doc.add_table(rows=1, cols=2)
-    table.autofit = True
-    fan_cell, mvp_cell = table.rows[0].cells
-    shade(fan_cell, "F8FAFC")
-    shade(mvp_cell, "FEF3C7")
-    fan_cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
-    mvp_cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
-
-    fp = fan_cell.paragraphs[0]
-    fr = fp.add_run("WHAT THE FAN SEES")
-    fr.bold = True
-    fr.font.size = Pt(9)
-    fr.font.color.rgb = ACCENT
-    fp2 = fan_cell.add_paragraph()
-    fr2 = fp2.add_run(fan_text)
-    fr2.font.size = Pt(10)
-
-    mp = mvp_cell.paragraphs[0]
-    mr = mp.add_run("WHAT MVP CAPTURES")
-    mr.bold = True
-    mr.font.size = Pt(9)
-    mr.font.color.rgb = GOLD
-    mp2 = mvp_cell.add_paragraph()
-    mr2 = mp2.add_run(mvp_title)
-    mr2.bold = True
-    mr2.font.size = Pt(11)
-
-    for k, v in mvp_data:
-        line = mvp_cell.add_paragraph()
-        rk = line.add_run(f"{k}: ")
-        rk.font.size = Pt(10)
-        rk.font.color.rgb = MUTED
-        rv = line.add_run(v)
-        rv.font.size = Pt(10)
-        rv.bold = True
-
-    doc.add_paragraph()
+def add_funnel_step(doc, step_num, color, eyebrow, title, body, fan_what=None, mvp_what=None):
+    add_eyebrow(doc, eyebrow, color=color)
+    add_heading(doc, f"{step_num}. {title}", level=2)
+    add_para(doc, body, size=11)
+    if fan_what or mvp_what:
+        table = doc.add_table(rows=1, cols=2)
+        fan_cell, mvp_cell = table.rows[0].cells
+        shade(fan_cell, "EFF6FF")
+        shade(mvp_cell, "FEF3C7")
+        fan_cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
+        mvp_cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
+        if fan_what:
+            fp = fan_cell.paragraphs[0]
+            fr = fp.add_run("WHAT THE FAN DOES/SEES")
+            fr.bold = True
+            fr.font.size = Pt(9)
+            fr.font.color.rgb = BLUE
+            for line in fan_what:
+                lp = fan_cell.add_paragraph()
+                lr = lp.add_run("• " + line)
+                lr.font.size = Pt(10)
+        if mvp_what:
+            mp = mvp_cell.paragraphs[0]
+            mr = mp.add_run("WHAT MVP CAPTURES")
+            mr.bold = True
+            mr.font.size = Pt(9)
+            mr.font.color.rgb = AMBER
+            for k, v in mvp_what:
+                line = mvp_cell.add_paragraph()
+                rk = line.add_run(f"{k}: ")
+                rk.font.size = Pt(10)
+                rk.font.color.rgb = MUTED
+                rv = line.add_run(v)
+                rv.font.size = Pt(10)
+                rv.bold = True
+        doc.add_paragraph()
 
 
 def main():
     doc = Document()
-
-    # Margins
     for section in doc.sections:
         section.top_margin = Inches(0.6)
         section.bottom_margin = Inches(0.6)
@@ -158,96 +159,207 @@ def main():
         section.right_margin = Inches(0.7)
 
     # Title block
-    add_eyebrow(doc, "Club MVP — Strategy Brief for Ryan Rechten, MVP Partnerships")
+    add_eyebrow(doc, "Club MVP — How It Drives Fight Promotion — Brief for Ryan Rechten")
     title = doc.add_paragraph()
-    t1 = title.add_run("Stop renting fans from Instagram. ")
+    t1 = title.add_run("From a TikTok ad to a captured fan to a paying customer — ")
     t1.bold = True
-    t1.font.size = Pt(26)
-    t2 = title.add_run("Start owning them.")
+    t1.font.size = Pt(22)
+    t2 = title.add_run("on the site MVP already owns.")
     t2.bold = True
-    t2.font.size = Pt(26)
+    t2.font.size = Pt(22)
     t2.font.color.rgb = ACCENT
 
     add_para(
         doc,
-        "A walkthrough of exactly what happens for the fan, what MVP captures, and how it turns "
-        "into sponsor revenue, ticket sales, and a year-round audience asset.",
+        "Sweepstakes capture fans at the top of the funnel. Engagement keeps them in. Sponsorship and "
+        "direct sales monetize at the bottom. The whole thing runs as a layer on "
+        "mostvaluablepromotions.com — not a new app, not a new site.",
         size=12, color=MUTED,
     )
-    add_para(
-        doc,
-        "Club MVP — the logged-in fan layer on top of mostvaluablepromotions.com. "
-        "Not a new destination. The same site, with a door for fans to walk through.",
-        size=11, color=GOLD, italic=True,
-    )
 
-    # 00 — How Club MVP fits
+    # 00 — The simple idea
     doc.add_paragraph()
-    add_heading(doc, "00  How Club MVP fits the existing site", level=1)
+    add_heading(doc, "00  The simple idea", level=1)
     add_para(
         doc,
-        "Today, mostvaluablepromotions.com is a brochure: news, fights, fighters, a shop. Visitors come, "
-        "read, leave anonymous. Club MVP adds a single button — \"Join Club MVP\" — that converts that "
-        "traffic into a logged-in fan with an account, a profile, an entry count, and a direct line back to MVP.",
+        "Club MVP is a logged-in layer on top of the website MVP already owns. Same domain. Same brand. "
+        "Same fights. New capability: capture a fan, keep them engaged, turn them into a paying "
+        "customer — for sponsors and for MVP directly.",
         size=11,
     )
     add_two_col(
         doc,
-        "mostvaluablepromotions.com today",
+        "Today — the brochure site",
         [
-            "News & fight announcements",
-            "Fighter roster pages",
-            "Press releases",
-            "Merch / shop",
-            "Anonymous traffic out",
+            "News, fights, fighters, shop",
+            "Visitors come, read, leave anonymous",
+            "MVP has no idea who they were",
         ],
-        "+ Club MVP layer",
+        "+ One button: \"Join Club MVP\"",
         [
-            "\"Join Club MVP\" button in nav",
-            "Member account + profile",
-            "Sweepstakes hub",
-            "Predictions, polls, live scorecards",
-            "Named fans in — data captured",
+            "Same site, plus a logged-in fan layer",
+            "MVP knows who came and what they did",
+            "Free re-engagement channel forever",
         ],
     )
-    add_para(doc, "Same domain. Same brand. Same fights. New layer.", size=10, color=MUTED, align=WD_ALIGN_PARAGRAPH.CENTER, italic=True)
 
-    # 01 — The setup
+    # 01 — The funnel overview
     doc.add_page_break()
-    add_heading(doc, "01  The setup", level=1)
+    add_heading(doc, "01  The funnel — one page", level=1)
+    add_para(doc, "Three stages. Top captures attention. Middle keeps it. Bottom monetizes it.", size=11)
+
+    table = doc.add_table(rows=3, cols=3)
+    funnel_rows = [
+        ("TOP — CAPTURE", "Sweepstakes capture fans from social", "TikTok / Instagram / YouTube → \"Win VIP fight experience\" → Join Club MVP", "EFF6FF"),
+        ("MIDDLE — ENGAGE", "Predictions, polls, live scorecards earn entries", "Every action = more entries · behavioral data · sponsor dwell measured", "FEF3C7"),
+        ("BOTTOM — MONETIZE", "Sponsors pay for the audience · MVP sells PPV, tickets, merch", "Sweepstakes inventory + extract current sponsor value + direct fan revenue", "DCFCE7"),
+    ]
+    for i, (label, title, sub, color) in enumerate(funnel_rows):
+        c1, c2, c3 = table.rows[i].cells
+        shade(c1, color)
+        shade(c2, color)
+        shade(c3, color)
+        r = c1.paragraphs[0].add_run(label)
+        r.bold = True
+        r.font.size = Pt(10)
+        r2 = c2.paragraphs[0].add_run(title)
+        r2.bold = True
+        r2.font.size = Pt(11)
+        r3 = c3.paragraphs[0].add_run(sub)
+        r3.font.size = Pt(10)
+    doc.add_paragraph()
+
+    # 02 — TOP: how fans enter
+    doc.add_page_break()
+    add_heading(doc, "02  How fans enter — TOP OF FUNNEL", level=1, color=BLUE)
     add_para(
         doc,
-        "Combat sports already generates massive attention. The problem is the relationship is owned by "
-        "Instagram, YouTube, broadcasters, ticketing companies, and sportsbooks — not by MVP. A "
-        "sweepstakes-driven fan platform changes that. MVP starts owning the fan account, the engagement "
-        "data, the purchase behavior, the sponsor interactions, and the direct communication channel.",
+        "Sweepstakes is the hook. Social is the channel. Mostvaluablepromotions.com is the destination. "
+        "Account creation is the conversion. Four steps. Less than 60 seconds.",
         size=11,
     )
-    add_two_col(
-        doc,
-        "Today — rented attention",
-        [
-            "Anonymous viewers",
-            "Re-acquired at full cost every fight",
-            "Sponsors buy logos and hope",
-            "No CRM, no retargeting, no compounding",
+
+    add_funnel_step(
+        doc, 1, BLUE,
+        "Discovery — on social",
+        "Fan sees the sweepstakes on TikTok / Instagram / YouTube",
+        "Fighter selfies + paid media drive traffic. The hook is a real, big prize: \"Win ringside seats + "
+        "walkout access at the next MVP fight.\" Every social impression now has a chance to convert into a "
+        "captured fan — not just a view.",
+    )
+
+    add_funnel_step(
+        doc, 2, BLUE,
+        "Land — on mostvaluablepromotions.com",
+        "Fan lands on the site they already know",
+        "The destination isn't a random microsite. It's mostvaluablepromotions.com — the brand fans "
+        "already trust. The \"Join Club MVP\" button is right there in the nav. Zero friction.",
+    )
+
+    add_funnel_step(
+        doc, 3, BLUE,
+        "Convert — account creation",
+        "Fan creates a Club MVP account — the data capture moment",
+        "One screen. Three fields. One tap. Email, phone (SMS opt-in), favorite fighter. The fan thinks "
+        "they're entering a sweepstakes — which they are. MVP just got a verified, opted-in record.",
+        fan_what=[
+            "Sees: \"Almost in. One step.\"",
+            "Enters email + phone + favorite fighter",
+            "Taps JOIN CLUB MVP",
         ],
-        "With Club MVP — owned audience",
-        [
-            "Named, opted-in fans logged in",
-            "Free promotional channel for the next fight",
-            "Sponsors buy audiences, not impressions",
-            "Every event grows the asset",
+        mvp_what=[
+            ("Fan ID", "fan_0a91f7"),
+            ("Email", "captured"),
+            ("SMS opt-in", "YES"),
+            ("Demo / geo", "M, 24, Phoenix"),
+            ("Source channel", "tiktok / creator-A"),
+            ("Pixel fired", "Meta + TikTok"),
         ],
     )
 
-    # 02 — Sponsorship lead
-    doc.add_page_break()
-    add_heading(doc, "02  Sponsorship — two ways to print money on day one", level=1)
+    add_funnel_step(
+        doc, 4, BLUE,
+        "Enter — the sweepstakes",
+        "Entry confirmed — and the funnel begins",
+        "Fan is in. Now the platform shows them how to earn more entries — which is where the in-funnel "
+        "engagement begins.",
+    )
+
     add_para(
         doc,
-        "This is where the platform pays for itself before a fan ever logs in. Two parallel revenue prongs — "
-        "both can run from week one.",
+        "TOP-OF-FUNNEL RESULT: Every social impression that used to evaporate now has a chance to become a "
+        "named, opted-in fan. This is the new top of MVP's marketing funnel for the fight — and it costs "
+        "roughly $3 per captured fan vs. $11–18 to acquire the same person on Meta cold.",
+        size=11, bold=True, color=BLUE,
+    )
+
+    # 03 — MIDDLE: once they're in
+    doc.add_page_break()
+    add_heading(doc, "03  Once they're in — MIDDLE OF FUNNEL", level=1, color=AMBER)
+    add_para(
+        doc,
+        "Now the platform's job is to keep the fan coming back through fight week and onto fight night. "
+        "Every interaction = more sweepstakes entries for the fan, more behavioral data + sponsor dwell "
+        "time for MVP.",
+        size=11,
+    )
+
+    add_funnel_step(
+        doc, 1, AMBER,
+        "Earn entries — daily reasons to return",
+        "Predictions, polls, sponsor content, referrals",
+        "Every day of fight week, a new entry mechanism. Predict the winner. Vote on the walkout song. "
+        "Watch a 30-second sponsor clip for bonus entries. Share with a friend. The fan is now coming "
+        "back daily — pre-fight buzz MVP no longer has to rent.",
+        fan_what=[
+            "Picks the winner (+5)",
+            "Picks the round (+5)",
+            "Watches sponsor clip (+3)",
+            "Shares with friends (+10)",
+            "Votes on walkout song (+2)",
+        ],
+        mvp_what=[
+            ("Predictions made", "3 / 5"),
+            ("Sponsor clip dwell", "28s avg"),
+            ("Shares triggered", "2"),
+            ("Referral signups", "1"),
+            ("Engagement score", "87 / 100"),
+        ],
+    )
+
+    add_funnel_step(
+        doc, 2, AMBER,
+        "Re-engage — push + email",
+        "MVP owns the channel now — no more paying Meta",
+        "By fight week, MVP isn't paying Meta to remind fans the fight is Saturday. It just sends a push "
+        "notification to every Club MVP member. T-72 hours. T-24 hours. T-2 hours. Free. Every time.",
+    )
+
+    add_funnel_step(
+        doc, 3, AMBER,
+        "Fight night — live participation",
+        "The platform becomes a second screen",
+        "Live scorecards round-by-round. Push notifications timed to the broadcast. Exclusive moments only "
+        "Club MVP members get. Real-time engaged-viewer list — the holy grail for sponsors who want proof "
+        "of during-broadcast attention, not after-the-fact estimates.",
+    )
+
+    add_para(
+        doc,
+        "MIDDLE-OF-FUNNEL RESULT: Every captured fan now has a behavioral fingerprint. Top 10% become "
+        "\"Superfans\" — premium sponsor inventory + first call for ticket pre-sales. Sponsor content gets "
+        "MEASURABLE DWELL TIME, not impressions. Fight-week buzz scales without renting a single new ad.",
+        size=11, bold=True, color=AMBER,
+    )
+
+    # 04 — BOTTOM: monetization
+    doc.add_page_break()
+    add_heading(doc, "04  How it makes money — BOTTOM OF FUNNEL", level=1, color=GREEN)
+    add_para(
+        doc,
+        "Three revenue lines, all unlocked the moment the funnel starts running. Sponsorship leads — "
+        "sweepstakes is the easiest inventory in the deck. Direct fan revenue and year-round monetization "
+        "compound on top.",
         size=11,
     )
 
@@ -264,15 +376,13 @@ def main():
     add_para(
         doc,
         "Why this clears procurement fast: sweepstakes sponsorship maps to an existing approval template "
-        "at every CPG, sportsbook, and beverage. No new vendor category. No new legal review. Just a "
-        "\"Presented by\" placement and a dataset at the end.",
+        "at every CPG, sportsbook, and beverage. No new vendor category. No new legal review.",
         size=11, italic=True,
     )
-    add_para(doc, "What we sell:", size=11, bold=True)
     add_bullets(doc, [
         ("Title sweepstakes", " — \"Win VIP fight night, presented by [Brand]\""),
-        ("Bonus-entry mechanics", " — \"Watch [Brand]'s 30-sec clip for +5 entries\" → measurable dwell time"),
-        ("Branded prize tiers", " — sponsor-supplied prizes (year of Celsius, $5K travel credit)"),
+        ("Bonus-entry mechanics", " — \"Watch [Brand]'s 30-sec clip for +5 entries\""),
+        ("Branded prize tiers", " — sponsor-supplied prizes (year of Celsius, $5K travel)"),
         ("Audience hand-off", " — opt-in entrants delivered to sponsor CRM post-fight"),
     ])
     add_para(
@@ -287,53 +397,76 @@ def main():
     add_para(
         doc,
         "Most current MVP sponsors are paying for logo exposure — corner posts, ring mats, broadcast bugs. "
-        "Same deal, three years running, same flat fee. The platform turns that flat fee into a measured "
+        "Same deal, three years running, same flat fee. Club MVP turns that flat fee into a measured "
         "asset — and a justification for renewal at 2–3x.",
         size=11,
     )
     add_para(
         doc,
-        "The renewal pitch: \"Last year you paid $X for impressions. This year, same dollar buys impressions "
-        "PLUS a sweepstakes activation, an audience file in your demo, and a measurable dwell-time report. "
-        "Or for 2x, you own the activation outright.\"",
+        "The renewal pitch: \"Last year you paid $X for impressions. This year, same dollar buys "
+        "impressions PLUS a sweepstakes activation, an audience file in your demo, and a measurable "
+        "dwell-time report. Or for 2x, you own the activation outright.\"",
         size=11, italic=True,
     )
-    add_para(doc, "How we extract more:", size=11, bold=True)
     add_bullets(doc, [
-        ("Audit current deals", " — pull every existing sponsor and tag what they currently get vs. what they could get"),
-        ("Activation upsell", " — offer current sponsors first right of refusal on Club MVP activations before going to market"),
-        ("ROI proof retroactively", " — even on existing deals, retro-fit Dropt reporting so they renew with confidence"),
-        ("Tier ladder", " — Logo → Logo + activation → Category exclusive. Move every sponsor up one rung."),
+        ("Audit current deals", " — tag what each sponsor gets vs. could get"),
+        ("Activation upsell", " — first right of refusal on Club MVP activations"),
+        ("Retroactive ROI proof", " — retro-fit Dropt reporting on existing deals"),
+        ("Tier ladder", " — Logo → Logo + activation → Category exclusive"),
     ])
     add_para(
         doc,
-        "Expected lift on renewal: +30–100% on existing sponsor revenue with zero new logos to chase — "
-        "just better-priced renewals.",
+        "Expected lift on renewal: +30–100% on existing sponsor revenue with zero new logos to chase.",
         size=11, bold=True, color=GOLD,
     )
 
     add_para(
         doc,
-        "Combined math: 1–2 new sweepstakes sponsors per fight ($300K–$1M) PLUS uplift on 4–6 existing "
-        "renewals (+$500K–$2M/year). Day-one impact, no platform-side risk.",
+        "Combined: 1–2 new sweepstakes sponsors per fight ($300K–$1M) + uplift on 4–6 existing renewals "
+        "(+$500K–$2M/year). Day-one impact, no platform-side risk.",
         size=12, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER,
     )
 
-    # 03 — What Dropt captures
-    doc.add_page_break()
-    add_heading(doc, "03  What Dropt actually captures", level=1)
+    # Direct fan revenue
+    doc.add_paragraph()
+    add_heading(doc, "Plus — direct fan revenue (this is what fills seats)", level=2)
+    add_two_col(
+        doc,
+        "Drives THIS fight",
+        [
+            "Ticket sales — geo-segment captured fans → SMS at T-72h",
+            "PPV bundle offers — fans who picked a winner get one-tap upsell",
+            "Merch conversion — fan who picks Fighter A sees Fighter A's shirt at checkout",
+            "Lookalike audiences — pixel feeds Meta/TikTok at 3–5x cold conversion",
+        ],
+        "Drives the NEXT fight",
+        [
+            "Free re-launch channel — email/SMS captured list, ~$0 CAC",
+            "Pre-sale priority — superfans get first crack at tickets",
+            "Off-season retention — content drops, sponsor newsletter inventory",
+            "Year-round monetization — VIP/loyalty memberships, premium sweepstakes",
+        ],
+    )
     add_para(
         doc,
-        "This isn't theoretical. Below is the exact view sponsors see — pulled from Dropt today. Every "
-        "sweepstakes entry gets fingerprinted into sellable segments, demographics, and psychographics. "
-        "This is the proof slide in every sponsor pitch.",
+        "Year-one upside on a 250K-fan list: $2–4M in addressable media + sponsor lift — on top of "
+        "per-fight sponsorship revenue above.",
+        size=11, bold=True, color=GREEN, align=WD_ALIGN_PARAGRAPH.CENTER,
+    )
+
+    # 05 — What sponsors get (Dropt proof)
+    doc.add_page_break()
+    add_heading(doc, "05  What sponsors actually get — the proof slide", level=1)
+    add_para(
+        doc,
+        "Sponsors don't ask \"how much reach?\" anymore. They ask \"how many opted-in fans, in my demo?\" "
+        "Below is the live Dropt output every sponsor pitch closes with.",
         size=11,
     )
 
-    # Sellable Segments table
-    add_heading(doc, "Sellable Audience Segments", level=2, color=ACCENT)
+    add_heading(doc, "Sellable Audience Segments", level=2, color=BLUE)
     seg_table = doc.add_table(rows=5, cols=3)
-    headers = ["Segment", "Share", "What it unlocks"]
+    headers = ["Segment", "Share", "Sponsor category fit"]
     for i, h in enumerate(headers):
         c = seg_table.rows[0].cells[i]
         shade(c, "0F172A")
@@ -354,16 +487,11 @@ def main():
             r.font.size = Pt(10)
             if j == 1:
                 r.bold = True
-                r.font.color.rgb = ACCENT
+                r.font.color.rgb = BLUE
     doc.add_paragraph()
 
-    # Demographics
-    add_heading(doc, "Age Distribution", level=2, color=ACCENT)
-    add_para(
-        doc,
-        "80.5% of audience is under 45 — prime spending years with high customer lifetime value.",
-        size=12, bold=True,
-    )
+    add_heading(doc, "Age Distribution", level=2, color=BLUE)
+    add_para(doc, "80.5% of audience is under 45 — prime spending years with high CLV.", size=12, bold=True)
     add_bullets(doc, [
         "18–24: 36.9% (Next Gen / Trendsetters)",
         "25–34: 25.4% (Young Professionals)",
@@ -371,8 +499,7 @@ def main():
         "45+: 19.5% (Established)",
     ])
 
-    # Psychographics
-    add_heading(doc, "Psychographics — The Conscious Performer", level=2, color=ACCENT)
+    add_heading(doc, "Psychographics — The Conscious Performer", level=2, color=BLUE)
     add_bullets(doc, [
         "55.2% choose water for hydration vs 25.8% energy drinks",
         "41.3% prioritize healthy eating",
@@ -381,176 +508,59 @@ def main():
     add_para(
         doc,
         "Unique insight: This is NOT a stereotypical \"beer & hot dog\" combat-sports crowd. They're "
-        "health-conscious performers who value hydration and clean fuel — making them a perfect fit for "
-        "wellness brands, electrolytes (LMNT, Liquid IV), and premium activewear.",
+        "health-conscious performers — perfect fit for wellness brands, electrolytes (LMNT, Liquid IV), "
+        "and premium activewear.",
         size=11, italic=True,
     )
-    add_para(
-        doc,
-        "Live capture from Dropt. As MVP audience scales, the same dashboard surfaces MVP-specific "
-        "segments — e.g., The Walkout Watcher, The Live Bettor, The Fight-Week Spender — each tied to a "
-        "specific sponsor category.",
-        size=10, color=MUTED, italic=True,
-    )
 
-    # 04 — Fan flow
+    # 06 — Why this is simple
     doc.add_page_break()
-    add_heading(doc, "04  How it works — the fan flow", level=1)
+    add_heading(doc, "06  Why this is simple", level=1)
     add_para(
         doc,
-        "Five steps. The hook is prizes. The mechanism is fight-week interactions. The output for MVP is data.",
-        size=11,
-    )
-
-    add_step(
-        doc, 1,
-        "Sweepstakes drop — \"Win a VIP fight experience\"",
-        "Fight-week ad on TikTok / Instagram drives to a landing page on mostvaluablepromotions.com "
-        "with a real prize: ringside seats, signed gloves, backstage access, walkout with the fighter.",
-        "Acquisition event",
-        [
-            ("Source channel", "tiktok / creator-A"),
-            ("Landing page CTR", "14.2%"),
-            ("Cost per click", "$0.18"),
-            ("UTM tag", "utm_xyz_fight7"),
-        ],
-    )
-    add_step(
-        doc, 2,
-        "Account creation — the data capture moment",
-        "Fan creates a Club MVP account to enter. Email, phone (for SMS opt-in), favorite fighter, "
-        "location. Frictionless — one screen, three fields, one tap.",
-        "New first-party record",
-        [
-            ("Fan ID", "fan_0a91f7"),
-            ("Email", "captured"),
-            ("SMS opt-in", "YES"),
-            ("Demo / geo", "M, 24, Phoenix AZ"),
-            ("Pixel fired", "Meta + TikTok"),
-        ],
-    )
-    add_step(
-        doc, 3,
-        "Earn entries — the engagement loop",
-        "Predictions, polls, shares, sponsor content views, friend referrals. Each action = more entries. "
-        "Every interaction is shareable.",
-        "Behavior signal & sponsor proof",
-        [
-            ("Predictions made", "3 / 5"),
-            ("Sponsor clip dwell", "28s avg"),
-            ("Shares triggered", "2"),
-            ("Referral signups", "1"),
-            ("Engagement score", "87 / 100"),
-        ],
-    )
-    add_step(
-        doc, 4,
-        "Fight night — live participation",
-        "Live scorecards round-by-round, push notifications timed to the broadcast, exclusive moments "
-        "only Club MVP fans get. The platform becomes a second screen.",
-        "Real-time engaged-viewer list",
-        [
-            ("Concurrent fans", "112,400"),
-            ("Avg session length", "42 min"),
-            ("Push opt-in rate", "71%"),
-            ("Sponsor co-brand views", "+2.1M"),
-        ],
-    )
-    add_step(
-        doc, 5,
-        "After the fight — offers, content, the next event",
-        "Winners notified. Personalized offer based on behavior: PPV bundle, fighter merch, ticket "
-        "pre-sale for the next event. The relationship doesn't end at the bell.",
-        "Compounding asset",
-        [
-            ("Captured fan", "retained"),
-            ("Next-fight CAC", "~$0"),
-            ("Lookalike seeded", "Meta + TikTok"),
-            ("Sponsor offer redemption", "tracked"),
-            ("Lifetime value", "growing"),
-        ],
-    )
-
-    # 05 — Division of labor
-    doc.add_page_break()
-    add_heading(doc, "05  What MVP does vs. what Club MVP handles", level=1)
-    add_para(
-        doc,
-        "The most important slide for a CMO worried about another tech project: MVP doesn't build, "
-        "integrate, or operate anything. MVP runs MVP.",
+        "MVP doesn't build, integrate, or operate anything. The product runs on top of the website MVP "
+        "already owns. The only thing MVP brings is what MVP already does best.",
         size=11,
     )
     add_two_col(
         doc,
         "MVP provides (no new lift)",
         [
-            "Prizes / VIP access / experiences",
-            "Fight-week promotion across owned channels",
-            "Bringing sponsors into activations",
-            "Encouraging fighter participation (15-sec selfies)",
-            "Live-event amplification",
+            "Prizes / VIP access / experiences (already in inventory)",
+            "Fight-week promotion across owned channels (already running)",
+            "Sponsor relationships (already exist)",
+            "Fighter participation — 15-sec selfies (already organic)",
+            "Live-event amplification (already happens)",
         ],
-        "Club MVP handles",
+        "Club MVP handles (everything else)",
         [
-            "User accounts & identity",
-            "Sweepstakes logic & legal compliance",
-            "Sponsor integrations & branded UX",
-            "Data collection, CRM, lifecycle messaging",
-            "Analytics, retention loops, dashboard reporting",
+            "\"Join Club MVP\" button + member accounts on existing site",
+            "Sweepstakes logic, legal compliance, prize fulfillment",
+            "Sponsor integrations + branded UX",
+            "Data capture, CRM, lifecycle email/SMS",
+            "Dropt analytics, dashboards, sponsor reporting",
         ],
     )
 
-    # 06 — Other revenue engines
-    add_heading(doc, "06  The other revenue engines", level=1)
-    add_para(doc, "Sponsorship leads (Section 02). Two more revenue lines open the moment Club MVP captures its first 50K fans.", size=11)
-    engines = [
-        ("Direct fan revenue", "Use the captured list to retarget for PPV, tickets, merch. Pixel every page, build lookalikes, run lifecycle email/SMS.", "3–5x", "Conversion vs. cold traffic"),
-        ("Year-round monetization", "VIP/loyalty memberships, premium sweepstakes, sponsor newsletter inventory, affiliate ticketing splits. The list keeps paying between fights.", "$2–4M", "Year-one upside on a 250K-fan list"),
-    ]
-    table = doc.add_table(rows=1, cols=2)
-    for i, (title, body, lift, label) in enumerate(engines):
-        c = table.rows[0].cells[i]
-        shade(c, "FAFAF9")
-        c.vertical_alignment = WD_ALIGN_VERTICAL.TOP
-        c.paragraphs[0].add_run(title).bold = True
-        bp = c.add_paragraph()
-        br = bp.add_run(body)
-        br.font.size = Pt(10)
-        lp = c.add_paragraph()
-        lr = lp.add_run(lift)
-        lr.bold = True
-        lr.font.size = Pt(20)
-        lr.font.color.rgb = ACCENT
-        lbp = c.add_paragraph()
-        lbr = lbp.add_run(label)
-        lbr.font.size = Pt(9)
-        lbr.font.color.rgb = MUTED
-    doc.add_paragraph()
-
-    # 07 — Operating model
-    add_heading(doc, "07  The CMO operating model", level=1)
-    add_para(doc, "One ratio runs the whole company.", size=11)
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p.add_run("Revenue per captured fan  ÷  Cost per captured fan")
-    r.bold = True
-    r.font.size = Pt(16)
-    r.font.color.rgb = ACCENT
-    add_para(doc, "If > 1, scale spend. If < 1, fix the funnel. Whole org aligned on one number.",
-             size=11, align=WD_ALIGN_PARAGRAPH.CENTER, color=MUTED)
-    add_para(doc, "Daily 3-number Slack digest: fans captured (24h) · cost per fan · revenue per fan.",
-             size=10, align=WD_ALIGN_PARAGRAPH.CENTER, color=MUTED, italic=True)
-
-    # 08 — Pilot
-    add_heading(doc, "08  The 14-day pilot", level=1)
-    add_para(doc, "No new tech. No new vendors. No new budget. The cost to test is effectively zero.", size=11)
+    # 07 — Pilot
+    add_heading(doc, "07  The 14-day pilot", level=1)
+    add_para(
+        doc,
+        "No new tech. No new vendors. No new budget. The cost to test is effectively zero. The upside is "
+        "a new revenue line MVP owns forever — and a fan funnel that compounds with every fight.",
+        size=11,
+    )
     add_bullets(doc, [
-        ("One sweepstakes live", " — VIP fight experience as the prize, predictions + polls as entry mechanism, fighter-promoted across socials"),
+        ("One sweepstakes live", " — VIP fight experience as the prize, \"Join Club MVP\" button on mostvaluablepromotions.com, fighter-promoted across socials"),
         ("One sponsor pilot sold", " — even at half-rate, to land the case study"),
-        ("One retargeting pixel firing", " — across MVP properties + lookalike seeded for next fight"),
-        ("One sponsor-ready report", " — exported from Dropt within 48h post-fight: reach, engaged actions, demo split, time spent, completion rate"),
+        ("One retargeting pixel firing", " — across MVP properties + lookalike audience seeded for the next fight"),
+        ("One sponsor-ready report", " — exported from Dropt within 48h post-fight"),
     ])
-    add_para(doc, "Targets: 50K+ captured fans · CPF under $3 · audience file delivered to sponsor in 48h.", size=11, bold=True)
+    add_para(
+        doc,
+        "Targets: 50K+ captured fans · CPF under $3 · audience file delivered to sponsor in 48h.",
+        size=11, bold=True,
+    )
 
     # Bottom line
     doc.add_paragraph()
@@ -563,18 +573,25 @@ def main():
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = p.add_run("We don't need a bigger fight to make more money.\nWe need to keep the fans we already have.")
+    r = p.add_run("A funnel MVP owns — for the fight, and every fight after.")
     r.bold = True
     r.font.size = Pt(16)
 
     add_para(
         doc,
-        "Ryan — pick a fight on the calendar. Send me the date and the top 3 sponsor targets. "
-        "I'll come back with a custom activation, audience projection, and price in 5 business days.",
+        "Top: sweepstakes + social capture fans into Club MVP on the site MVP already owns. Middle: "
+        "predictions and live participation keep them engaged through fight week. Bottom: sponsors pay "
+        "for the audience and MVP sells PPV, tickets, and merch direct. Every fight makes the next one "
+        "cheaper to fill.",
         size=11, italic=True, align=WD_ALIGN_PARAGRAPH.CENTER,
     )
+    add_para(
+        doc,
+        "Ryan — pick a fight on the calendar. Send me the date and the top 3 sponsor targets. Custom "
+        "activation, audience projection, and price in 5 business days.",
+        size=11, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER,
+    )
 
-    # Save
     OUT.parent.mkdir(parents=True, exist_ok=True)
     doc.save(str(OUT))
     print(f"Wrote {OUT}")
