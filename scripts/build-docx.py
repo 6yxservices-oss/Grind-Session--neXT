@@ -210,7 +210,7 @@ def main():
 
     table = doc.add_table(rows=3, cols=3)
     funnel_rows = [
-        ("TOP — CAPTURE", "Sweepstakes capture fans from social", "TikTok / Instagram / YouTube → \"Win VIP fight experience\" → Join Club MVP", "EFF6FF"),
+        ("TOP — CAPTURE", "Social media post or Meta ad → sweepstakes giveaway", "Meta / TikTok / IG / YouTube · paid + fighter UGC → \"Win VIP fight night\" → Join Club MVP", "EFF6FF"),
         ("MIDDLE — ENGAGE", "Predictions, polls, live scorecards earn entries", "Every action = more entries · behavioral data · sponsor dwell measured", "FEF3C7"),
         ("BOTTOM — MONETIZE", "Sponsors pay for the audience · MVP sells PPV, tickets, merch", "Sweepstakes inventory + extract current sponsor value + direct fan revenue", "DCFCE7"),
     ]
@@ -234,18 +234,20 @@ def main():
     add_heading(doc, "02  How fans enter — TOP OF FUNNEL", level=1, color=BLUE)
     add_para(
         doc,
-        "Sweepstakes is the hook. Social is the channel. Mostvaluablepromotions.com is the destination. "
-        "Account creation is the conversion. Four steps. Less than 60 seconds.",
+        "The fan enters the funnel through a social media post or Meta ad promoting a sweepstakes "
+        "giveaway. They tap, land on mostvaluablepromotions.com, create a Club MVP account, and they're "
+        "in. Four steps. Less than 60 seconds.",
         size=11,
     )
 
     add_funnel_step(
         doc, 1, BLUE,
-        "Discovery — on social",
-        "Fan sees the sweepstakes on TikTok / Instagram / YouTube",
-        "Fighter selfies + paid media drive traffic. The hook is a real, big prize: \"Win ringside seats + "
-        "walkout access at the next MVP fight.\" Every social impression now has a chance to convert into a "
-        "captured fan — not just a view.",
+        "Discovery — social media post or Meta ad",
+        "Fan sees a sweepstakes giveaway in their feed",
+        "The funnel entry point is a social media post or a Meta ad promoting a sweepstakes giveaway. "
+        "Could be a fighter's organic post, MVP's owned channels, or a paid Meta / TikTok / YouTube ad — "
+        "the hook is always the same: \"Win VIP fight night, ringside seats, signed gloves, walkout "
+        "access.\" That single tap on the post is how the fan enters the funnel.",
     )
 
     add_funnel_step(
